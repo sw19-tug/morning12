@@ -6,12 +6,19 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <ListView
+        android:id="@+id/list_notes"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"></ListView>
+
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/bt_create"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:clickable="true"
         android:layout_gravity="end|bottom"
-        tools:src="@drawable/ic_add" />
+        tools:src="@drawable/ic_add"
+        android:tint="@android:color/white"
+        android:layout_margin="20sp"/>
 
 </android.support.design.widget.CoordinatorLayout>
