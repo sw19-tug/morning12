@@ -19,4 +19,9 @@ public class NoteOverviewTest {
     public void testAddButtonIsDisplayed() {
         onView(withId(R.id.bt_create)).check(matches(isDisplayed()));
     }
+
+    @Test
+    public void testNotesListViewIsDisplayed() {
+        onView(withId(R.id.list_notes)).check(matches(isDisplayed()));
+    }
 }
