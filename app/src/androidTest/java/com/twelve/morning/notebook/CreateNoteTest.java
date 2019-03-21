@@ -24,7 +24,18 @@ public class CreateNoteTest {
     @Test
     public void popUpShowsOnFabClick(){
         onView(withId(R.id.bt_create)).perform(click());
-        onView(withId(R.id.pw_create_note)).inRoot(RootMatchers.isPlatformPopup()).check(matches(isDisplayed()));
+        onView(withId(R.id.ll_create_note)).inRoot(RootMatchers.isPlatformPopup()).check(matches(isDisplayed()));
+    }
+
+    @Test
+    public void popUpContainsFieldsAndButtons(){
+        onView(withId(R.id.bt_create)).perform(click());
+        onView(withId(R.id.ll_create_note)).inRoot(RootMatchers.isPlatformPopup()).check(matches(isDisplayed()));
+        onView(withId(R.id.et_note_title)).inRoot(RootMatchers.isPlatformPopup()).check(matches(isDisplayed()));
+        onView(withId(R.id.et_note_body)).inRoot(RootMatchers.isPlatformPopup()).check(matches(isDisplayed()));
+        onView(withId(R.id.bt_note_create_save)).inRoot(RootMatchers.isPlatformPopup()).check(matches(isDisplayed()));
+        onView(withId(R.id.et_note_create_cancel)).inRoot(RootMatchers.isPlatformPopup()).check(matches(isDisplayed()));
+
     }
 
 

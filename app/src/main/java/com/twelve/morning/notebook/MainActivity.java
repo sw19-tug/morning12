@@ -29,11 +29,10 @@ public class MainActivity extends AppCompatActivity {
         create_note_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                LinearLayout view_group = MainActivity.this.findViewById(R.id.pw_create_note);
+                LinearLayout view_group = MainActivity.this.findViewById(R.id.ll_create_note);
                 LayoutInflater layoutInflater = (LayoutInflater)
                         MainActivity.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 View customView = layoutInflater.inflate(R.layout.popup_window, view_group);
-                System.out.println(customView);
                 PopupWindow popup_window = new PopupWindow(customView,
                         ViewGroup.LayoutParams.MATCH_PARENT,
                         ViewGroup.LayoutParams.MATCH_PARENT);
