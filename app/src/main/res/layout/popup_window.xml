@@ -4,12 +4,16 @@
     android:orientation="vertical"
     android:padding="10dip"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent">
+    android:layout_height="fill_parent"
+    android:background="@color/lightBackgroundGrey"
+    android:contentDescription="@string/create_note_description">
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/tv_popup_create"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
         android:layout_marginTop="10dip"
-        android:text="Test Pop-Up" />
+        android:text="@string/dummy_text"
+        android:textColor="@color/textPrimary"/>
 
 </LinearLayout>

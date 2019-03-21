@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">Notebook</string>
     <string name="add">+</string>
+    <string name="dummy_text">Dummy Text</string>
+    <string name="create_note_description">Create and Modify a Note</string>
+
 </resources>
