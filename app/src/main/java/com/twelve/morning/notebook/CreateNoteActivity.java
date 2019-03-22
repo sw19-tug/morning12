@@ -5,8 +5,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 
 public class CreateNoteActivity extends AppCompatActivity {
+
+    private Note last_saved_note = null;
+    public Note getLastSavedNote(){
+        return this.last_saved_note;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,8 +23,14 @@ public class CreateNoteActivity extends AppCompatActivity {
         finishCreateNoteActivity((Button)findViewById(R.id.bt_note_create_save));
     }
 
-    private void storeNote(){
-
+    private void storeNote() {
+        EditText title = CreateNoteActivity.this.findViewById(R.id.et_note_title);
+        EditText body = CreateNoteActivity.this.findViewById(R.id.et_note_body);
+        String title_text = title.getText().toString();
+        String body_text = body.getText().toString();
+        if (!(title_text.isEmpty() && body_text.isEmpty())) {
+            last_saved_note = new Note(title_text, body_text);
+        }
     }
 
 
