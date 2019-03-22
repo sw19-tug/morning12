@@ -12,12 +12,15 @@ import org.junit.runner.RunWith;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.clearText;
 import static android.support.test.espresso.action.ViewActions.click;
+import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static junit.framework.TestCase.assertNotNull;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 
 @RunWith(AndroidJUnit4.class)
@@ -61,5 +64,50 @@ public class CreateNoteActivityTest {
         onView(withId(R.id.rl_create_note)).check(matches(isDisplayed()));
         onView(withId(R.id.bt_note_create_save)).perform(click());
         onView(withId(R.id.bt_create)).check(matches(isDisplayed()));
+    }
+
+    @Test
+    public void testCorrectNoteCreation(){
+        String title_input = "dummyTitle";
+        String body_input = "dummyBody";
+        onView(withId(R.id.rl_create_note)).check(matches(isDisplayed()));
+        onView(withId(R.id.et_note_title)).perform(clearText(), typeText(title_input));
+        onView(withId(R.id.et_note_body)).perform(clearText(), typeText(body_input))
+                .perform(closeSoftKeyboard());
+        onView(withId(R.id.bt_note_create_save)).check(matches(isDisplayed()));
+        onView(withId(R.id.bt_note_create_save)).perform(click());
+        Note note = activityCreateNoteTestRule.getActivity().getLastSavedNote();
+        assertNotNull(note);
+        assertEquals(title_input, note.getTitle());
+        assertEquals(body_input, note.getBody());
+
+    }
+
+    @Test
+    public void testIncorrectNoteCreation(){
+        String title_input = "";
+        String body_input = "";
+        onView(withId(R.id.rl_create_note)).check(matches(isDisplayed()));
+        onView(withId(R.id.et_note_title)).perform(clearText(), typeText(title_input));
+        onView(withId(R.id.et_note_body)).perform(clearText(), typeText(body_input))
+                .perform(closeSoftKeyboard());
+        onView(withId(R.id.bt_note_create_save)).check(matches(isDisplayed()));
+        onView(withId(R.id.bt_note_create_save)).perform(click());
+        Note note = activityCreateNoteTestRule.getActivity().getLastSavedNote();
+        assertNull(note);
+    }
+
+    @Test
+    public void testAbortedNoteCreation(){
+        String title_input = "dummyTitle";
+        String body_input = "dummyBody";
+        onView(withId(R.id.rl_create_note)).check(matches(isDisplayed()));
+        onView(withId(R.id.et_note_title)).perform(clearText(), typeText(title_input));
+        onView(withId(R.id.et_note_body)).perform(clearText(), typeText(body_input))
+                .perform(closeSoftKeyboard());
+        onView(withId(R.id.bt_note_create_cancel)).check(matches(isDisplayed()));
+        onView(withId(R.id.bt_note_create_cancel)).perform(click());
+        Note note = activityCreateNoteTestRule.getActivity().getLastSavedNote();
+        assertNull(note);
     }
 }
