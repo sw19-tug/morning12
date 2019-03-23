@@ -1,6 +1,7 @@
 package com.twelve.morning.notebook;
 
 import android.support.test.rule.ActivityTestRule;
+import android.support.v7.widget.AppCompatTextView;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -13,7 +14,9 @@ import static android.support.test.espresso.matcher.ViewMatchers.hasMinimumChild
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withParent;
+import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.core.AllOf.allOf;
+import static org.hamcrest.core.AnyOf.anyOf;
 import static org.hamcrest.Matchers.anything;
 
 public class NoteOverviewTest {
@@ -33,6 +36,6 @@ public class NoteOverviewTest {
 
     @Test
     public void testNotesListViewContainsElement() {
-        onView(allOf(anything(), withParent(withId(R.id.list_notes)))).check(matches(isDisplayed()));
+        onView(withText("Minus one that's three, quick maths")).check(matches(isDisplayed()));
     }
 }
