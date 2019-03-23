@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Notebook</string>
-    <string name="add">+</string>
+    <string name="sort_title">Title</string>
+    <string name="sort_creationdate">Creation</string>
 </resources>

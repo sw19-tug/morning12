@@ -16,7 +16,7 @@ public class NoteSortingTest {
     public ActivityTestRule<MainActivity> activityTestRule = new ActivityTestRule<>(MainActivity.class);
 
     @Test
-    public void testAddButtonIsDisplayed() {
+    public void testSortingButtonsAreDisplayed() {
         onView(withId(R.id.bt_sort_by_title)).check(matches(isDisplayed()));
         onView(withId(R.id.bt_sort_by_creation)).check(matches(isDisplayed()));
     }
