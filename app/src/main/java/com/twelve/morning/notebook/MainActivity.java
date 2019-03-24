@@ -1,9 +1,13 @@
 package com.twelve.morning.notebook;
 
+import android.content.Intent;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -13,7 +17,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+      
+        switchToCreateNoteActivity();
+      
         list_view = (ListView) findViewById(R.id.list_notes);
 
         ArrayAdapter<String> list_adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, new String[] {
@@ -28,4 +34,18 @@ public class MainActivity extends AppCompatActivity {
         });
         list_view.setAdapter(list_adapter);
     }
+
+
+    private void switchToCreateNoteActivity(){
+        FloatingActionButton create_note_btn = findViewById(R.id.bt_create);
+        create_note_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent switch_to_create_note = new Intent(MainActivity.this,
+                        CreateNoteActivity.class);
+                startActivity(switch_to_create_note);
+            }
+        });
+    }
 }
+
