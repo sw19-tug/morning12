@@ -22,15 +22,15 @@ public class MainActivity extends AppCompatActivity {
         switchToCreateNoteActivity();
         reloadNotes();
       
-        list_view.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intent = new Intent(MainActivity.this, EditNoteActivity.class);
-                Note note = (Note)adapterView.getItemAtPosition(i);
-                intent.putExtra("title", note.getTitle());
-                startActivity(intent);
-            }
-        });
+//        list_view.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+//                Intent intent = new Intent(MainActivity.this, EditNoteActivity.class);
+//                Note note = (Note)adapterView.getItemAtPosition(i);
+//                intent.putExtra("note", note);
+//                startActivity(intent);
+//            }
+//        });
     }
   
     protected void onResume() {

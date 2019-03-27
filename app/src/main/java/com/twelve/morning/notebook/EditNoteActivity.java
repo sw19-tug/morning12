@@ -27,12 +27,11 @@ public class EditNoteActivity extends AppCompatActivity {
     private void fillTitleBody()
     {
         Intent intent = getIntent();
-        String title = intent.getStringExtra("title");
-        String body = intent.getStringExtra("title");
+        Note note = (Note)intent.getSerializableExtra("note");
         EditText edit_text_title = this.findViewById(R.id.et_edit_note_title);
         EditText edit_text_body = this.findViewById(R.id.et_edit_note_body);
-        edit_text_title.setText(title);
-        edit_text_body.setText(body);
+        edit_text_title.setText(note.getTitle());
+        edit_text_body.setText(note.getBody());
     }
 
 
