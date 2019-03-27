@@ -37,6 +37,6 @@ public class NoteExportTest {
 
     @Test
     public void checkCopress() {
-
+        onView(withId(R.id.export_button)).check(matches(isDisplayed()));
     }
 }
