@@ -22,6 +22,8 @@ public class NotesListAdapter extends BaseAdapter implements ListAdapter {
         this.context = ctx;
     }
 
+
+
     @Override
     public int getCount() {
         return notes.length;
@@ -48,7 +50,8 @@ public class NotesListAdapter extends BaseAdapter implements ListAdapter {
         title.setText(((Note)notes[position]).getTitle());
 
         TextView content = (TextView)convertView.findViewById(R.id.note_content);
-        content.setText(((Note)notes[position]).getBody().substring(0, 25));
+        String body = ((Note)notes[position]).getBody();
+        content.setText(body.substring(0, Math.min(body.length(), 25)));
 
         /*
         Button deleteBtn = (Button)view.findViewById(R.id.delete_btn);
@@ -72,5 +75,9 @@ public class NotesListAdapter extends BaseAdapter implements ListAdapter {
         */
 
         return convertView;
+    }
+
+    public Note[] getNotes() {
+        return notes;
     }
 }

@@ -12,7 +12,7 @@ import android.widget.ListView;
 public class MainActivity extends AppCompatActivity {
 
     private ListView list_view;
-    private NotesListAdapter adapter = null;
+    public NotesListAdapter adapter = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
