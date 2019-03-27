@@ -13,38 +13,37 @@ import android.widget.ListView;
 public class MainActivity extends AppCompatActivity {
 
     private ListView list_view;
+    private NotesListAdapter adapter = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-      
         switchToCreateNoteActivity();
+        reloadNotes();
       
-        list_view = (ListView) findViewById(R.id.list_notes);
-
-        ArrayAdapter<String> list_adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, new String[] {
-                "Two plus two is four",
-                "Minus one that's three, quick maths",
-                "Everyday man's on the block",
-                "Smoke trees (ah)",
-                "See your girl in the park",
-                "That girl is a uckers",
-                "When the ting went quack-quack-quack",
-                "You man were ducking (you man ducked)"
-        });
-        list_view.setAdapter(list_adapter);
-
         list_view.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent = new Intent(MainActivity.this, EditNoteActivity.class);
-                intent.putExtra("title", (String) adapterView.getItemAtPosition(i));
+                intent.putExtra("title", adapterView.getItemAtPosition(i));
                 startActivity(intent);
             }
         });
     }
+  
+    protected void onResume() {
+        super.onResume();
+        reloadNotes();
 
+    }
+
+    private void reloadNotes() {
+        System.out.println(DatabaseWrapper.getInstance());
+        this.adapter = new NotesListAdapter(DatabaseWrapper.getInstance().getNotes(), this);
+        list_view = (ListView) findViewById(R.id.list_notes);
+        list_view.setAdapter(this.adapter);
+    }
 
     private void switchToCreateNoteActivity(){
         FloatingActionButton create_note_btn = findViewById(R.id.bt_create);
