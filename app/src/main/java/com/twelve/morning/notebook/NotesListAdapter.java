@@ -1,9 +1,11 @@
 package com.twelve.morning.notebook;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ListAdapter;
 import android.widget.TextView;
@@ -40,7 +42,7 @@ public class NotesListAdapter extends BaseAdapter implements ListAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.activity_list_item, null);
@@ -73,6 +75,17 @@ public class NotesListAdapter extends BaseAdapter implements ListAdapter {
             }
         });
         */
+
+        convertView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, EditNoteActivity.class);
+                Note note = notes[position];
+                intent.putExtra("title", note.getTitle());
+                context.startActivity(intent);
+        }
+
+        });
 
         return convertView;
     }
