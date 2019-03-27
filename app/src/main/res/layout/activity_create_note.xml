@@ -26,7 +26,7 @@
         android:layout_below="@+id/TextView1"
         android:layout_marginTop="30dp"
         android:ems="10"
-        android:text="@string/Title"
+        android:text=""
         android:maxLines="1"
         android:maxLength="30"
         android:inputType="text"
