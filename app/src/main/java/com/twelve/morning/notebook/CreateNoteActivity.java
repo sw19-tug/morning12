@@ -31,6 +31,7 @@ public class CreateNoteActivity extends AppCompatActivity {
         if (!(title_text.isEmpty() && body_text.isEmpty())) {
             last_saved_note = new Note(title_text, body_text);
         }
+        DatabaseWrapper.getInstance().addNote(new Note(title_text, body_text));
     }
 
 
