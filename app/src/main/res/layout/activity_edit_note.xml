@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:textSize="25dp"
+        android:textSize="25sp"
         android:textStyle="bold"
         android:textColor="@color/colorPrimaryDark"
         android:text="@string/Edit"
@@ -26,11 +26,11 @@
         android:layout_below="@+id/TextView2"
         android:layout_marginTop="30dp"
         android:ems="10"
-        android:text="@string/Title"
         android:maxLines="1"
         android:maxLength="30"
         android:inputType="text"
         android:focusableInTouchMode="true"
+        android:hint="Title:"
         />
 
     <EditText

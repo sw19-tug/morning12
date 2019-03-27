@@ -39,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent = new Intent(MainActivity.this, EditNoteActivity.class);
+                intent.putExtra("title", (String) adapterView.getItemAtPosition(i));
                 startActivity(intent);
             }
         });

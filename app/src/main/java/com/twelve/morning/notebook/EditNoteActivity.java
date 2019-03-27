@@ -19,8 +19,20 @@ public class EditNoteActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_note);
 
+        fillTitleBody();
         finishEditNoteActivity((Button)findViewById(R.id.bt_edit_note_create_cancel));
         finishEditNoteActivity((Button)findViewById(R.id.bt_edit_note_create_save));
+    }
+
+    private void fillTitleBody()
+    {
+        Intent intent = getIntent();
+        String title = intent.getStringExtra("title");
+        String body = intent.getStringExtra("title");
+        EditText edit_text_title = this.findViewById(R.id.et_edit_note_title);
+        EditText edit_text_body = this.findViewById(R.id.et_edit_note_body);
+        edit_text_title.setText(title);
+        edit_text_body.setText(body);
     }
 
 
