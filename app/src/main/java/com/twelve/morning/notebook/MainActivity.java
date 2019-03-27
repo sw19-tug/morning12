@@ -7,20 +7,22 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 
 
 public class MainActivity extends AppCompatActivity {
 
     private ListView list_view;
-    private NotesListAdapter adapter = null;
+    public NotesListAdapter adapter = null;
+    private Sorting sorting = Sorting.CREATION;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        switchToCreateNoteActivity();
-        reloadNotes();
+        setupButtons();
+        reloadNotes(sorting);
       
         list_view.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -35,18 +37,16 @@ public class MainActivity extends AppCompatActivity {
   
     protected void onResume() {
         super.onResume();
-        reloadNotes();
-
+        reloadNotes(sorting);
     }
 
-    private void reloadNotes() {
-        System.out.println(DatabaseWrapper.getInstance());
-        this.adapter = new NotesListAdapter(DatabaseWrapper.getInstance().getNotes(), this);
-        list_view = (ListView) findViewById(R.id.list_notes);
+    private void reloadNotes(Sorting sorting) {
+        this.adapter = new NotesListAdapter(DatabaseWrapper.getInstance().getNotes(sorting), this);
+        list_view = findViewById(R.id.list_notes);
         list_view.setAdapter(this.adapter);
     }
 
-    private void switchToCreateNoteActivity(){
+    private void setupButtons(){
         FloatingActionButton create_note_btn = findViewById(R.id.bt_create);
         create_note_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,6 +54,26 @@ public class MainActivity extends AppCompatActivity {
                 Intent switch_to_create_note = new Intent(MainActivity.this,
                         CreateNoteActivity.class);
                 startActivity(switch_to_create_note);
+            }
+        });
+
+        Button sort_date_button = findViewById(R.id.bt_sort_by_creation);
+
+        sort_date_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                sorting = Sorting.CREATION;
+                reloadNotes(sorting);
+            }
+        });
+
+        Button sort_title_button = findViewById(R.id.bt_sort_by_title);
+
+        sort_title_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                sorting = Sorting.TITLE;
+                reloadNotes(sorting);
             }
         });
     }
