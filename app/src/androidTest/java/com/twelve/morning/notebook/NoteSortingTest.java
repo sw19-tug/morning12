@@ -30,11 +30,11 @@ public class NoteSortingTest {
     public void testSorting() {
 
         onView(withId(R.id.bt_create)).perform(click());
-        onView(withId(R.id.et_note_title)).perform(typeText("B"), closeSoftKeyboard());
+        onView(withId(R.id.et_note_title)).perform(typeText("A"), closeSoftKeyboard());
         onView(withId(R.id.bt_note_create_save)).perform(click());
 
         onView(withId(R.id.bt_create)).perform(click());
-        onView(withId(R.id.et_note_title)).perform(typeText("A"), closeSoftKeyboard());
+        onView(withId(R.id.et_note_title)).perform(typeText("B"), closeSoftKeyboard());
         onView(withId(R.id.bt_note_create_save)).perform(click());
 
         Note[] notes = activityTestRule.getActivity().adapter.getNotes();

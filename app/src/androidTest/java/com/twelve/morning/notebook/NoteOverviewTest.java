@@ -29,12 +29,6 @@ public class NoteOverviewTest {
         onView(withId(R.id.list_notes)).check(matches(isDisplayed()));
     }
 
-    /*
-    @Test
-    public void testNotesListViewContainsElement() {
-        onView(withText("Minus one that's three, quick maths")).check(matches(isDisplayed()));
-    }*/
-
     @Test
     public void testNotesListAddNote() {
         onView(withId(R.id.bt_create)).perform(click());
