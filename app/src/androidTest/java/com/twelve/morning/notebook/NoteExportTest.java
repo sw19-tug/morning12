@@ -16,27 +16,21 @@ import static android.support.test.espresso.matcher.ViewMatchers.withId;
 @RunWith(AndroidJUnit4.class)
 public class NoteExportTest {
 
-
     @Rule
-    public ActivityTestRule<CreateNoteActivity> activityCreateNoteTestRule =
-            new ActivityTestRule<>(CreateNoteActivity.class);
-
+    public ActivityTestRule<MainActivity> activityTestRule = new ActivityTestRule<>(MainActivity.class);
 
     @Test
-    public void checkVisibleButton() {
-        onView(withId(R.id.export_button)).check(matches(isDisplayed()));
-
+    public void checkVisibleButton () {
+        onView(withId(R.id.bt_export)).check(matches(isDisplayed()));
     }
 
     @Test
-    public void checkCklickableButton() {
-        onView(withId(R.id.export_button)).perform(click());
-
-
+    public void checkCklickableButton () {
+        onView(withId(R.id.bt_export)).perform(click());
     }
 
     @Test
-    public void checkCopress() {
+    public void checkCompress() {
 
     }
 }
