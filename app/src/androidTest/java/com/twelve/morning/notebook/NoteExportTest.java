@@ -30,12 +30,7 @@ public class NoteExportTest {
     }
 
     @Test
-<<<<<<< HEAD
-    public void checkCopress() {
-        onView(withId(R.id.export_button)).check(matches(isDisplayed()));
-=======
     public void checkCompress() {
-
->>>>>>> 7b9ff6636f45b09f9f9967dfda175e6231b0dcbf
+        onView(withId(R.id.bt_export)).check(matches(isDisplayed()));
     }
 }
