@@ -82,7 +82,6 @@ public class MainActivity extends AppCompatActivity {
 
     private void zip(String[] _notes, String zipFileName) {
         int BUFFER = 1000;
-        Log.v("DO","hello");
         try {
             getStoragePermission();
             BufferedInputStream noteBuffered = null;
@@ -91,7 +90,6 @@ public class MainActivity extends AppCompatActivity {
             byte data[] = new byte[BUFFER];
 
             for (int i = 0; i < _notes.length; i++) {
-                Log.v("Compress", "Adding: " + _notes[i]);
                 //FileInputStream fi = new FileInputStream(_files[i]);
                 InputStream inputStream = new ByteArrayInputStream(_notes[i].getBytes(StandardCharsets.UTF_8));
                 noteBuffered = new BufferedInputStream(inputStream, BUFFER);

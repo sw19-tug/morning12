@@ -25,7 +25,7 @@ public class NoteExportTest {
     }
 
     @Test
-    public void checkCklickableButton () {
+    public void checkClickableButton () {
         onView(withId(R.id.bt_export)).perform(click());
     }
 
