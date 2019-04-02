@@ -33,4 +33,8 @@ public class NoteExportTest {
     public void checkCompress() {
         onView(withId(R.id.bt_export)).check(matches(isDisplayed()));
     }
+
+    @Test
+    public void testCase() {
+        onView(withId(R.id.bt_export)).check(matches(isDisplayed()));    }
 }
