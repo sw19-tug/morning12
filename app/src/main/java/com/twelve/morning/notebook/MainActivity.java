@@ -103,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 String zipFileName = "exported_notes.zip";
-                zip(notes, zipFileName);
+                //zip(notes, zipFileName);
                 shareZipFile(zipFileName);
             }
         });
