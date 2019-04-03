@@ -28,7 +28,6 @@ import static org.junit.Assert.assertNull;
 @RunWith(AndroidJUnit4.class)
 public class EditNoteTest {
 
-
     @Rule
     public ActivityTestRule<MainActivity> activityMainTestRule =
             new ActivityTestRule<>(MainActivity.class);
@@ -48,7 +47,6 @@ public class EditNoteTest {
         onView(withId(R.id.bt_create)).check(matches(isDisplayed()));
     }
 
-
     @Test
     public void popUpContainsFieldsAndButtons(){
         onView(withText(title_input)).perform(click());
@@ -58,7 +56,6 @@ public class EditNoteTest {
         onView(withId(R.id.bt_edit_note_create_save)).check(matches(isDisplayed()));
         onView(withId(R.id.bt_edit_note_create_cancel)).check(matches(isDisplayed()));
     }
-
 
     @Test
     public void returnToMainActivityByAbort(){
