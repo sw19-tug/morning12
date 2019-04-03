@@ -36,7 +36,7 @@ public class EditNoteTest {
     private String title_input = "testTitletestTitle";
     private String body_input = "testBodytestBodytestBodytestBodytestBodytestBodytestBodytestBody";
 
-
+    @Test
     public void setupNoteInOverView(){
         onView(withId(R.id.bt_create)).perform(click());
         onView(withId(R.id.rl_create_note)).check(matches(isDisplayed()));
@@ -68,13 +68,13 @@ public class EditNoteTest {
         onView(withId(R.id.bt_create)).check(matches(isDisplayed()));
     }
 
-    @Test
-    public void returnToMainActivityBySave(){
-        onView(withText(title_input)).perform(click());
-        onView(withId(R.id.rl_edit_note)).check(matches(isDisplayed()));
-        onView(withId(R.id.bt_edit_note_create_save)).perform(click());
-        onView(withId(R.id.bt_create)).check(matches(isDisplayed()));
-    }
+//    @Test
+//    public void returnToMainActivityBySave(){
+//        onView(withText(title_input)).perform(click());
+//        onView(withId(R.id.rl_edit_note)).check(matches(isDisplayed()));
+//        onView(withId(R.id.bt_edit_note_create_save)).perform(click());
+//        onView(withId(R.id.bt_create)).check(matches(isDisplayed()));
+//    }
 
     @Test
     public void listItemTextIsPassedToEditNote(){
