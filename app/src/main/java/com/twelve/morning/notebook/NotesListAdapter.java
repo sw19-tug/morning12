@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.TextView;
 
@@ -75,6 +76,17 @@ public class NotesListAdapter extends BaseAdapter implements ListAdapter {
             }
         });
         */
+        Button pinBtn = convertView.findViewById(R.id.btn_pin);
+
+        pinBtn.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Note note = notes[position];
+                note.setPinned(true);
+                note.save();
+
+            }
+        });
 
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
