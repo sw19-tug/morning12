@@ -71,7 +71,7 @@ public class NotePinTest {
         // -----------------------actual pin test --------------------------------
 
         Note[] notes = activityTestRule.getActivity().adapter.getNotes();
-        Assert.assertTrue(notes[0].getPinned() == false);
+        Assert.assertFalse(notes[0].getPinned());
         onView(withId(R.id.cb_pinned)).check(matches(isNotChecked()));
 
         onView(withId(R.id.cb_pinned)).perform(click());
