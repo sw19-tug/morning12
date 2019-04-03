@@ -32,7 +32,7 @@ public class NoteDeleteTest {
         onView(withText("ZZZZ")).perform(click());
 
         // delete note
-        onView(withText(R.id.bt_edit_delete_note)).perform(click());
+        onView(withId(R.id.bt_edit_delete_note)).perform(click());
 
         // check if deleted
         onView(withText("ZZZZ")).check(doesNotExist());

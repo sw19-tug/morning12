@@ -58,6 +58,16 @@
         />
 
     <Button
+        android:id="@+id/bt_edit_delete_note"
+        android:layout_width="70pt"
+        android:layout_height="20pt"
+        android:layout_alignParentTop = "true"
+        android:layout_alignParentRight = "true"
+        android:text="@string/delete_note"
+        android:background="@color/DeleteRed"
+        />
+
+    <Button
         android:id="@+id/bt_edit_note_create_cancel"
         android:layout_width="70pt"
         android:layout_height="20pt"

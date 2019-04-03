@@ -22,6 +22,8 @@ public class EditNoteActivity extends AppCompatActivity {
         fillTitleBody();
         finishEditNoteActivity((Button)findViewById(R.id.bt_edit_note_create_cancel));
         finishEditNoteActivity((Button)findViewById(R.id.bt_edit_note_create_save));
+        finishEditNoteActivity((Button)findViewById(R.id.bt_edit_delete_note));
+
     }
 
     private void fillTitleBody()
@@ -41,6 +43,20 @@ public class EditNoteActivity extends AppCompatActivity {
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    Intent switch_back_to_main = new Intent(EditNoteActivity.this,
+                            MainActivity.class);
+                    startActivity(switch_back_to_main);
+                }
+            });
+        }
+        else if(button.getId() == R.id.bt_edit_delete_note)
+        {
+            button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = getIntent();
+                    Note note = (Note)intent.getSerializableExtra("note");
+                    note.delete();
                     Intent switch_back_to_main = new Intent(EditNoteActivity.this,
                             MainActivity.class);
                     startActivity(switch_back_to_main);
