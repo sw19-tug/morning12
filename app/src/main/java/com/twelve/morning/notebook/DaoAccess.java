@@ -1,7 +1,4 @@
 package com.twelve.morning.notebook;
-
-
-
 import java.util.List;
 
 import androidx.room.Dao;
@@ -30,5 +27,5 @@ public interface DaoAccess {
     void deleteNote(Note note);
 
     @Query("DELETE FROM noteTable")
-    void nukeTable();
+    void deleteTable();
 }
