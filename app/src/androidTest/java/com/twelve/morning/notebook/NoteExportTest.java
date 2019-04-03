@@ -35,10 +35,5 @@ public class NoteExportTest {
     }
 
     @Test
-<<<<<<< .merge_file_PsOvmt
-    public void testCase() {
-        onView(withId(R.id.bt_export)).check(matches(isDisplayed()));    }
-=======
     public void testCase() { onView(withId(R.id.bt_export)).check(matches(isDisplayed())); }
->>>>>>> .merge_file_T4d9mQ
 }
