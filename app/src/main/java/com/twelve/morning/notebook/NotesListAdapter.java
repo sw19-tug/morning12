@@ -76,13 +76,13 @@ public class NotesListAdapter extends BaseAdapter implements ListAdapter {
             }
         });
         */
-        Button pinBtn = convertView.findViewById(R.id.btn_pin);
+        Button pinBtn = convertView.findViewById(R.id.cb_pinned);
 
         pinBtn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
                 Note note = notes[position];
-                note.setPinned(true);
+                note.setPinned(!note.getPinned());
                 note.save();
 
             }

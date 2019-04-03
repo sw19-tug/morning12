@@ -31,7 +31,7 @@ public class NotePinTest {
         Note[] notes = activityTestRule.getActivity().adapter.getNotes();
         Assert.assertTrue(notes[0].getPinned() == false);
 
-        onView(withId(R.id.btn_pin)).perform(click());
+        onView(withId(R.id.cb_pinned)).perform(click());
 
         notes = activityTestRule.getActivity().adapter.getNotes();
         Assert.assertTrue(notes[0].getPinned() == true);
