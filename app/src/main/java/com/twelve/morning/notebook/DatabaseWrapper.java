@@ -29,6 +29,12 @@ public class DatabaseWrapper {
             Arrays.sort(tmp, new Comparator<Note>() {
                 @Override
                 public int compare(Note o1, Note o2) {
+                    if (o1.getPinned() && !o2.getPinned()){
+                        return -1;
+                    }
+                    if (!o1.getPinned() && o2.getPinned()){
+                        return 1;
+                    }
                     return o2.getCreationDate().compareTo(o1.getCreationDate());
                 }
             });
@@ -38,6 +44,12 @@ public class DatabaseWrapper {
             Arrays.sort(tmp, new Comparator<Note>() {
                 @Override
                 public int compare(Note o1, Note o2) {
+                    if (o1.getPinned() && !o2.getPinned()){
+                        return -1;
+                    }
+                    if (!o1.getPinned() && o2.getPinned()){
+                        return 1;
+                    }
                     return o1.getTitle().compareTo(o2.getTitle());
                 }
             });

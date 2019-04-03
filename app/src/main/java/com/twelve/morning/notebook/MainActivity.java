@@ -40,8 +40,11 @@ public class MainActivity extends AppCompatActivity {
         reloadNotes(sorting);
     }
 
-    private void reloadNotes(Sorting sorting) {
-        this.adapter = new NotesListAdapter(DatabaseWrapper.getInstance().getNotes(sorting), this);
+    public void reloadNotes(Sorting sorting) {
+        if (sorting != null){
+            this.sorting = sorting;
+        }
+        this.adapter = new NotesListAdapter(DatabaseWrapper.getInstance().getNotes(this.sorting), this);
         list_view = findViewById(R.id.list_notes);
         list_view.setAdapter(this.adapter);
     }

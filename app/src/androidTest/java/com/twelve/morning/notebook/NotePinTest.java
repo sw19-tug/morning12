@@ -121,9 +121,6 @@ public class NotePinTest {
                 .atPosition(1).onChildView(withId(R.id.cb_pinned)).perform(click());
 
         onData(anything()).inAdapterView(withId(R.id.list_notes))
-                .atPosition(1).onChildView(withId(R.id.cb_pinned)).check(matches(isChecked()));
-
-        onData(anything()).inAdapterView(withId(R.id.list_notes))
                 .atPosition(0).onChildView(withId(R.id.cb_pinned)).check(matches(isChecked()));
 
     }
