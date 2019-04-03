@@ -22,17 +22,17 @@ public class EditNoteActivity extends AppCompatActivity {
         fillTitleBody();
         finishEditNoteActivity((Button)findViewById(R.id.bt_edit_note_create_cancel));
         finishEditNoteActivity((Button)findViewById(R.id.bt_edit_note_create_save));
+        finishEditNoteActivity((Button)findViewById(R.id.bt_edit_delete_note));
     }
 
     private void fillTitleBody()
     {
         Intent intent = getIntent();
-        String title = intent.getStringExtra("title");
-        String body = intent.getStringExtra("title");
+        Note note = (Note)intent.getSerializableExtra("note");
         EditText edit_text_title = this.findViewById(R.id.et_edit_note_title);
         EditText edit_text_body = this.findViewById(R.id.et_edit_note_body);
-        edit_text_title.setText(title);
-        edit_text_body.setText(body);
+        edit_text_title.setText(note.getTitle());
+        edit_text_body.setText(note.getBody());
     }
 
 
@@ -42,6 +42,20 @@ public class EditNoteActivity extends AppCompatActivity {
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    Intent switch_back_to_main = new Intent(EditNoteActivity.this,
+                            MainActivity.class);
+                    startActivity(switch_back_to_main);
+                }
+            });
+        }
+        else if(button.getId() == R.id.bt_edit_delete_note)
+        {
+            button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = getIntent();
+                    Note note = (Note)intent.getSerializableExtra("note");
+                    note.delete();
                     Intent switch_back_to_main = new Intent(EditNoteActivity.this,
                             MainActivity.class);
                     startActivity(switch_back_to_main);

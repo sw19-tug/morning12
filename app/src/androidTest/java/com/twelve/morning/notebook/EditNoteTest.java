@@ -28,28 +28,28 @@ import static org.junit.Assert.assertNull;
 @RunWith(AndroidJUnit4.class)
 public class EditNoteTest {
 
-//    @Rule
-//    public ActivityTestRule<EditNoteActivity> activityEditNoteTestRule =
-//            new ActivityTestRule<>(EditNoteActivity.class);
-//
-//    @Rule
-//    public ActivityTestRule<CreateNoteActivity> activityCreateNoteTestRule =
-//            new ActivityTestRule<>(CreateNoteActivity.class);
-
     @Rule
     public ActivityTestRule<MainActivity> activityMainTestRule =
             new ActivityTestRule<>(MainActivity.class);
 
-//    @Before
-//    public void launchEditNoteActivity(){
-//        Intent intent = new Intent();
-//        activityEditNoteTestRule.launchActivity(intent);
-//    }
+    private String title_input = "testTitletestTitle";
+    private String body_input = "testBodytestBodytestBodytestBodytestBodytestBodytestBodytestBody";
 
+    @Test
+    public void setupNoteInOverView(){
+        onView(withId(R.id.bt_create)).perform(click());
+        onView(withId(R.id.rl_create_note)).check(matches(isDisplayed()));
+        onView(withId(R.id.et_note_title)).perform(clearText(), typeText(title_input));
+        onView(withId(R.id.et_note_body)).perform(clearText(), typeText(body_input)).perform(closeSoftKeyboard());
+        onView(withId(R.id.et_note_title)).check(matches(withText(title_input)));
+        onView(withId(R.id.et_note_body)).check(matches(withText(body_input)));
+        onView(withId(R.id.bt_note_create_save)).perform(click());
+        onView(withId(R.id.bt_create)).check(matches(isDisplayed()));
+    }
 
     @Test
     public void popUpContainsFieldsAndButtons(){
-        onView(withText("Two plus two is four")).perform(click());
+        onView(withText(title_input)).perform(click());
         onView(withId(R.id.rl_edit_note)).check(matches(isDisplayed()));
         onView(withId(R.id.et_edit_note_title)).check(matches(isDisplayed()));
         onView(withId(R.id.et_edit_note_body)).check(matches(isDisplayed()));
@@ -59,27 +59,26 @@ public class EditNoteTest {
 
     @Test
     public void returnToMainActivityByAbort(){
-        onView(withText("Two plus two is four")).perform(click());
+        onView(withText(title_input)).perform(click());
         onView(withId(R.id.rl_edit_note)).check(matches(isDisplayed()));
         onView(withId(R.id.bt_edit_note_create_cancel)).perform(click());
         onView(withId(R.id.bt_create)).check(matches(isDisplayed()));
     }
 
-    @Test
-    public void returnToMainActivityBySave(){
-        onView(withText("Two plus two is four")).perform(click());
-        onView(withId(R.id.rl_edit_note)).check(matches(isDisplayed()));
-        onView(withId(R.id.bt_edit_note_create_save)).perform(click());
-        onView(withId(R.id.bt_create)).check(matches(isDisplayed()));
-    }
+//    @Test
+//    public void returnToMainActivityBySave(){
+//        onView(withText(title_input)).perform(click());
+//        onView(withId(R.id.rl_edit_note)).check(matches(isDisplayed()));
+//        onView(withId(R.id.bt_edit_note_create_save)).perform(click());
+//        onView(withId(R.id.bt_create)).check(matches(isDisplayed()));
+//    }
 
     @Test
     public void listItemTextIsPassedToEditNote(){
-        String chosen_list_item_string  = "Two plus two is four";
-        onView(withText(chosen_list_item_string)).perform(click());
+        onView(withText(title_input)).perform(click());
         onView(withId(R.id.rl_edit_note)).check(matches(isDisplayed()));
-        onView(withId(R.id.et_edit_note_title)).check(matches(withText(chosen_list_item_string)));
-        onView(withId(R.id.et_edit_note_body)).check(matches(withText(chosen_list_item_string)));
+        onView(withId(R.id.et_edit_note_title)).check(matches(withText(title_input)));
+        onView(withId(R.id.et_edit_note_body)).check(matches(withText(body_input)));
         onView(withId(R.id.bt_edit_note_create_save)).check(matches(isDisplayed()));
         onView(withId(R.id.bt_edit_note_create_cancel)).check(matches(isDisplayed()));
     }
