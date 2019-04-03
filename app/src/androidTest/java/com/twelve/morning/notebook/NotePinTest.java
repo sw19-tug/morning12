@@ -38,7 +38,7 @@ public class NotePinTest {
     }
 
     @Test
-    public void testpinCheckbox(){
+    public void testPinCheckbox(){
         String title_input = "dummyTitle";
         String body_input = "dummyBody";
         onView(withId(R.id.bt_create)).perform(click());
