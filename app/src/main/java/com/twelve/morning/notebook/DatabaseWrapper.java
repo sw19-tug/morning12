@@ -44,6 +44,17 @@ public class DatabaseWrapper {
         }
         return tmp;
     }
+
+    public void saveNote(Note note) {
+        for (Note n :
+                notes) {
+            if (note.id == n.id){
+                n.setTitle(note.getTitle());
+                n.setPinned(note.getPinned());
+                n.setBody(note.getBody());
+            }
+        }
+    }
 }
 
 enum Sorting {
