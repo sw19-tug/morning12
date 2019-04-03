@@ -23,7 +23,6 @@ public class EditNoteActivity extends AppCompatActivity {
         finishEditNoteActivity((Button)findViewById(R.id.bt_edit_note_create_cancel));
         finishEditNoteActivity((Button)findViewById(R.id.bt_edit_note_create_save));
         finishEditNoteActivity((Button)findViewById(R.id.bt_edit_delete_note));
-
     }
 
     private void fillTitleBody()

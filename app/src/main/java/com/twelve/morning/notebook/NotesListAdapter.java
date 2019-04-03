@@ -95,7 +95,6 @@ public class NotesListAdapter extends BaseAdapter implements ListAdapter {
                 Note note = notes[position];
                 intent.putExtra("note", note);
                 context.startActivity(intent);
-
         }
 
         });
