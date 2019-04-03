@@ -93,8 +93,9 @@ public class NotesListAdapter extends BaseAdapter implements ListAdapter {
             public void onClick(View v) {
                 Intent intent = new Intent(context, EditNoteActivity.class);
                 Note note = notes[position];
-                intent.putExtra("title", note.getTitle());
+                intent.putExtra("note", note);
                 context.startActivity(intent);
+
         }
 
         });

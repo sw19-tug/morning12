@@ -1,9 +1,11 @@
 package com.twelve.morning.notebook;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.Random;
 
-public class Note {
+public class Note implements Serializable {
+  
     private static Random rand = new Random();
 
     private String title;
