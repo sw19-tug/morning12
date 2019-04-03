@@ -55,6 +55,9 @@ public class DatabaseWrapper {
             }
         }
     }
+    public void reset(){
+        this.notes.clear();
+    }
 }
 
 enum Sorting {
