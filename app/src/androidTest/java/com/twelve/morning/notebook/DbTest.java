@@ -1,5 +1,7 @@
 package com.twelve.morning.notebook;
 
+import android.app.Application;
+import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.test.runner.AndroidJUnit4;
 import android.support.test.runner.lifecycle.ApplicationLifecycleCallback;
@@ -9,8 +11,17 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import androidx.room.Room;
+import androidx.test.core.app.ApplicationProvider;
+
+import java.io.IOError;
+import java.io.IOException;
+import java.lang.Object;
 import java.util.Date;
 import java.util.List;
+import android.app.Application;
+import android.content.Context;
+import androidx.lifecycle.Lifecycle;
 
 import static org.junit.Assert.*;
 
@@ -20,18 +31,21 @@ import static org.junit.Assert.*;
 @RunWith(AndroidJUnit4.class)
 public class DbTest {
     //lateinit var testdb: DbHelper //class des DbHelpers
-    NoteRepository testdb;
+    private NoteDatabase testdb;
+    private DaoAccess noteDao;
 
     @Before
     void setup() {
         //DatabaseHelper testdb = new DatabaseHelper(ApplicationProvider.getApplicationContext());
-        testdb = new NoteRepository(getApplicationContext());
+        Context context = ApplicationProvider.getApplicationContext();
+        testdb = Room.inMemoryDatabaseBuilder(context, NoteDatabase.class).build();
+        noteDao = testdb.daoAccess();
         //testdb.
     }
 
     @After
-    void cleaningDB() {
-        testdb.Cleanup();
+    public void closeDB() throws IOException {
+        testdb.close();
     }
 
     @Test
@@ -41,9 +55,8 @@ public class DbTest {
         String text = "This is an example text.";
         String tags = "Surfing, Testing";
         //DatabaseHelper testdb = new DatabaseHelper(something);
-        NoteRepository testdb = new NoteRepository(something);
         //SETUP FOR THE TABLE
-        List<Note> notes = testdb.GetAllNotes();
+        List<Note> notes = noteDao.loadAllNotes();
         if(notes.size() != 0)
             Note.SetUp(notes.get(notes.size()-1).getId());
         else
