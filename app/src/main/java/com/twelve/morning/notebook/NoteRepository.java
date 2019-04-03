@@ -19,16 +19,6 @@ public class NoteRepository {
         noteDatabase = null;
     }
 
-    public void InsertNote(String title, String textBody, String tags)
-    {
-        Note note = new Note();
-        note.setTags(tags);
-        note.setTextBody(textBody);
-        note.setTitle(title);
-
-        InsertNote(note);
-    }
-
     public boolean InsertNote(final Note note)
     {
         noteDatabase.daoAccess().InsertNote(note);
@@ -59,9 +49,9 @@ public class NoteRepository {
         return notes;
     }
 
-    public void NukeTable()
+    public void DeleteTable()
     {
-        noteDatabase.daoAccess().nukeTable();
+        noteDatabase.daoAccess().deleteTable();
     }
 }
 

@@ -45,13 +45,13 @@ public class DbTest {
         //SETUP FOR THE TABLE
         List<Note> notes = testdb.GetAllNotes();
         if(notes.size() != 0)
-            Note.SetUp(notes.get(notes.size()-1).getId());
+            Note.ResetStaticID(notes.get(notes.size()-1).getId());
         else
-            Note.SetUp(-1);
-        testdb.NukeTable();
+            Note.ResetStaticID(-1);
+        testdb.DeleteTable();
 
         Note test_note = new Note(title, text, tags);
-        test_note.setToNoteId();//Needed to set the id correctly because it might not match the one set in the database
+        test_note.setId();//Needed to set the id correctly because it might not match the one set in the database
 
         assertEquals(true, testdb.InsertNote(test_note));
         assertEquals(test_note, testdb.GetNote(test_note.getId()));
