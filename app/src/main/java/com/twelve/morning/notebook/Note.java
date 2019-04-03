@@ -69,4 +69,9 @@ public class Note implements Serializable {
         DatabaseWrapper.getInstance().saveNote(this);
     }
 
+    public void delete(){
+        DatabaseWrapper.getInstance().deleteNote(this);
+    }
+
+
 }

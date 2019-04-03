@@ -55,6 +55,18 @@ public class DatabaseWrapper {
             }
         }
     }
+    public void deleteNote(Note note) {
+        int index = 0;
+        for(int i = 0; i < notes.size(); i++)
+        {
+            if(notes.get(i).id == note.id)
+            {
+                index = i;
+                break;
+            }
+        }
+        notes.remove(index);
+    }
 }
 
 enum Sorting {
