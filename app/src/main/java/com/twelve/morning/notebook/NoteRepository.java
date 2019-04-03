@@ -1,9 +1,8 @@
 package com.twelve.morning.notebook;
 
-import android.arch.persistence.room.Room;
 import android.content.Context;
-
 import java.util.List;
+import androidx.room.Room;
 
 public class NoteRepository {
 
