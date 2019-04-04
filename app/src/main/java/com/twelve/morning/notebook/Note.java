@@ -1,8 +1,10 @@
 package com.twelve.morning.notebook;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
@@ -15,22 +17,22 @@ public class Note implements Serializable {
     private Date creation_date;
     private Boolean pinned = false;
     public int id = rand.nextInt();
-    private Set<String> tags;
+    private List<String> tags;
 
     public Note(String title){
         this.title = title;
         this.body = "";
         this.creation_date = new Date();
-        this.tags = new HashSet<>();
-        this.tags.add("#testTag");
+        this.tags = new ArrayList<>();
+        //this.tags.add("#testTag");
     }
 
     public Note(String title, String body){
         this.title = title;
         this.body = body;
         this.creation_date = new Date();
-        this.tags = new HashSet<>();
-        this.tags.add("#testTag");
+        this.tags = new ArrayList<>();
+        //this.tags.add("#testTag");
     }
 
     public void setBody(String body) {
