@@ -39,6 +39,7 @@ public class EditNoteTest {
     public void setupNoteInOverView(){
         onView(withId(R.id.bt_create)).perform(click());
         onView(withId(R.id.rl_create_note)).check(matches(isDisplayed()));
+        onView(withId(R.id.bt_edit_delete_note)).check(matches(isDisplayed()));
         onView(withId(R.id.et_note_title)).perform(clearText(), typeText(title_input));
         onView(withId(R.id.et_note_body)).perform(clearText(), typeText(body_input)).perform(closeSoftKeyboard());
         onView(withId(R.id.et_note_title)).check(matches(withText(title_input)));
@@ -82,8 +83,23 @@ public class EditNoteTest {
         onView(withId(R.id.bt_edit_note_create_save)).check(matches(isDisplayed()));
         onView(withId(R.id.bt_edit_note_create_cancel)).check(matches(isDisplayed()));
     }
-
-
+/*
+    @Test
+    public void testIfNoteIsActuallyEdited() {
+        String title_input = "dummyTitle";
+        String body_input = "dummyBodydummyBodydummyBodydummyBodydummyBodydummyBody";
+        onView(withId(R.id.bt_create)).perform(click());
+        onView(withId(R.id.et_note_title)).perform(clearText(), typeText(title_input));
+        onView(withId(R.id.et_note_body)).perform(clearText(), typeText(body_input))
+                .perform(closeSoftKeyboard());
+        onView(withText(title_input)).perform(click());
+        String new_title = "newTitle";
+        String new_body = "newBody";
+        onView(withId(R.id.et_note_title)).perform(clearText(), typeText(new_title));
+        onView(withId(R.id.et_note_body)).perform(clearText(), typeText(new_body)).perform(closeSoftKeyboard());
+        onView(withId(R.id.bt_edit_note_create_save)).perform(click());
+        onView(withText(new_title)).check(matches(isDisplayed()));
+    }*/
 
 
 

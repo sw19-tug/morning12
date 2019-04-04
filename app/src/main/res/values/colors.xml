@@ -6,7 +6,6 @@
     <color name="textPrimary">#323232</color>
     <color name="lightBackgroundGrey">#DDDCDC</color>
     <color name="BackgroundGrey">#929292</color>
-    <color name="DeleteRed">#E53935</color>
-
+    <color name="DeleteRed">#f44336</color>
 
 </resources>
