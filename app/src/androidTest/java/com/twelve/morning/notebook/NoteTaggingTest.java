@@ -1,0 +1,28 @@
+package com.twelve.morning.notebook;
+
+import android.support.test.rule.ActivityTestRule;
+
+import org.junit.Assert;
+import org.junit.Rule;
+import org.junit.Test;
+
+import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.action.ViewActions.click;
+import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard;
+import static android.support.test.espresso.action.ViewActions.typeText;
+import static android.support.test.espresso.assertion.ViewAssertions.matches;
+import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static android.support.test.espresso.matcher.ViewMatchers.withId;
+
+public class NoteTaggingTest {
+
+    @Rule
+    public ActivityTestRule<MainActivity> activityTestRule = new ActivityTestRule<>(MainActivity.class);
+
+    @Test
+    public void testPinning() {
+        String[] notes = TagManager.parse("#tag1 #tag2");
+        Assert.assertTrue(notes[0].equals("tag1") && notes[1].equals("tag2"));
+
+    }
+}
