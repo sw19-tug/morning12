@@ -16,4 +16,5 @@
     <string name="Title">Title:</string>
     <string name="Body_hint">Enter Text here:</string>
     <string name="export_bt">Export notes</string>
+
 </resources>
