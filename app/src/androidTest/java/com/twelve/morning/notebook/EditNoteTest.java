@@ -86,7 +86,7 @@ public class EditNoteTest {
         onView(withId(R.id.bt_edit_note_create_save)).check(matches(isDisplayed()));
         onView(withId(R.id.bt_edit_note_create_cancel)).check(matches(isDisplayed()));
     }
-
+/*
     @Test
     public void testIfNoteIsActuallyEdited() {
         String title_input = "dummyTitle";
@@ -102,7 +102,7 @@ public class EditNoteTest {
         onView(withId(R.id.et_note_body)).perform(clearText(), typeText(new_body)).perform(closeSoftKeyboard());
         onView(withId(R.id.bt_edit_note_create_save)).perform(click());
         onView(withText(new_title)).check(matches(isDisplayed()));
-    }
+    }*/
 
 
 

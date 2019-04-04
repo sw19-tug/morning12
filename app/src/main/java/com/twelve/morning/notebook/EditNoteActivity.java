@@ -41,6 +41,15 @@ public class EditNoteActivity extends AppCompatActivity {
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    Intent intent = getIntent();
+                    Note note = (Note)intent.getSerializableExtra("note");
+                    EditText edit_text_title = findViewById(R.id.et_edit_note_title);
+                    EditText edit_text_body = findViewById(R.id.et_edit_note_body);
+                    note.setTitle(edit_text_title.getText().toString());
+                    note.setBody(edit_text_body.getText().toString());
+
+
+
                     Intent switch_back_to_main = new Intent(EditNoteActivity.this,
                             MainActivity.class);
                     startActivity(switch_back_to_main);
