@@ -7,6 +7,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class CreateNoteActivity extends AppCompatActivity {
 
     private Note last_saved_note = null;
@@ -31,6 +34,16 @@ public class CreateNoteActivity extends AppCompatActivity {
         if (!(title_text.isEmpty() && body_text.isEmpty())) {
             last_saved_note = new Note(title_text, body_text);
         }
+
+        String[] tags = TagManager.parse(body_text);
+        List<Tag> Tags = new ArrayList<>();
+        for (String tag1 : tags) {
+            Tag tag = new Tag(tag1);
+            Tags.add(tag);
+        }
+        last_saved_note.setTags(Tags);
+        System.out.println(Tags);
+
         DatabaseWrapper.getInstance().addNote(new Note(title_text, body_text));
     }
 
@@ -41,7 +54,10 @@ public class CreateNoteActivity extends AppCompatActivity {
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if(view.getId() == R.id.bt_note_create_save) storeNote();
+                    if(view.getId() == R.id.bt_note_create_save)
+                    {
+                        storeNote();
+                    }
                     Intent switch_back_to_main = new Intent(CreateNoteActivity.this,
                             MainActivity.class);
                     startActivity(switch_back_to_main);
