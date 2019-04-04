@@ -7,6 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ListAdapter;
 import android.widget.TextView;
 
@@ -55,6 +57,19 @@ public class NotesListAdapter extends BaseAdapter implements ListAdapter {
         String body = ((Note)notes[position]).getBody();
         content.setText(body.substring(0, Math.min(body.length(), 25)));
 
+        CheckBox pinned_box = (CheckBox)convertView.findViewById(R.id.cb_pinned);
+        pinned_box.setChecked(((Note)notes[position]).getPinned());
+
+        pinned_box.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Note note = notes[position];
+                note.setPinned(!note.getPinned());
+                note.save();
+                ((MainActivity)context).reloadNotes(null);
+            }
+        });
+
         /*
         Button deleteBtn = (Button)view.findViewById(R.id.delete_btn);
         Button addBtn = (Button)view.findViewById(R.id.add_btn);
@@ -83,7 +98,6 @@ public class NotesListAdapter extends BaseAdapter implements ListAdapter {
                 Note note = notes[position];
                 intent.putExtra("note", note);
                 context.startActivity(intent);
-
         }
 
         });
