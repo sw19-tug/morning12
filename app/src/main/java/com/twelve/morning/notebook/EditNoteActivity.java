@@ -37,8 +37,17 @@ public class EditNoteActivity extends AppCompatActivity {
 
 
     private void finishEditNoteActivity(final Button button){
-        if(button.getId() == R.id.bt_edit_note_create_cancel ||
-                button.getId() == R.id.bt_edit_note_create_save){
+        if(button.getId() == R.id.bt_edit_note_create_cancel){
+            button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent switch_back_to_main = new Intent(EditNoteActivity.this,
+                            MainActivity.class);
+                    startActivity(switch_back_to_main);
+                }
+            });
+        }
+        else if(button.getId() == R.id.bt_edit_note_create_save){
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -48,7 +57,7 @@ public class EditNoteActivity extends AppCompatActivity {
                     EditText edit_text_body = findViewById(R.id.et_edit_note_body);
                     note.setTitle(edit_text_title.getText().toString());
                     note.setBody(edit_text_body.getText().toString());
-
+                    note.save();
 
 
                     Intent switch_back_to_main = new Intent(EditNoteActivity.this,
