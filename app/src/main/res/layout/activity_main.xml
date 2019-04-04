@@ -55,7 +55,7 @@
         android:layout_height="wrap_content"
         android:clickable="true"
         android:layout_gravity="end|bottom"
-        tools:src="@drawable/ic_add"
+        android:src="@drawable/ic_add"
         android:tint="@android:color/white"
         android:layout_margin="20sp"/>
 
