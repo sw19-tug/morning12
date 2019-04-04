@@ -21,7 +21,7 @@ public class NoteTaggingTest {
 
     @Test
     public void testPinning() {
-        String[] notes = TagManager.parse("#tag1, #tag2");
+        String[] notes = TagManager.parse("#tag1 #tag2");
         Assert.assertTrue(notes[0].equals("tag1") && notes[1].equals("tag2"));
 
     }
