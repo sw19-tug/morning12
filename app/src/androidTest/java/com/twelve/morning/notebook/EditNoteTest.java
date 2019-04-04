@@ -11,6 +11,8 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.util.concurrent.TimeUnit;
+
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.clearText;
 import static android.support.test.espresso.action.ViewActions.click;
@@ -83,7 +85,7 @@ public class EditNoteTest {
         onView(withId(R.id.bt_edit_note_create_save)).check(matches(isDisplayed()));
         onView(withId(R.id.bt_edit_note_create_cancel)).check(matches(isDisplayed()));
     }
-/*
+
     @Test
     public void testIfNoteIsActuallyEdited() {
         String title_input = "dummyTitle";
@@ -92,14 +94,16 @@ public class EditNoteTest {
         onView(withId(R.id.et_note_title)).perform(clearText(), typeText(title_input));
         onView(withId(R.id.et_note_body)).perform(clearText(), typeText(body_input))
                 .perform(closeSoftKeyboard());
+        onView(withId(R.id.bt_note_create_save)).perform(click());
         onView(withText(title_input)).perform(click());
         String new_title = "newTitle";
         String new_body = "newBody";
-        onView(withId(R.id.et_note_title)).perform(clearText(), typeText(new_title));
-        onView(withId(R.id.et_note_body)).perform(clearText(), typeText(new_body)).perform(closeSoftKeyboard());
+        onView(withId(R.id.et_edit_note_title)).perform(clearText(), typeText(new_title), closeSoftKeyboard());
+        onView(withId(R.id.et_edit_note_body)).perform(clearText(), typeText(new_body), closeSoftKeyboard());
+
         onView(withId(R.id.bt_edit_note_create_save)).perform(click());
         onView(withText(new_title)).check(matches(isDisplayed()));
-    }*/
+    }
 
 
 
