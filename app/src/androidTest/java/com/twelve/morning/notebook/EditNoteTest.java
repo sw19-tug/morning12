@@ -41,7 +41,7 @@ public class EditNoteTest {
     public void setupNoteInOverView(){
         onView(withId(R.id.bt_create)).perform(click());
         onView(withId(R.id.rl_create_note)).check(matches(isDisplayed()));
-        onView(withId(R.id.bt_edit_delete_note)).check(matches(isDisplayed()));
+        onView(withId(R.id.menu_edit_options)).check(matches(isDisplayed()));
         onView(withId(R.id.et_note_title)).perform(clearText(), typeText(title_input));
         onView(withId(R.id.et_note_body)).perform(clearText(), typeText(body_input)).perform(closeSoftKeyboard());
         onView(withId(R.id.et_note_title)).check(matches(withText(title_input)));

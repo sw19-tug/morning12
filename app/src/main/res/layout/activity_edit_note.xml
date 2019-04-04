@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/rl_edit_note"
     android:orientation="vertical"
@@ -55,16 +56,6 @@
         android:layout_alignParentRight = "true"
         android:text="@string/Confirm_bt"
         android:background="@color/colorPrimary"
-        />
-
-    <Button
-        android:id="@+id/bt_edit_delete_note"
-        android:layout_width="70pt"
-        android:layout_height="20pt"
-        android:layout_alignParentTop = "true"
-        android:layout_alignParentRight = "true"
-        android:text="@string/delete_note"
-        android:background="@color/DeleteRed"
         />
 
     <Button

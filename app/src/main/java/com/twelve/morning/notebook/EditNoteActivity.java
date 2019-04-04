@@ -3,6 +3,9 @@ package com.twelve.morning.notebook;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -22,7 +25,29 @@ public class EditNoteActivity extends AppCompatActivity {
         fillTitleBody();
         finishEditNoteActivity((Button)findViewById(R.id.bt_edit_note_create_cancel));
         finishEditNoteActivity((Button)findViewById(R.id.bt_edit_note_create_save));
-        finishEditNoteActivity((Button)findViewById(R.id.bt_edit_delete_note));
+    }
+
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.edit_menu, menu);
+        return true;
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()){
+            case R.id.option_delete:
+
+                Intent intent = getIntent();
+                Note note = (Note)intent.getSerializableExtra("note");
+                note.delete();
+                Intent switch_back_to_main = new Intent(EditNoteActivity.this,
+                        MainActivity.class);
+                startActivity(switch_back_to_main);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     private void fillTitleBody()
@@ -60,20 +85,6 @@ public class EditNoteActivity extends AppCompatActivity {
                     note.save();
 
 
-                    Intent switch_back_to_main = new Intent(EditNoteActivity.this,
-                            MainActivity.class);
-                    startActivity(switch_back_to_main);
-                }
-            });
-        }
-        else if(button.getId() == R.id.bt_edit_delete_note)
-        {
-            button.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent intent = getIntent();
-                    Note note = (Note)intent.getSerializableExtra("note");
-                    note.delete();
                     Intent switch_back_to_main = new Intent(EditNoteActivity.this,
                             MainActivity.class);
                     startActivity(switch_back_to_main);
