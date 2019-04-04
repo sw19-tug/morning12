@@ -6,6 +6,8 @@ import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
 
+import java.util.Set;
+
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard;
@@ -25,15 +27,15 @@ public class TagTest {
 
         onView(withId(R.id.bt_create)).perform(click());
         onView(withId(R.id.et_note_title)).perform(typeText("A"), closeSoftKeyboard());
-        onView(withId(R.id.et_edit_note_body)).perform(typeText("Body #yoappsucsass"), closeSoftKeyboard());
+        onView(withId(R.id.et_note_body)).perform(typeText("Body #yoappsucsass"), closeSoftKeyboard());
         onView(withId(R.id.bt_note_create_save)).perform(click());
 
         Note[] notes = activityTestRule.getActivity().adapter.getNotes();
         Assert.assertTrue(notes.length > 0);
 
         Note note = notes[0];
-        Tag[] tags = note.getTags();
+        Set tags = note.getTags();
 
-        Assert.assertTrue(tags.length > 0);
+        Assert.assertTrue(tags.size() > 0);
     }
 }
