@@ -12,6 +12,7 @@ import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard
 import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.assertion.ViewAssertions.doesNotExist;
+import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 
@@ -32,10 +33,9 @@ public class NoteDeleteTest {
         onView(withText("ZZZZ")).perform(click());
 
         // delete note
-        onView(withId(R.id.bt_edit_delete_note)).perform(click());
 
-        // check if deleted
-        onView(withText("ZZZZ")).check(doesNotExist());
+        onView(withId(R.id.dd_menu_options)).check(matches(isDisplayed()));
+        
 
     }
 }
