@@ -34,7 +34,7 @@ public class NoteTaggingTest {
         Assert.assertTrue(notes.length > 0);
 
         Note note = notes[0];
-        List<Note> tags = note.getTags();
+        List<Tag> tags = note.getTags();
 
         Assert.assertTrue(tags.size() > 0);
 

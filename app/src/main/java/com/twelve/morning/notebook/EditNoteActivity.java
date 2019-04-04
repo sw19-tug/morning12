@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import java.util.ArrayList;
+import java.util.List;
 
 public class EditNoteActivity extends AppCompatActivity {
 
@@ -49,7 +51,14 @@ public class EditNoteActivity extends AppCompatActivity {
                     note.setTitle(edit_text_title.getText().toString());
                     note.setBody(edit_text_body.getText().toString());
 
-
+                    String[] tags = TagManager.parse(edit_text_body.getText().toString());
+                    List<Tag> Tags = new ArrayList<>();
+                    for (String tag1 : tags) {
+                        Tag tag = new Tag(tag1);
+                        Tags.add(tag);
+                        note.setTags(Tags);
+                    }
+                    System.out.println(Tags);
 
                     Intent switch_back_to_main = new Intent(EditNoteActivity.this,
                             MainActivity.class);

@@ -17,7 +17,7 @@ public class Note implements Serializable {
     private Date creation_date;
     private Boolean pinned = false;
     public int id = rand.nextInt();
-    private List<String> tags;
+    private List<Tag> tags;
 
     public Note(String title){
         this.title = title;
@@ -82,11 +82,11 @@ public class Note implements Serializable {
         DatabaseWrapper.getInstance().deleteNote(this);
     }
 
-    public Set<String> getTags() {
+    public List<Tag> getTags() {
         return tags;
     }
 
-    public void setTags(Set<String> tags) {
+    public void setTags(List<Tag> tags) {
         this.tags = tags;
     }
 
