@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">Notebook</string>
+    <string name="sort_title">Title</string>
+    <string name="sort_creationdate">Creation</string>
+
+    <string name="pin_note">Pin</string>
+    <string name="delete_note">Delete</string>
+    <string name="share_note">Share</string>
+
+    <string name="dummy_text">Dummy Text</string>
+    <string name="create_note_description">Create and Modify a Note</string>
+    <string name="Create">Create new Note</string>
+    <string name="Edit">Edit Note</string>
+    <string name="Confirm_bt">Confirm</string>
+    <string name="Abort_bt">Abort</string>
+    <string name="Title">Title:</string>
+    <string name="Body_hint">Enter Text here:</string>
+    <string name="export_bt">Export notes</string>
+
+</resources>
