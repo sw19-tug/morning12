@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rl_edit_note"
+    android:orientation="vertical"
+    android:padding="20dip"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/lightBackgroundGrey"
+    android:contentDescription="@string/Edit">
+
+    <TextView
+        android:id="@+id/TextView2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        android:textColor="@color/colorPrimaryDark"
+        android:text="@string/Edit"
+        />
+
+    <EditText
+        android:id="@+id/et_edit_note_title"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/TextView2"
+        android:layout_marginTop="30dp"
+        android:ems="10"
+        android:maxLines="1"
+        android:maxLength="30"
+        android:inputType="text"
+        android:focusableInTouchMode="true"
+        android:hint="Title:"
+        />
+
+    <EditText
+        android:id="@+id/et_edit_note_body"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="50pt"
+        android:layout_below="@+id/et_edit_note_title"
+        android:layout_marginTop="50dp"
+        android:maxLines="13"
+        android:maxLength="2000"
+        android:ems="10"
+        android:hint="@string/Body_hint"
+        android:gravity="top"
+        android:inputType="textMultiLine"/>
+
+    <Button
+        android:id="@+id/bt_edit_note_create_save"
+        android:layout_width="70pt"
+        android:layout_height="20pt"
+        android:layout_alignParentBottom = "true"
+        android:layout_alignParentRight = "true"
+        android:text="@string/Confirm_bt"
+        android:background="@color/colorPrimary"
+        />
+
+    <Button
+        android:id="@+id/bt_edit_note_create_cancel"
+        android:layout_width="70pt"
+        android:layout_height="20pt"
+        android:layout_alignParentBottom = "true"
+        android:layout_alignParentLeft = "true"
+        android:text="@string/Abort_bt"
+        android:background="@color/BackgroundGrey"
+
+        />
+
+</RelativeLayout>

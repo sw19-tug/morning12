@@ -17,7 +17,8 @@ public class DatabaseWrapper {
 
     private DatabaseWrapper()
     {
-        
+        //context = context.getApplicationContext();
+        //noteDatabase = Room.databaseBuilder(context, NoteDatabase.class, DB_NAME).allowMainThreadQueries().build();
     }
 
     private ArrayList<Note> notes = new ArrayList<>();

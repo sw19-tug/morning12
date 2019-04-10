@@ -1,40 +1,45 @@
 package com.twelve.morning.notebook;
 
+import android.support.test.InstrumentationRegistry;
+import android.support.test.espresso.Espresso;
 import android.support.test.rule.ActivityTestRule;
 
+import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
+
+import java.util.concurrent.TimeUnit;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
+import static android.support.test.espresso.assertion.ViewAssertions.doesNotExist;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static android.support.test.espresso.matcher.ViewMatchers.isNotChecked;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 
-public class NoteOverviewTest {
+public class NoteDeleteTest {
 
     @Rule
     public ActivityTestRule<MainActivity> activityTestRule = new ActivityTestRule<>(MainActivity.class);
 
     @Test
-    public void testAddButtonIsDisplayed() {
-        onView(withId(R.id.bt_create)).check(matches(isDisplayed()));
-    }
+    public void testDeletion() {
 
-    @Test
-    public void testNotesListViewIsDisplayed() {
-        onView(withId(R.id.list_notes)).check(matches(isDisplayed()));
-    }
-
-    @Test
-    public void testNotesListAddNote() {
+        // create note
         onView(withId(R.id.bt_create)).perform(click());
-        onView(withId(R.id.et_note_title)).perform(typeText("Pizza"));
-        onView(withId(R.id.et_note_body)).perform(typeText("- Sale Marina\n- Farina W220\n- Lievito di birra\n- Mozzarella di Bufala Campana DOP\n- Basilico fresco\n- Pomodori pelati\n- Olio extra vergine"), closeSoftKeyboard());
+        onView(withId(R.id.et_note_title)).perform(typeText("ZZZZ"), closeSoftKeyboard());
         onView(withId(R.id.bt_note_create_save)).perform(click());
-        onView(withText("Pizza")).check(matches(isDisplayed()));
+
+        // open created note
+        onView(withText("ZZZZ")).perform(click());
+        Espresso.openContextualActionModeOverflowMenu();
+
+        onView(withText(R.string.delete_note)).perform(click());
+
+        onView(withText("ZZZZ")).check(doesNotExist());
     }
 }
