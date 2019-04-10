@@ -99,7 +99,7 @@ public class EditNoteActivity extends AppCompatActivity {
                     for (String tag1 : tags) {
                         Tag tag = new Tag(tag1);
                         Tags.add(tag);
-                        note.setTags(Tags);
+                        //note.setTags(Tags);
                     }
 
                     note.save();
