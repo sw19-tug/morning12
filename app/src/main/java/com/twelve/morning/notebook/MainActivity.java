@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        DatabaseWrapper.getInstance().createDatabase(getApplicationContext());
         setContentView(R.layout.activity_main);
         setupButtons();
         reloadNotes(sorting);
