@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         setupButtons();
         reloadNotes(sorting);
-        exportNotes();      
+        exportNotes();
 
 //        list_view.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 //            @Override
@@ -106,13 +106,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 String zipFileName = "exported_notes.zip";
-                //zip(notes, zipFileName);
+                Note[] notesToEport = DatabaseWrapper.getInstance().getNotes(Sorting.TITLE);
+                zip(notesToEport, zipFileName);
                 shareZipFile(zipFileName);
             }
         });
     }
 
-    private void zip(String[] _notes, String zipFileName) {
+    private void zip(Note[] _notes, String zipFileName) {
         int BUFFER = 1000;
         try {
             getStoragePermission();
@@ -123,10 +124,10 @@ public class MainActivity extends AppCompatActivity {
 
             for (int i = 0; i < _notes.length; i++) {
                 //FileInputStream fi = new FileInputStream(_files[i]);
-                InputStream inputStream = new ByteArrayInputStream(_notes[i].getBytes(StandardCharsets.UTF_8));
+                InputStream inputStream = new ByteArrayInputStream(_notes[i].getBody().getBytes(StandardCharsets.UTF_8));
                 noteBuffered = new BufferedInputStream(inputStream, BUFFER);
 
-                ZipEntry entry = new ZipEntry(_notes[i]);
+                ZipEntry entry = new ZipEntry(_notes[i].getTitle() + ".txt");
                 out.putNextEntry(entry);
                 int count;
 
