@@ -48,15 +48,9 @@ public class DbTest {
     {
         String title = "Title";
         String text = "This is an example text.";
-        String tags = "Surfing, Testing";
-        //List<Note> notes = testdb.GetAllNotes();
         List<Note> notes = myDao.loadAllNotes();
 
-        Note test_note = new Note(title, text, tags);
-        //test_note.setId();//Needed to set the id correctly because it might not match the one set in the database
-
-        //assertEquals(true, testdb.InsertNote(test_note));
-        //assertEquals(true, myDao.InsertNote(test_note));
+        Note test_note = new Note(title, text);
         myDao.InsertNote(test_note);
         List<Note> noteList = myDao.loadAllNotes();
         int id = noteList.get(noteList.size() - 1).getId();
@@ -66,23 +60,63 @@ public class DbTest {
         myDao.deleteNote(test_note);
         noteList = myDao.loadAllNotes();
         assertEquals(true, noteList.isEmpty());
+    }
 
+    @Test
+    public void DbCreate()
+    {
+        String title = "Title";
+        String text = "This is an example text.";
 
-        //Date date = ;//date right now
+        Note test_note = new Note(title, text);
+        myDao.InsertNote(test_note);
+        List<Note> noteList = myDao.loadAllNotes();
+        assertEquals(false, noteList.isEmpty());
+    }
 
-        //alles einzeln asserten/halbwegs einzeln
-        //Aufteilen in die drei Bereiche
+    @Test
+    public void DbEmpty()
+    {
+        List<Note> noteList = myDao.loadAllNotes();
+        assertEquals(true, noteList.isEmpty());
+    }
 
-        //Note* assert_notes = new Note[];
-        //testdb.readNotes(assert_notes);
-        //List<Note> assert_notes;
-        //assert_notes = noteDao.loadAllNotes();
+    @Test
+    public void DbUpdate()
+    {
+        String title = "Title";
+        String text = "This is an example text.";
+        String change = "Now different";
 
-        //assertEquals(title, assert_notes.get(0).getTitle());
-        //assertEquals(text, assert_notes.get(0).getBody());
-        //assertEquals(1, assert_notes.get(0).getId());
-        //assertEquals(date, assert_notes.get(0).date);
-        //assertEquals(0, assert_notes.get(0).pinned);
-        //assertEquals(tags, assert_notes.get(0).getTags());
+        Note test_note = new Note(title, text);
+        myDao.InsertNote(test_note);
+        List<Note> noteList = myDao.loadAllNotes();
+        Note change_note = noteList.get(0);
+        change_note.setBody(change);
+        myDao.updateNote(change_note);
+        noteList = myDao.loadAllNotes();
+        assertEquals(change_note.getBody(), noteList.get(0).getBody());
+    }
+
+    @Test
+    public void DbTableDrop()
+    {
+        String titleA = "First";
+        String titleB = "Second";
+        String titleC = "Third";
+
+        List<Note> noteList = myDao.loadAllNotes();
+        assertEquals(true, noteList.isEmpty());
+        Note noteA = new Note(titleA);
+        myDao.InsertNote(noteA);
+        Note noteB = new Note(titleB);
+        myDao.InsertNote(noteB);
+        Note noteC = new Note(titleC);
+        myDao.InsertNote(noteC);
+        noteList = myDao.loadAllNotes();
+        assertEquals(false, noteList.isEmpty());
+        myDao.deleteTable();
+        noteList = myDao.loadAllNotes();
+        assertEquals(true, noteList.isEmpty());
     }
 }
