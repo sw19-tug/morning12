@@ -1,11 +1,10 @@
 package com.twelve.morning.notebook;
 
-import java.util.Date;
-import java.io.Serializable;
+import android.arch.persistence.room.ColumnInfo;
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.PrimaryKey;
 
-import androidx.room.ColumnInfo;
-import androidx.room.Entity;
-import androidx.room.PrimaryKey;
+import java.util.Date;
 
 @Entity(tableName = "noteTable")
 public class Note {
@@ -52,7 +51,7 @@ public class Note {
         creation_date = new Date();
     }
 
-   Note(String inTitle, String inText, String inTags)
+    Note(String inTitle, String inText, String inTags)
     {
         title = inTitle;
         body = inText;
@@ -104,8 +103,12 @@ public class Note {
         this.title = title;
     }
 
-    public String getTextBody() {
+    public String getBody() {
         return body;
+    }
+
+    public void setBody(String body) {
+        this.body = body;
     }
 
     public void setTextBody(String textBody) {
@@ -118,6 +121,14 @@ public class Note {
 
     public void setTags(String tags) {
         this.tags = tags;
+    }
+
+    public Date getCreation_date() {
+        return creation_date;
+    }
+
+    public void setCreation_date(Date creation_date) {
+        this.creation_date = creation_date;
     }
 
     public Boolean getPinned() { return pinned; }

@@ -1,8 +1,9 @@
 package com.twelve.morning.notebook;
 
+import android.arch.persistence.room.Room;
 import android.content.Context;
+
 import java.util.List;
-import androidx.room.Room;
 
 public class NoteRepository {
 
@@ -14,10 +15,15 @@ public class NoteRepository {
         noteDatabase = Room.databaseBuilder(context, NoteDatabase.class, DB_NAME).allowMainThreadQueries().build();
     }
 
-    public void Cleanup()
+    public void CloseDb()
+    {
+        noteDatabase.close();
+    }
+
+    /*public void Cleanup()
     {
         noteDatabase = null;
-    }
+    }*/
 
     public boolean InsertNote(final Note note)
     {
@@ -36,11 +42,10 @@ public class NoteRepository {
         noteDatabase.daoAccess().deleteNote(note);
     }
 
-    public Note GetNote(int id)
+    public List<Note> GetNotesByTitle(String title)
     {
-        //notes are saved on id+1 position for some reason
-        Note note = noteDatabase.daoAccess().getNote(id+1);
-        return note;
+        List<Note> notes = noteDatabase.daoAccess().getNoteByTitle(title);
+        return notes;
     }
 
     public List<Note> GetAllNotes()
@@ -49,10 +54,19 @@ public class NoteRepository {
         return notes;
     }
 
+    /*public List<Note> GetAllNotes()
+    {
+        List<Note> notes = noteDatabase.daoAccess().loadAllNotes();
+        return notes;
+    }*/
+
     public void DeleteTable()
     {
         noteDatabase.daoAccess().deleteTable();
     }
 }
+
+
+
 
 
