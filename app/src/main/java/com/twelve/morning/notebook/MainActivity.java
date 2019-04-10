@@ -10,6 +10,8 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -57,6 +59,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         reloadNotes(sorting);
+    }
+
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.import_menu, menu);
+        return true;
     }
 
     public void reloadNotes(Sorting sorting) {
