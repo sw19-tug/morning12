@@ -36,10 +36,10 @@ public class NoteTaggingTest {
         Note note = notes[0];
         List<Tag> tags = note.getTags();
 
-        Assert.assertTrue(tags.size() > 0);
+        Assert.assertFalse(tags.isEmpty());
 
         Tag t1 = tags.get(0);
-        Assert.assertTrue(t1.getContent().equals("#yoappsucsass"));
+        Assert.assertTrue(t1.getContent().equals("yoappsucsass"));
 
     }
 

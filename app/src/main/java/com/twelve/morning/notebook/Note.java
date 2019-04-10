@@ -35,6 +35,14 @@ public class Note implements Serializable {
         //this.tags.add("#testTag");
     }
 
+    public Note(String title, String body, List<Tag> tags){
+        this.title = title;
+        this.body = body;
+        this.creation_date = new Date();
+        this.tags = tags;
+        //this.tags.add("#testTag");
+    }
+
     public void setBody(String body) {
         this.body = body;
     }

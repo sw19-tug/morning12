@@ -34,16 +34,15 @@ public class EditNoteTest {
     public ActivityTestRule<MainActivity> activityMainTestRule =
             new ActivityTestRule<>(MainActivity.class);
 
-    private String title_input = "testTitletestTitle";
+    private String title_input = "abc";
     private String body_input = "testBodytestBodytestBodytestBodytestBodytestBodytestBodytestBody";
 
     @Test
     public void setupNoteInOverView(){
         onView(withId(R.id.bt_create)).perform(click());
         onView(withId(R.id.rl_create_note)).check(matches(isDisplayed()));
-        onView(withId(R.id.menu_edit_options)).check(matches(isDisplayed()));
         onView(withId(R.id.et_note_title)).perform(clearText(), typeText(title_input));
-        onView(withId(R.id.et_note_body)).perform(clearText(), typeText(body_input)).perform(closeSoftKeyboard());
+        onView(withId(R.id.et_note_body)).perform(clearText(), typeText(body_input), closeSoftKeyboard());
         onView(withId(R.id.et_note_title)).check(matches(withText(title_input)));
         onView(withId(R.id.et_note_body)).check(matches(withText(body_input)));
         onView(withId(R.id.bt_note_create_save)).perform(click());
@@ -51,7 +50,7 @@ public class EditNoteTest {
     }
 
     @Test
-    public void popUpContainsFieldsAndButtons(){
+    public void editFormContainsFieldsAndButtons(){
         onView(withText(title_input)).perform(click());
         onView(withId(R.id.rl_edit_note)).check(matches(isDisplayed()));
         onView(withId(R.id.et_edit_note_title)).check(matches(isDisplayed()));
@@ -68,13 +67,13 @@ public class EditNoteTest {
         onView(withId(R.id.bt_create)).check(matches(isDisplayed()));
     }
 
-//    @Test
-//    public void returnToMainActivityBySave(){
-//        onView(withText(title_input)).perform(click());
-//        onView(withId(R.id.rl_edit_note)).check(matches(isDisplayed()));
-//        onView(withId(R.id.bt_edit_note_create_save)).perform(click());
-//        onView(withId(R.id.bt_create)).check(matches(isDisplayed()));
-//    }
+    @Test
+    public void returnToMainActivityBySave(){
+        onView(withText(title_input)).perform(click());
+        onView(withId(R.id.rl_edit_note)).check(matches(isDisplayed()));
+        onView(withId(R.id.bt_edit_note_create_save)).perform(click());
+        onView(withId(R.id.bt_create)).check(matches(isDisplayed()));
+    }
 
     @Test
     public void listItemTextIsPassedToEditNote(){
