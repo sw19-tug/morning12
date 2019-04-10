@@ -1,6 +1,7 @@
 package com.twelve.morning.notebook;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
@@ -31,7 +32,6 @@ import java.util.zip.ZipOutputStream;
 public class MainActivity extends AppCompatActivity {
 
     private ListView list_view;
-    final private int REQUEST_CODE_ASK_PERMISSIONS = 123;
     public NotesListAdapter adapter = null;
     private Sorting sorting = Sorting.CREATION;
 
@@ -102,65 +102,18 @@ public class MainActivity extends AppCompatActivity {
 
     private void exportNotes(){
         FloatingActionButton export_note_btn = findViewById(R.id.bt_export);
+        final Activity self = this;
         export_note_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                ShareManager.getStoragePermission(self);
                 String zipFileName = "exported_notes.zip";
                 Note[] notesToEport = DatabaseWrapper.getInstance().getNotes(Sorting.TITLE);
-                zip(notesToEport, zipFileName);
-                shareZipFile(zipFileName);
+                ShareManager.zip(notesToEport, zipFileName);
+                startActivity(ShareManager.shareZipFile(zipFileName));
             }
         });
     }
 
-    private void zip(Note[] _notes, String zipFileName) {
-        int BUFFER = 1000;
-        try {
-            getStoragePermission();
-            BufferedInputStream noteBuffered = null;
-            FileOutputStream dest = new FileOutputStream(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) + "/" + zipFileName);
-            ZipOutputStream out = new ZipOutputStream(new BufferedOutputStream(dest));
-            byte data[] = new byte[BUFFER];
-
-            for (int i = 0; i < _notes.length; i++) {
-                //FileInputStream fi = new FileInputStream(_files[i]);
-                InputStream inputStream = new ByteArrayInputStream(_notes[i].getBody().getBytes(StandardCharsets.UTF_8));
-                noteBuffered = new BufferedInputStream(inputStream, BUFFER);
-
-                ZipEntry entry = new ZipEntry(_notes[i].getTitle() + ".txt");
-                out.putNextEntry(entry);
-                int count;
-
-                while ((count = noteBuffered.read(data, 0, BUFFER)) != -1) {
-                    out.write(data, 0, count);
-                }
-                noteBuffered.close();
-            }
-
-            out.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void getStoragePermission() {
-        int hasStoragePermission = checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE);
-        if (hasStoragePermission != PackageManager.PERMISSION_GRANTED) {
-            requestPermissions(new String[] {Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                    REQUEST_CODE_ASK_PERMISSIONS);
-            return;
-        }
-    }
-
-    private void shareZipFile(String zipFileName) {
-        File exportedNotesFile = new File("file://"+ Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) + "/" + zipFileName);
-        Intent sendIntent = new Intent();
-        sendIntent.setAction(Intent.ACTION_SEND);
-        sendIntent.putExtra(Intent.EXTRA_FROM_STORAGE, exportedNotesFile);
-        sendIntent.putExtra(Intent.EXTRA_TEXT, "Sharing exported notes");
-        sendIntent.setType("application/zip");
-        startActivity(Intent.createChooser(sendIntent, "share " + zipFileName));
-        return;
-    }
 }
 

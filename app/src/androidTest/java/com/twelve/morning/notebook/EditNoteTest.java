@@ -119,8 +119,9 @@ public class EditNoteTest {
         onView(withText("XXXX")).perform(click());
         Espresso.openContextualActionModeOverflowMenu();
 
+        onView(withText(R.string.share_note)).check(matches(isDisplayed()));
         onView(withText(R.string.share_note)).perform(click());
-        onView(withText("share " + "XXXX.zip")).perform(click());
+        //onView(withText("share " + "XXXX.zip")).perform(click());
 
     }
 
