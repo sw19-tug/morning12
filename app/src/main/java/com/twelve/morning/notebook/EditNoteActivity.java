@@ -37,15 +37,24 @@ public class EditNoteActivity extends AppCompatActivity {
 
     public boolean onOptionsItemSelected(MenuItem item) {
 
+
+        Intent intent = getIntent();
+        Note note = (Note)intent.getSerializableExtra("note");
+
         switch (item.getItemId()){
             case R.id.option_delete:
-
-                Intent intent = getIntent();
-                Note note = (Note)intent.getSerializableExtra("note");
                 note.delete();
                 Intent switch_back_to_main = new Intent(EditNoteActivity.this,
                         MainActivity.class);
                 startActivity(switch_back_to_main);
+                return true;
+            case R.id.option_share:
+                ShareManager.getStoragePermission(this);
+                Note[] noteToEport = new Note[1];
+                noteToEport[0] = note;
+                String zipFileName = note.getTitle()+".zip";
+                ShareManager.zip(noteToEport, zipFileName);
+                startActivity(ShareManager.shareZipFile(zipFileName));
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
