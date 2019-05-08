@@ -26,10 +26,13 @@ import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
 import java.util.zip.ZipOutputStream;
 
 
@@ -92,8 +95,39 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == 0){
-            System.out.println(data.getDataString());
+            String path = data.getData().getPath();
+            path = path.substring(path.indexOf(':') + 1);
+            unpackZip(path);
         }
+    }
+
+    private boolean unpackZip(String path)
+    {
+        InputStream is;
+        ZipInputStream zis;
+        try
+        {
+            String filename;
+            is = new FileInputStream(path);
+            zis = new ZipInputStream(new BufferedInputStream(is));
+            ZipEntry ze;
+
+            while ((ze = zis.getNextEntry()) != null)
+            {
+                filename = ze.getName();
+                System.out.println(filename);
+                zis.closeEntry();
+            }
+
+            zis.close();
+        }
+        catch(IOException e)
+        {
+            e.printStackTrace();
+            return false;
+        }
+
+        return true;
     }
 
     protected void onResume() {
