@@ -115,7 +115,18 @@ public class MainActivity extends AppCompatActivity {
             while ((ze = zis.getNextEntry()) != null)
             {
                 filename = ze.getName();
-                System.out.println(filename);
+
+                byte[] buffer = new byte[1024];
+                int read = 0;
+                String content = "";
+                while ((read = zis.read(buffer)) != -1) {
+                    content += new String(buffer);
+                }
+
+                Note note = new Note();
+                note.setTitle(filename.replace(".txt", ""));
+                note.setBody(content);
+                DatabaseWrapper.getInstance().addNote(note);
                 zis.closeEntry();
             }
 

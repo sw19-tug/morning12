@@ -34,10 +34,10 @@ public class NoteSharingTest {
         Intents.intending(IntentMatchers.anyIntent()).respondWith(result);
 
         Espresso.openContextualActionModeOverflowMenu();
-        onView(withText(R.string.import_bt)).check(matches(isDisplayed()));
-        onView(withText(R.string.import_bt)).perform(click());
+        onView(withText(R.string.import_string)).check(matches(isDisplayed()));
+        onView(withText(R.string.import_string)).perform(click());
 
 
-        onView(withText(R.string.import_bt)).check(doesNotExist());
+        onView(withText(R.string.import_string)).check(doesNotExist());
     }
 }
