@@ -25,7 +25,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/TextView2"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="15dp"
         android:ems="10"
         android:maxLines="1"
         android:maxLength="30"
@@ -38,9 +38,10 @@
         android:id="@+id/et_edit_note_body"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:minHeight="50pt"
+        android:minHeight="20dp"
+        android:maxHeight="150dp"
         android:layout_below="@+id/et_edit_note_title"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="15dp"
         android:maxLines="13"
         android:maxLength="2000"
         android:ems="10"
@@ -68,5 +69,17 @@
         android:background="@color/BackgroundGrey"
 
         />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/tag_information"
+        android:layout_below="@+id/et_edit_note_body"
+        android:layout_marginTop="15dp"
+        android:textSize="18sp"
+
+        />
+
 
 </RelativeLayout>
