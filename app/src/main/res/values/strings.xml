@@ -17,4 +17,6 @@
     <string name="Body_hint">Enter Text here:</string>
     <string name="export_bt">Export notes</string>
 
+    <string name="import_string">Import notes</string>
+    <string name="export_string">Export notes</string>
 </resources>

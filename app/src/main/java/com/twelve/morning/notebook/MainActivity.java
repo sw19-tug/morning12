@@ -11,12 +11,16 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.net.Uri;
+import android.widget.Toast;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -42,19 +46,56 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         setupButtons();
         reloadNotes(sorting);
-        exportNotes();
-
-//        list_view.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-//                Intent intent = new Intent(MainActivity.this, EditNoteActivity.class);
-//                Note note = (Note)adapterView.getItemAtPosition(i);
-//                intent.putExtra("note", note);
-//                startActivity(intent);
-//            }
-//        });
     }
-  
+
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_menu, menu);
+        return true;
+    }
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+
+        Intent intent = getIntent();
+        //Note note = (Note)intent.getSerializableExtra("note");
+
+        switch (item.getItemId()){
+            case R.id.bt_import:
+                showFileChooser();
+                return true;
+            case R.id.bt_export:
+                ShareManager.getStoragePermission(this);
+                String zipFileName = "exported_notes.zip";
+                Note[] notesToEport = DatabaseWrapper.getInstance().getNotes(Sorting.TITLE);
+                ShareManager.zip(notesToEport, zipFileName);
+                startActivity(ShareManager.shareZipFile(zipFileName));
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+    private void showFileChooser() {
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.setType("application/zip");
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+
+        try {
+            startActivityForResult(
+                    Intent.createChooser(intent, "Select a File"),0);
+        } catch (android.content.ActivityNotFoundException ex) {
+            // Potentially direct the user to the Market with a Dialog
+            Toast.makeText(this, "Please install a File Manager.",
+                    Toast.LENGTH_SHORT).show();
+        }
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == 0){
+            System.out.println(data.getDataString());
+        }
+    }
+
     protected void onResume() {
         super.onResume();
         reloadNotes(sorting);
@@ -97,21 +138,6 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 sorting = Sorting.TITLE;
                 reloadNotes(sorting);
-            }
-        });
-    }
-
-    private void exportNotes(){
-        FloatingActionButton export_note_btn = findViewById(R.id.bt_export);
-        final Activity self = this;
-        export_note_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ShareManager.getStoragePermission(self);
-                String zipFileName = "exported_notes.zip";
-                Note[] notesToEport = DatabaseWrapper.getInstance().getNotes(Sorting.TITLE);
-                ShareManager.zip(notesToEport, zipFileName);
-                startActivity(ShareManager.shareZipFile(zipFileName));
             }
         });
     }
