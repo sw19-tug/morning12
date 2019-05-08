@@ -2,6 +2,6 @@
 
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/menu_edit_options">
-    <item android:id="@+id/import_string"
+    <item android:id="@+id/option_import"
         android:title="@string/import_bt"/>
 </menu>

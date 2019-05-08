@@ -1,6 +1,7 @@
 package com.twelve.morning.notebook;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
@@ -12,12 +13,14 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.net.Uri;
+import android.widget.Toast;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -65,6 +68,31 @@ public class MainActivity extends AppCompatActivity {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.import_menu, menu);
         return true;
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.option_import:
+                showFileChooser();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private void showFileChooser() {
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.setType("file/zip");
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+
+        try {
+            startActivityForResult(
+                    Intent.createChooser(intent, "Select a File"),0);
+        } catch (android.content.ActivityNotFoundException ex) {
+            // Potentially direct the user to the Market with a Dialog
+            Toast.makeText(this, "Please install a File Manager.",
+                    Toast.LENGTH_SHORT).show();
+        }
     }
 
     public void reloadNotes(Sorting sorting) {
