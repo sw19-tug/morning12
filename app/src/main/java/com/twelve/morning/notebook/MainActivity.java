@@ -10,6 +10,7 @@ import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatDelegate;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -34,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
     private ListView list_view;
     public NotesListAdapter adapter = null;
     private Sorting sorting = Sorting.CREATION;
+    private boolean night_mode = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -123,8 +125,12 @@ public class MainActivity extends AppCompatActivity {
         darkmode_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                setTheme(R.style.DarkTheme);
-                recreate();
+                night_mode = !night_mode;
+                if (night_mode) {
+                    getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                } else {
+                    getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                }
             }
         });
     }
