@@ -43,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
         setupButtons();
         reloadNotes(sorting);
         exportNotes();
+        changeTheme();
 
 //        list_view.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 //            @Override
@@ -112,6 +113,18 @@ public class MainActivity extends AppCompatActivity {
                 Note[] notesToEport = DatabaseWrapper.getInstance().getNotes(Sorting.TITLE);
                 ShareManager.zip(notesToEport, zipFileName);
                 startActivity(ShareManager.shareZipFile(zipFileName));
+            }
+        });
+    }
+
+    private void changeTheme() {
+        FloatingActionButton darkmode_btn = findViewById(R.id.bt_darkmode);
+        final Activity self = this;
+        darkmode_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                setTheme(R.style.DarkTheme);
+                recreate();
             }
         });
     }

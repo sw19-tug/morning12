@@ -7,5 +7,5 @@
     <color name="lightBackgroundGrey">#DDDCDC</color>
     <color name="BackgroundGrey">#929292</color>
     <color name="DeleteRed">#f44336</color>
-
+    <color name="linearLayout">#FFF</color>
 </resources>
