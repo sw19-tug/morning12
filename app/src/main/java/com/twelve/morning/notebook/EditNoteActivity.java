@@ -36,8 +36,6 @@ public class EditNoteActivity extends AppCompatActivity {
     }
 
     public boolean onOptionsItemSelected(MenuItem item) {
-
-
         Intent intent = getIntent();
         Note note = (Note)intent.getSerializableExtra("note");
 

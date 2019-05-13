@@ -17,5 +17,7 @@
     <string name="Body_hint">Enter Text here:</string>
     <string name="export_bt">Export notes</string>
     <string name="darkmode_bt">Darkmode</string>
+    <string name="night_mode">Night Mode</string>
+    <string name="day_mode">Day Mode</string>
 
 </resources>

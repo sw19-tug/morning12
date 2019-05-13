@@ -5,13 +5,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:background="@color/colorPrimary">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:background="@color/linearLayout">
+        android:background="@color/backGround">
 
 
         <LinearLayout
@@ -47,17 +48,6 @@
         android:clickable="true"
         android:layout_gravity="bottom|left"
         tools:src="@drawable/ic_add"
-        android:tint="@android:color/white"
-        android:layout_margin="20sp"/>
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/bt_darkmode"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:clickable="true"
-        android:layout_gravity="bottom|center"
-        android:src="@drawable/ic_add"
-        android:tint="@android:color/white"
         android:layout_margin="20sp"/>
 
     <android.support.design.widget.FloatingActionButton
@@ -67,7 +57,6 @@
         android:clickable="true"
         android:layout_gravity="end|bottom"
         android:src="@drawable/ic_add"
-        android:tint="@android:color/white"
         android:layout_margin="20sp"/>
 
 </android.support.design.widget.CoordinatorLayout>

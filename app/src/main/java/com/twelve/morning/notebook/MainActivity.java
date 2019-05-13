@@ -2,8 +2,10 @@ package com.twelve.morning.notebook;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Environment;
 import android.support.annotation.RequiresApi;
@@ -12,6 +14,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatDelegate;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -35,7 +40,33 @@ public class MainActivity extends AppCompatActivity {
     private ListView list_view;
     public NotesListAdapter adapter = null;
     private Sorting sorting = Sorting.CREATION;
-    private boolean night_mode = false;
+
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_menu, menu);
+        if(AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES){
+            menu.findItem(R.id.bt_darkmode).setTitle(R.string.day_mode);
+        } else {
+            menu.findItem(R.id.bt_darkmode).setTitle(R.string.night_mode);
+        }
+        return true;
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.bt_darkmode:
+                if (AppCompatDelegate.getDefaultNightMode() != AppCompatDelegate.MODE_NIGHT_YES) {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                    recreate();
+                } else {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                    recreate();
+                }
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,17 +76,6 @@ public class MainActivity extends AppCompatActivity {
         setupButtons();
         reloadNotes(sorting);
         exportNotes();
-        changeTheme();
-
-//        list_view.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-//                Intent intent = new Intent(MainActivity.this, EditNoteActivity.class);
-//                Note note = (Note)adapterView.getItemAtPosition(i);
-//                intent.putExtra("note", note);
-//                startActivity(intent);
-//            }
-//        });
     }
   
     protected void onResume() {
@@ -115,22 +135,6 @@ public class MainActivity extends AppCompatActivity {
                 Note[] notesToEport = DatabaseWrapper.getInstance().getNotes(Sorting.TITLE);
                 ShareManager.zip(notesToEport, zipFileName);
                 startActivity(ShareManager.shareZipFile(zipFileName));
-            }
-        });
-    }
-
-    private void changeTheme() {
-        FloatingActionButton darkmode_btn = findViewById(R.id.bt_darkmode);
-        final Activity self = this;
-        darkmode_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                night_mode = !night_mode;
-                if (night_mode) {
-                    getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                } else {
-                    getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-                }
             }
         });
     }

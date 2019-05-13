@@ -4,6 +4,7 @@
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
     <color name="textPrimary">#323232</color>
+    <color name="backGround">@android:color/background_light</color>
     <color name="lightBackgroundGrey">#DDDCDC</color>
     <color name="BackgroundGrey">#929292</color>
     <color name="DeleteRed">#f44336</color>
