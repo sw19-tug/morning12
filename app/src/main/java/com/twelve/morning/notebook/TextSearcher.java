@@ -44,7 +44,7 @@ public class TextSearcher {
     }
 
     //I dont know how to get the correct activity, so im passing it for now
-    static private void highlightText(Activity activity, Note note, int position, int size)
+    static public void highlightText(Activity activity, Note note, int position, int size)
     {
         //assume all lines are visible and we need to just highlight the searchedText
         //moveToCharacter(position);

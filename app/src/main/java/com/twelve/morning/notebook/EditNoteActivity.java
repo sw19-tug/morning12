@@ -1,5 +1,6 @@
 package com.twelve.morning.notebook;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -9,6 +10,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.SearchView;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,6 +30,7 @@ public class EditNoteActivity extends AppCompatActivity {
         fillTitleBody();
         finishEditNoteActivity((Button)findViewById(R.id.bt_edit_note_create_cancel));
         finishEditNoteActivity((Button)findViewById(R.id.bt_edit_note_create_save));
+        finishEditNoteActivity((SearchView)findViewById(R.id.search_view_find_text));
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -110,5 +114,27 @@ public class EditNoteActivity extends AppCompatActivity {
                 }
             });
         }
+    }
+
+    private void finishEditNoteActivity(final SearchView searchView){
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                int position = TextSearcher.GetInstance().SearchNextInstance(last_edited_note, query);
+                if(position == -1)
+                    return false;
+                else{
+                    Activity activity = null; //Needs to be proper activity
+                    TextSearcher.GetInstance().highlightText(activity, last_edited_note, position, query.length());
+                }
+
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return true;
+            }
+        });
     }
 }
