@@ -18,7 +18,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 
-public class NoteDarkmode {
+public class NoteDarkmodeTest {
 
     @Rule
     public ActivityTestRule<MainActivity> activityTestRule = new ActivityTestRule<>(MainActivity.class);
@@ -33,6 +33,7 @@ public class NoteDarkmode {
     @Test
     public void testColorChanged() {
         Espresso.openContextualActionModeOverflowMenu();
+        onView(withText(R.string.night_mode)).check(matches(isDisplayed()));
         onView(withText(R.string.night_mode)).perform(click());
         Espresso.openContextualActionModeOverflowMenu();
         onView(withText(R.string.day_mode)).check(matches(isDisplayed()));
