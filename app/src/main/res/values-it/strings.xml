@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Libretto</string>
+    <string name="sort_title">Titolo</string>
+    <string name="sort_creationdate">Data di creazione</string>
+
+    <string name="pin_note">Pinnen</string>
+    <string name="delete_note">Cancellare</string>
+    <string name="share_note">Share</string>
+
+    <string name="dummy_text">Dummy Text</string>
+    <string name="create_note_description">Creare una notizia per mofificazione</string>
+    <string name="Create">Creare una nuova notizia</string>
+    <string name="Edit">Modificare</string>
+    <string name="Confirm_bt">Confirma</string>
+    <string name="Abort_bt">Cancella</string>
+    <string name="Title">Titolo:</string>
+    <string name="Body_hint">Inseriere testo qui:</string>
+    <string name="export_bt">Notiz exportieren</string>
+    <string name="tag_information"><![CDATA[Per aggiungere un tag a una notizia, inserisci \"#<tag> \" per ognuno tag dentro il Textfeld della notizia. Inoltre devi sostituiere <tag> con il nome del tag.]]></string>
+
+    <string name="import_string">Importarte notizia</string>
+    <string name="export_string">Esportarte notizia</string>
+    <string name="local_string">Cambia lingua</string>
+</resources>
