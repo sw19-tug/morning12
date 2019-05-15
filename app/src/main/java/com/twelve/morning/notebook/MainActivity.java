@@ -2,14 +2,17 @@ package com.twelve.morning.notebook;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Environment;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatDelegate;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -42,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
     public NotesListAdapter adapter = null;
     private Sorting sorting = Sorting.CREATION;
 
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,14 +58,16 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.main_menu, menu);
+        if(AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES){
+            menu.findItem(R.id.bt_darkmode).setTitle(R.string.day_mode);
+        } else {
+            menu.findItem(R.id.bt_darkmode).setTitle(R.string.night_mode);
+        }
         return true;
     }
+  
     public boolean onOptionsItemSelected(MenuItem item) {
-
-
         Intent intent = getIntent();
-        //Note note = (Note)intent.getSerializableExtra("note");
-
         switch (item.getItemId()){
             case R.id.bt_import:
                 showFileChooser();
@@ -72,6 +78,15 @@ public class MainActivity extends AppCompatActivity {
                 Note[] notesToEport = DatabaseWrapper.getInstance().getNotes(Sorting.TITLE);
                 ShareManager.zip(notesToEport, zipFileName);
                 startActivity(ShareManager.shareZipFile(zipFileName));
+                return true;
+            case R.id.bt_darkmode:
+                if (AppCompatDelegate.getDefaultNightMode() != AppCompatDelegate.MODE_NIGHT_YES) {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                    recreate();
+                } else {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                    recreate();
+                }
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
