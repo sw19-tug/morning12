@@ -14,8 +14,25 @@ import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 
+// ignore outdated tests
 @Ignore
 @RunWith(AndroidJUnit4.class)
 public class NoteExportTest {
-    // removed outdated tests
+    @Rule
+    public ActivityTestRule<MainActivity> activityTestRule = new ActivityTestRule<>(MainActivity.class);
+
+    @Test
+    public void checkVisibleButton () {
+        onView(withId(R.id.bt_export)).check(matches(isDisplayed()));
+    }
+
+    @Test
+    public void checkClickableButton () {
+        onView(withId(R.id.bt_export)).perform(click());
+    }
+
+    @Test
+    public void checkCompress() {
+        onView(withId(R.id.bt_export)).check(matches(isDisplayed()));
+    }
 }

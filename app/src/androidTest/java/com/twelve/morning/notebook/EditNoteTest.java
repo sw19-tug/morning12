@@ -2,6 +2,7 @@ package com.twelve.morning.notebook;
 
 
 import android.content.Intent;
+import android.support.test.espresso.Espresso;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.widget.EditText;
@@ -105,6 +106,23 @@ public class EditNoteTest {
     }
 
 
+    @Test
+    public void testShareNote() {
+
+        // create note
+        onView(withId(R.id.bt_create)).perform(click());
+        onView(withId(R.id.et_note_title)).perform(typeText("XXXX"), closeSoftKeyboard());
+        onView(withId(R.id.bt_note_create_save)).perform(click());
+
+        // open created note
+        onView(withText("XXXX")).perform(click());
+        Espresso.openContextualActionModeOverflowMenu();
+
+        onView(withText(R.string.share_note)).check(matches(isDisplayed()));
+        onView(withText(R.string.share_note)).perform(click());
+        //onView(withText("share " + "XXXX.zip")).perform(click());
+
+    }
 
 
 }
