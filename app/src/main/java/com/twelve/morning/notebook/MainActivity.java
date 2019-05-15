@@ -95,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(ShareManager.shareZipFile(zipFileName));
                 return true;
             case R.id.bt_local:
-                String[] languages = {"English", "Deutsch"};
+                String[] languages = {"English", "Deutsch", "Hrvatski"};
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
                 builder.setTitle("Select Language");
                 builder.setItems(languages, new DialogInterface.OnClickListener() {
@@ -105,6 +105,7 @@ public class MainActivity extends AppCompatActivity {
                         switch (which){
                             case 0: language = "en"; break;
                             case 1: language = "de"; break;
+                            case 2: language = "cr"; break;
                         }
                         LocaleHelper.setLocale(MainActivity.this, language);
                         recreate();
