@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Notizbuach</string>
+    <string name="sort_title">Titl</string>
+    <string name="sort_creationdate">Erstellungsdatum</string>
+
+    <string name="pin_note">Pinnen</string>
+    <string name="delete_note">Löschn</string>
+    <string name="share_note">Toaln</string>
+
+    <string name="dummy_text">Dummy Text</string>
+    <string name="create_note_description">Notiz erstelln und beorbeitn</string>
+    <string name="Create">Noie Notiz erstelln</string>
+    <string name="Edit">Notiz beorbeitn</string>
+    <string name="Confirm_bt">Speichorn</string>
+    <string name="Abort_bt">Ohbrechn</string>
+    <string name="Title">Titl:</string>
+    <string name="Body_hint">Text muas do her:</string>
+    <string name="export_bt">Notizn exportiern</string>
+    <string name="tag_information"><![CDATA[Um a notiz zu tagn schreib \"#<tag> \" in di notiz fir jedn tag wose hobn willsch, tuasch holt <tag> mitn tag wose hobn willsch austauschn bua.]]></string>
+
+    <string name="import_string">Notizn importiern</string>
+    <string name="export_string">Notizn exportiern</string>
+    <string name="local_string">Sproche ändorn</string>
+</resources>
