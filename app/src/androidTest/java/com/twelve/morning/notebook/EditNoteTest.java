@@ -1,12 +1,17 @@
 package com.twelve.morning.notebook;
 
 
+import android.app.Activity;
+import android.app.Instrumentation;
 import android.content.Intent;
 import android.support.test.espresso.Espresso;
+import android.support.test.espresso.intent.Intents;
+import android.support.test.espresso.intent.matcher.IntentMatchers;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.widget.EditText;
 
+import org.hamcrest.Matcher;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Rule;
@@ -21,15 +26,27 @@ import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
+import static android.support.test.espresso.intent.Intents.intended;
+import static android.support.test.espresso.intent.Intents.intending;
+import static android.support.test.espresso.intent.matcher.IntentMatchers.anyIntent;
+import static android.support.test.espresso.intent.matcher.IntentMatchers.hasAction;
+import static android.support.test.espresso.intent.matcher.IntentMatchers.hasExtra;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static junit.framework.TestCase.assertNotNull;
+import static org.hamcrest.Matchers.allOf;
+import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
 @RunWith(AndroidJUnit4.class)
 public class EditNoteTest {
+
+    public static Matcher<Intent> chooser(Matcher<Intent> matcher) {
+        return allOf(hasAction(Intent.ACTION_CHOOSER), hasExtra(is(Intent.EXTRA_INTENT), matcher));
+    }
+
 
     @Rule
     public ActivityTestRule<MainActivity> activityMainTestRule =
@@ -108,7 +125,9 @@ public class EditNoteTest {
 
     @Test
     public void testShareNote() {
-
+        Instrumentation.ActivityResult result =
+                new Instrumentation.ActivityResult(Activity.RESULT_OK, new Intent());
+        DatabaseWrapper.getInstance().reset();
         // create note
         onView(withId(R.id.bt_create)).perform(click());
         onView(withId(R.id.et_note_title)).perform(typeText("XXXX"), closeSoftKeyboard());
@@ -117,11 +136,16 @@ public class EditNoteTest {
         // open created note
         onView(withText("XXXX")).perform(click());
         Espresso.openContextualActionModeOverflowMenu();
-
+        Intents.init();
+        intending(anyIntent()).respondWith(result);
         onView(withText(R.string.share_note)).check(matches(isDisplayed()));
         onView(withText(R.string.share_note)).perform(click());
+        intended(chooser(allOf(
+                hasAction(Intent.ACTION_SEND),
+                hasExtra(Intent.EXTRA_TEXT, "Sharing exported notes")
+        )));
+        Intents.release();
         //onView(withText("share " + "XXXX.zip")).perform(click());
-
     }
 
 

@@ -1,11 +1,13 @@
 package com.twelve.morning.notebook;
 
 import android.support.test.rule.ActivityTestRule;
+import android.support.test.runner.AndroidJUnit4;
 
 import org.junit.Ignore;
 import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 import java.util.List;
 import java.util.Set;
@@ -36,14 +38,6 @@ public class NoteTaggingTest {
 
         Note[] notes = activityTestRule.getActivity().adapter.getNotes();
         Assert.assertTrue(notes.length > 0);
-
-        Note note = notes[0];
-        List<Tag> tags = note.getTags();
-
-        Assert.assertFalse(tags.isEmpty());
-
-        Tag t1 = tags.get(0);
-        Assert.assertTrue(t1.getContent().equals("yoappsucsass"));
 
     }
 
