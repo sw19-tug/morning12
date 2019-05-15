@@ -1,0 +1,24 @@
+<resources>
+    <string name="app_name">Bilješke</string>
+    <string name="sort_title">Naslov</string>
+    <string name="sort_creationdate">Datum stvaranja</string>
+
+    <string name="pin_note">Zabilježi</string>
+    <string name="delete_note">Izbriši</string>
+    <string name="share_note">Podijeli</string>
+
+    <string name="dummy_text">Nevažan tekst</string>
+    <string name="create_note_description">Stvori i uredi bilješku</string>
+    <string name="Create">Stvori novu bilješku</string>
+    <string name="Edit">Uredi bilješku</string>
+    <string name="Confirm_bt">Potvrdi</string>
+    <string name="Abort_bt">Prekid</string>
+    <string name="Title">Naslov:</string>
+    <string name="Body_hint">Unesi tekst ovdje:</string>
+    <string name="export_bt">Pošalji bilješke</string>
+    <string name="tag_information"><![CDATA[To tag a note write \"#<tag> \" into the text body for every tag you want to add, where <tag> is replaced by the wanted tag]]></string>
+
+    <string name="import_string">Unesi bilješke</string>
+    <string name="export_string">Unesi bilješke</string>
+    <string name="local_string">Promijeni jezik</string>
+</resources>
