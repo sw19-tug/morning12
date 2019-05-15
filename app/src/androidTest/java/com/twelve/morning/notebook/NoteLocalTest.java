@@ -36,4 +36,16 @@ public class NoteLocalTest {
 
         onView(withText("Select Language")).check(matches(isDisplayed()));
     }
+
+    @Test
+    public void openChangeLanguagePopup () {
+        Espresso.openContextualActionModeOverflowMenu();
+        onView(withText(R.string.local_string)).check(matches(isDisplayed()));
+        onView(withText(R.string.local_string)).perform(click());
+
+        onView(withText("Select Language")).check(matches(isDisplayed()));
+        onView(withText("Deutsch")).perform(click());
+        Espresso.openContextualActionModeOverflowMenu();
+        onView(withText("Sprache auswählen")).check(matches(isDisplayed()));
+    }
 }

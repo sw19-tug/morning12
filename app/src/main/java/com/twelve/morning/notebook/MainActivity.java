@@ -2,6 +2,8 @@ package com.twelve.morning.notebook;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
@@ -69,10 +71,21 @@ public class MainActivity extends AppCompatActivity {
             case R.id.bt_export:
                 ShareManager.getStoragePermission(this);
                 String zipFileName = "exported_notes.zip";
-                Note[] notesToEport = DatabaseWrapper.getInstance().getNotes(Sorting.TITLE);
-                ShareManager.zip(notesToEport, zipFileName);
+                Note[] notesToExport = DatabaseWrapper.getInstance().getNotes(Sorting.TITLE);
+                ShareManager.zip(notesToExport, zipFileName);
                 startActivity(ShareManager.shareZipFile(zipFileName));
                 return true;
+            case R.id.bt_local:
+                String[] languages = {"English", "Deutsch"};
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setTitle("Select Language");
+                builder.setItems(languages, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // the user clicked on language[which]
+                    }
+                });
+                builder.show();
             default:
                 return super.onOptionsItemSelected(item);
         }
