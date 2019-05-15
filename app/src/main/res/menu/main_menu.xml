@@ -6,4 +6,6 @@
         android:title="@string/import_string"/>
     <item android:id="@+id/bt_export"
         android:title="@string/export_string"/>
+    <item android:id="@+id/bt_local"
+        android:title="@string/local_string"/>
 </menu>
