@@ -26,6 +26,7 @@ public class Note implements Serializable {
     @ColumnInfo(name = "Pinned")
     private Boolean pinned = false;
 
+
     Note()
     {
         creationDate = new Date();
