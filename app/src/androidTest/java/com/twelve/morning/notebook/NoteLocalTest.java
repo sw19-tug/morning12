@@ -38,7 +38,7 @@ public class NoteLocalTest {
     }
 
     @Test
-    public void openChangeLanguagePopup () {
+    public void changeLanguage () {
         Espresso.openContextualActionModeOverflowMenu();
         onView(withText(R.string.local_string)).check(matches(isDisplayed()));
         onView(withText(R.string.local_string)).perform(click());

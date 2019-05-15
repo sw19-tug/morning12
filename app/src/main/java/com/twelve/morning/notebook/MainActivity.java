@@ -3,9 +3,11 @@ package com.twelve.morning.notebook;
 import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Environment;
 import android.support.annotation.RequiresApi;
@@ -33,6 +35,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
+import java.util.Locale;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 import java.util.zip.ZipOutputStream;
@@ -44,13 +47,29 @@ public class MainActivity extends AppCompatActivity {
     public NotesListAdapter adapter = null;
     private Sorting sorting = Sorting.CREATION;
 
+    static private boolean firstLaunch = true;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         DatabaseWrapper.getInstance().createDatabase(getApplicationContext());
+
+
+        if(firstLaunch){
+            firstLaunch = false;
+            Locale locale = new Locale("de");
+            Locale.setDefault(locale);
+            Configuration config = new Configuration();
+            config.locale = locale;
+            getResources().updateConfiguration(
+                    config,
+                    getResources().getDisplayMetrics()
+            );
+        }
         setContentView(R.layout.activity_main);
         setupButtons();
         reloadNotes(sorting);
+
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -82,7 +101,13 @@ public class MainActivity extends AppCompatActivity {
                 builder.setItems(languages, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        // the user clicked on language[which]
+                        String language = "en";
+                        switch (which){
+                            case 0: language = "en"; break;
+                            case 1: language = "de"; break;
+                        }
+                        LocaleHelper.setLocale(MainActivity.this, language);
+                        recreate();
                     }
                 });
                 builder.show();

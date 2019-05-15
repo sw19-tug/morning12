@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Notebook</string>
+    <string name="sort_title">Titel</string>
+    <string name="sort_creationdate">Erstellt</string>
+
+    <string name="pin_note">Pin</string>
+    <string name="delete_note">Löschen</string>
+    <string name="share_note">Teilen</string>
+
+    <string name="dummy_text">Dummy Text</string>
+    <string name="create_note_description">Erstelle und bearbeite eine Notiz</string>
+    <string name="Create">Erstelle eine neue Notiz</string>
+    <string name="Edit">Bearbeite Notiz</string>
+    <string name="Confirm_bt">OK</string>
+    <string name="Abort_bt">Abbrechen</string>
+    <string name="Title">Titel:</string>
+    <string name="Body_hint">Enter Text here:</string>
+    <string name="export_bt">Export notes</string>
+    <string name="tag_information"><![CDATA[To tag a note write \"#<tag> \" into the text body for every tag you want to add, where <tag> is replaced by the wanted tag]]></string>
+
+    <string name="import_string">Importiere Notizen</string>
+    <string name="export_string">Exportiere Notizen</string>
+    <string name="local_string">Sprache ändern</string>
+</resources>
