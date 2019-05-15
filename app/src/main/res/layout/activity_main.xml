@@ -42,15 +42,6 @@
     </LinearLayout>
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/bt_export"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:clickable="true"
-        android:layout_gravity="bottom|left"
-        tools:src="@drawable/ic_add"
-        android:layout_margin="20sp"/>
-
-    <android.support.design.widget.FloatingActionButton
         android:id="@+id/bt_create"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
