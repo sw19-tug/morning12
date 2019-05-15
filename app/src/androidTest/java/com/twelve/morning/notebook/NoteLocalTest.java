@@ -46,6 +46,6 @@ public class NoteLocalTest {
         onView(withText("Select Language")).check(matches(isDisplayed()));
         onView(withText("Deutsch")).perform(click());
         Espresso.openContextualActionModeOverflowMenu();
-        onView(withText("Sprache auswählen")).check(matches(isDisplayed()));
+        onView(withText("Sprache ändern")).check(matches(isDisplayed()));
     }
 }
