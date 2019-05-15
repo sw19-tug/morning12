@@ -1,6 +1,8 @@
 package com.twelve.morning.notebook;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -117,15 +119,20 @@ public class EditNoteActivity extends AppCompatActivity {
     }
 
     private void finishEditNoteActivity(final SearchView searchView){
+        Intent intent = getIntent();
+        final Note note = (Note)intent.getSerializableExtra("note");
+        final Activity self = this;
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                int position = TextSearcher.GetInstance().SearchNextInstance(last_edited_note, query);
-                if(position == -1)
+                System.out.println("onQueryTextSubmit "+query);
+                int position = TextSearcher.GetInstance().SearchNextInstance(note, query);
+                if(position == -1){
+                    showAlert("Warning", "'"+query+"' not found", "Ok");
                     return false;
+                }
                 else{
-                    Activity activity = null; //Needs to be proper activity
-                    TextSearcher.GetInstance().highlightText(activity, last_edited_note, position, query.length());
+                    TextSearcher.GetInstance().highlightText(self, note, position, query.length());
                 }
 
                 return true;
@@ -136,5 +143,19 @@ public class EditNoteActivity extends AppCompatActivity {
                 return true;
             }
         });
+    }
+
+    private void showAlert(String title, String message, String positive_message) {
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+        alert.setPositiveButton(positive_message, new DialogInterface.OnClickListener(){
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+        alert.setTitle(title);
+        alert.setMessage(message);
+
+        alert.create().show();
     }
 }

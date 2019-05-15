@@ -17,6 +17,7 @@ import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
+import static org.junit.Assert.assertEquals;
 
 public class SearchTest {
 
@@ -35,6 +36,23 @@ public class SearchTest {
 
         onView(withText(title_input)).perform(click());
 
-        onView(R.id.search_bar).check(matches(isDisplayed()));
+        onView(withId(R.id.search_view_find_text)).check(matches(isDisplayed()));
     }
+
+    @Test
+    public void textSearcherTest() {
+        Note note = new Note();
+        note.setBody("abcabcabcabcabcabc");
+
+        int pos = TextSearcher.GetInstance().SearchNextInstance(note, "abc");
+        assertEquals(0, pos);
+
+        pos = TextSearcher.GetInstance().SearchNextInstance(note, "abc");
+        assertEquals(3, pos);
+
+        pos = TextSearcher.GetInstance().SearchNextInstance(note, "dummy");
+        assertEquals(-1, pos);
+    }
+
+
 }

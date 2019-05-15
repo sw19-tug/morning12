@@ -9,6 +9,7 @@
     android:orientation="vertical"
     android:padding="20dip">
 
+
     <TextView
         android:id="@+id/TextView2"
         android:layout_width="match_parent"
@@ -18,6 +19,7 @@
         android:textColor="@color/colorPrimaryDark"
         android:textSize="25sp"
         android:textStyle="bold" />
+
 
     <EditText
         android:id="@+id/et_edit_note_title"
@@ -32,46 +34,53 @@
         android:maxLength="30"
         android:maxLines="1" />
 
-    <EditText
-        android:id="@+id/et_edit_note_body"
-        android:layout_width="fill_parent"
+    <ScrollView
+        android:id="@+id/scrollview"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/et_edit_note_title"
-        android:layout_marginTop="32dp"
-        android:ems="10"
-        android:gravity="top"
-        android:hint="@string/Body_hint"
-        android:inputType="textMultiLine"
-        android:maxLength="2000"
-        android:maxLines="13"
-        android:minHeight="50pt" />
+        android:layout_marginTop="32dp">
 
-    <Button
-        android:id="@+id/bt_edit_note_create_save"
-        android:layout_width="70pt"
-        android:layout_height="20pt"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
-        android:background="@color/colorPrimary"
-        android:text="@string/Confirm_bt" />
+        <EditText
+            android:id="@+id/et_edit_note_body"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:gravity="top"
+            android:hint="@string/Body_hint"
+            android:inputType="textMultiLine"
+            android:maxLength="2000"
+            android:maxLines="13"
+            android:minHeight="50pt" />
 
-    <Button
-        android:id="@+id/bt_edit_note_create_cancel"
-        android:layout_width="70pt"
-        android:layout_height="20pt"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentBottom="true"
-        android:background="@color/BackgroundGrey"
-        android:text="@string/Abort_bt"
+    </ScrollView>
 
-        />
 
-    <SearchView
-        android:id="@+id/search_view_find_text"
-        android:layout_width="372dp"
-        android:layout_height="27dp"
-        android:queryHint="Search for Text"
-        android:layout_below="@+id/TextView2"
-        android:layout_marginTop="32dp" />
+        <SearchView
+            android:id="@+id/search_view_find_text"
+            android:layout_width="372dp"
+            android:layout_height="27dp"
+            android:queryHint="Search for Text"
+            android:layout_below="@+id/TextView2"
+            android:layout_marginTop="32dp" />
 
+        <Button
+            android:id="@+id/bt_edit_note_create_save"
+            android:layout_width="70pt"
+            android:layout_height="20pt"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:background="@color/colorPrimary"
+            android:text="@string/Confirm_bt" />
+
+        <Button
+            android:id="@+id/bt_edit_note_create_cancel"
+            android:layout_width="70pt"
+            android:layout_height="20pt"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentBottom="true"
+            android:background="@color/BackgroundGrey"
+            android:text="@string/Abort_bt"
+
+            />
 </RelativeLayout>
