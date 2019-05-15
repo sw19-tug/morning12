@@ -41,17 +41,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         setupButtons();
         reloadNotes(sorting);
-        exportNotes();      
-
-//        list_view.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-//                Intent intent = new Intent(MainActivity.this, EditNoteActivity.class);
-//                Note note = (Note)adapterView.getItemAtPosition(i);
-//                intent.putExtra("note", note);
-//                startActivity(intent);
-//            }
-//        });
+        exportNotes();
     }
   
     protected void onResume() {
@@ -106,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 String zipFileName = "exported_notes.zip";
-                //zip(notes, zipFileName);
+//                zip(notes, zipFileName);
                 shareZipFile(zipFileName);
             }
         });

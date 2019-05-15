@@ -7,6 +7,7 @@ import android.support.test.runner.AndroidJUnit4;
 import android.widget.EditText;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -25,7 +26,6 @@ import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static junit.framework.TestCase.assertNotNull;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
-
 
 @RunWith(AndroidJUnit4.class)
 public class EditNoteTest {
@@ -87,14 +87,14 @@ public class EditNoteTest {
 
     @Test
     public void testIfNoteIsActuallyEdited() {
-        String title_input = "dummyTitle";
-        String body_input = "dummyBodydummyBodydummyBodydummyBodydummyBodydummyBody";
+        String title_input_2 = "dummyTitle2";
+        String body_input_2 = "dummyBodydummyBodydummyBodydummyBodydummyBodydummyBody2";
         onView(withId(R.id.bt_create)).perform(click());
-        onView(withId(R.id.et_note_title)).perform(clearText(), typeText(title_input));
-        onView(withId(R.id.et_note_body)).perform(clearText(), typeText(body_input))
+        onView(withId(R.id.et_note_title)).perform(clearText(), typeText(title_input_2));
+        onView(withId(R.id.et_note_body)).perform(clearText(), typeText(body_input_2))
                 .perform(closeSoftKeyboard());
         onView(withId(R.id.bt_note_create_save)).perform(click());
-        onView(withText(title_input)).perform(click());
+        onView(withText(title_input_2)).perform(click());
         String new_title = "newTitle";
         String new_body = "newBody";
         onView(withId(R.id.et_edit_note_title)).perform(clearText(), typeText(new_title), closeSoftKeyboard());

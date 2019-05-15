@@ -24,7 +24,6 @@ public class Note implements Serializable {
         this.body = "";
         this.creation_date = new Date();
         this.tags = new ArrayList<>();
-        //this.tags.add("#testTag");
     }
 
     public Note(String title, String body){
@@ -32,7 +31,6 @@ public class Note implements Serializable {
         this.body = body;
         this.creation_date = new Date();
         this.tags = new ArrayList<>();
-        //this.tags.add("#testTag");
     }
 
     public Note(String title, String body, List<Tag> tags){
@@ -40,7 +38,6 @@ public class Note implements Serializable {
         this.body = body;
         this.creation_date = new Date();
         this.tags = tags;
-        //this.tags.add("#testTag");
     }
 
     public void setBody(String body) {
