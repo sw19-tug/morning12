@@ -40,8 +40,7 @@ public class NoteDarkmodeTest {
         Espresso.pressBack();
 
         TypedArray day_values = activityTestRule.getActivity().getTheme().obtainStyledAttributes(new int[] {
-                android.R.attr.colorBackground,
-                android.R.attr.textColorPrimary,
+                android.R.attr.windowBackground
         });
 
         Espresso.openContextualActionModeOverflowMenu();
