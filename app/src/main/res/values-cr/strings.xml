@@ -3,7 +3,7 @@
     <string name="sort_title">Naslov</string>
     <string name="sort_creationdate">Datum stvaranja</string>
 
-    <string name="pin_note">Zabilježi</string>
+    <string name="pin_note">Označi</string>
     <string name="delete_note">Izbriši</string>
     <string name="share_note">Podijeli</string>
 
@@ -16,7 +16,7 @@
     <string name="Title">Naslov:</string>
     <string name="Body_hint">Unesi tekst ovdje:</string>
     <string name="export_bt">Pošalji bilješke</string>
-    <string name="tag_information"><![CDATA[To tag a note write \"#<tag> \" into the text body for every tag you want to add, where <tag> is replaced by the wanted tag]]></string>
+    <string name="tag_information"><![CDATA[Za označiti bilješku napišite \"#<oznaka>\" unutar teksta za svaku oznaku koju želite dodati, gdje je <oznaka> zamijenjena sa željenom oznakom]]></string>
 
     <string name="import_string">Unesi bilješke</string>
     <string name="export_string">Unesi bilješke</string>
