@@ -71,7 +71,7 @@ public class DatabaseWrapper {
             });
         }
 
-        if (sorting == Sorting.TITLE) {
+        else if (sorting == Sorting.TITLE) {
             Arrays.sort(tmp, new Comparator<Note>() {
                 @Override
                 public int compare(Note o1, Note o2) {
@@ -86,7 +86,7 @@ public class DatabaseWrapper {
             });
         }
 
-        if (sorting == Sorting.SIZE) {
+        else if (sorting == Sorting.SIZE) {
             Arrays.sort(tmp, new Comparator<Note>() {
                 @Override
                 public int compare(Note o1, Note o2) {
@@ -96,10 +96,7 @@ public class DatabaseWrapper {
                     if (!o1.getPinned() && o2.getPinned()){
                         return 1;
                     }
-                    if(o1.getBody().length() > o2.getBody().length()) {
-                        return 1;
-                    }
-                    return -1;
+                    return o2.getBody().trim().length() - o1.getBody().trim().length();
                 }
             });
         }
