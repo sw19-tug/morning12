@@ -90,10 +90,16 @@ public class DatabaseWrapper {
             Arrays.sort(tmp, new Comparator<Note>() {
                 @Override
                 public int compare(Note o1, Note o2) {
-                    if(o1.getBody().length() > o2.getBody().length()) {
+                    if (o1.getPinned() && !o2.getPinned()){
+                        return -1;
+                    }
+                    if (!o1.getPinned() && o2.getPinned()){
                         return 1;
                     }
-                    return -1;
+                    if(o1.getBody().length() > o2.getBody().length()) {
+                        return -1;
+                    }
+                    return 1;
                 }
             });
         }
