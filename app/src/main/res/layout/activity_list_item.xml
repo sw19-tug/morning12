@@ -31,6 +31,8 @@
             android:layout_centerVertical="true"
             android:layout_alignParentLeft="true"
             android:paddingLeft="8dp"
+            android:maxLines="2"
+            android:paddingRight="30dp"
             android:textSize="18sp"
             android:text="tmp"/>
 
