@@ -15,14 +15,12 @@
     <string name="Abort_bt">Abort</string>
     <string name="Title">Title:</string>
     <string name="Body_hint">Enter Text here:
-    <![CDATA[\n\nTo tag a note write \"#<tag> \" into the text body for every tag
-     you want to add, where <tag> is replaced by the wanted tag]]>
+    <![CDATA[\n\nTo tag a note write \"#<tag> \" into the text body for every tag you want to add, where <tag> is replaced by the wanted tag]]>
     </string>
     <string name="export_bt">Export notes</string>
     <string name="darkmode_bt">Darkmode</string>
     <string name="night_mode">Night Mode</string>
     <string name="day_mode">Day Mode</string>
-    <string name="tag_information"></string>
     <string name="import_string">Import notes</string>
     <string name="export_string">Export notes</string>
 </resources>
