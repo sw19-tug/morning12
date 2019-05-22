@@ -81,7 +81,7 @@ public class DatabaseWrapper {
                     if (!o1.getPinned() && o2.getPinned()){
                         return 1;
                     }
-                    return o1.getTitle().compareTo(o2.getTitle());
+                    return o1.getTitle().toUpperCase().compareTo(o2.getTitle().toUpperCase());
                 }
             });
         }
@@ -97,9 +97,9 @@ public class DatabaseWrapper {
                         return 1;
                     }
                     if(o1.getBody().length() > o2.getBody().length()) {
-                        return -1;
+                        return 1;
                     }
-                    return 1;
+                    return -1;
                 }
             });
         }
