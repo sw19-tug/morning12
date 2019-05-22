@@ -32,7 +32,7 @@ public class NoteURLTest {
 
         onView(withId(R.id.bt_create)).perform(click());
         onView(withId(R.id.et_note_title)).perform(typeText("Note " + rand), closeSoftKeyboard());
-        onView(withId(R.id.et_note_body)).perform(typeText("Body https://gitignore.io"), closeSoftKeyboard());
+        onView(withId(R.id.et_note_body)).perform(typeText("Body https://gitignore.io lelelelele hiho"), closeSoftKeyboard());
         onView(withId(R.id.bt_note_create_save)).perform(click());
 
         onView(withText("A" + rand)).perform(click());

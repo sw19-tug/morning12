@@ -3,6 +3,12 @@ package com.twelve.morning.notebook;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.Html;
+import android.text.Spannable;
+import android.text.TextWatcher;
+import android.text.method.LinkMovementMethod;
+import android.text.util.Linkify;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -61,11 +67,32 @@ public class EditNoteActivity extends AppCompatActivity {
         }
     }
 
+
+
     private void fillTitleBody()
     {
         Intent intent = getIntent();
         Note note = (Note)intent.getSerializableExtra("note");
         EditText edit_text_title = this.findViewById(R.id.et_edit_note_title);
+        TextView textView = (TextView) findViewById(R.id.et_edit_note_body);
+        textView.addTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                Linkify.addLinks((Spannable) s, Linkify.WEB_URLS);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                Linkify.addLinks(s, Linkify.WEB_URLS);
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                // Nothing to do
+            }
+
+        });
         EditText edit_text_body = this.findViewById(R.id.et_edit_note_body);
         edit_text_title.setText(note.getTitle());
         edit_text_body.setText(note.getBody());
