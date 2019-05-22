@@ -6,7 +6,6 @@ import android.arch.persistence.room.PrimaryKey;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 
 @Entity(tableName = "noteTable")
 public class Note implements Serializable {

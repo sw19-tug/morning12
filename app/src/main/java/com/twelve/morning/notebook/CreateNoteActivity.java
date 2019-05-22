@@ -41,8 +41,6 @@ public class CreateNoteActivity extends AppCompatActivity {
             Tag tag = new Tag(tag1);
             Tags.add(tag);
         }
-        //last_saved_note.setTags(Tags);
-        System.out.println(Tags);
 
         DatabaseWrapper.getInstance().addNote(new Note(title_text, body_text));
     }

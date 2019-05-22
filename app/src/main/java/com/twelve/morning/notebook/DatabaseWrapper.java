@@ -17,8 +17,6 @@ public class DatabaseWrapper {
 
     private DatabaseWrapper()
     {
-        //context = context.getApplicationContext();
-        //noteDatabase = Room.databaseBuilder(context, NoteDatabase.class, DB_NAME).allowMainThreadQueries().build();
     }
 
     private ArrayList<Note> notes = new ArrayList<>();
@@ -39,19 +37,14 @@ public class DatabaseWrapper {
         noteDatabase.close();
     }
 
-    // add new note
     public int addNote(Note new_note) {
-        //notes.add(new_note);
         noteDatabase.daoAccess().InsertNote(new_note);
         List<Note> notes = noteDatabase.daoAccess().loadAllNotes();
 
         return notes.get(notes.size()-1).getId();
     }
 
-    // get all notes
     public Note[] getNotes(Sorting sorting) {
-        //Note[] tmp = new Note[notes.size()];
-        //notes.toArray(tmp);
         List<Note> notes = noteDatabase.daoAccess().loadAllNotes();
         Note[] tmp = new Note[notes.size()];
         notes.toArray(tmp);
@@ -101,7 +94,6 @@ public class DatabaseWrapper {
     }
   
     public void reset(){
-        //this.notes.clear();
         noteDatabase.daoAccess().deleteTable();
     }
   
