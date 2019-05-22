@@ -33,7 +33,6 @@ public class NoteTaggingTest {
 
         Note[] notes = activityTestRule.getActivity().adapter.getNotes();
         Assert.assertTrue(notes.length > 0);
-
     }
 
     @Test
