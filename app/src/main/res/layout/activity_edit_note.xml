@@ -38,8 +38,14 @@
         android:id="@+id/scrollview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_above="@+id/bt_edit_note_create_save"
         android:layout_below="@+id/et_edit_note_title"
-        android:layout_marginTop="32dp">
+        android:layout_marginTop="15dp"
+        android:maxLength="2000"
+        android:ems="10"
+        android:hint="@string/Body_hint"
+        android:gravity="top"
+        android:inputType="textMultiLine"/>
 
         <EditText
             android:id="@+id/et_edit_note_body"
@@ -54,7 +60,6 @@
             android:minHeight="50pt" />
 
     </ScrollView>
-
 
         <SearchView
             android:id="@+id/search_view_find_text"
