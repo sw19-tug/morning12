@@ -37,11 +37,8 @@ public class TextSearcher {
         System.out.println("SearchNextInstance "+currentPos+" last: "+lastPos);
         if(currentPos == -1)
         {
-            //noteBody doesent contain text
             if(lastPos == 0)
                 return -1;
-
-            //set currentPos to the first occurrence of text
             currentPos = note.getBody().indexOf(text, 0);
         }
 
@@ -50,10 +47,8 @@ public class TextSearcher {
     }
 
 
-    //I dont know how to get the correct activity, so im passing it for now
     static public void highlightText(Activity activity, Note note, int position, int size)
     {
-        //assume all lines are visible and we need to just highlight the searchedText
         TextSearcher.removePreviousHighlight(activity);
 
         moveToCharacter(activity, position);
@@ -83,38 +78,4 @@ public class TextSearcher {
         Layout layout = textView.getLayout();
         sv.smoothScrollTo(0, layout.getLineTop(layout.getLineForOffset(position)));
     }
-
-    static private boolean allLinesVisible()
-    {
-        return true;
-    }
-
-    static private void pointToText(Activity activity, int position)
-    {
-        ScrollView sv = activity.findViewById(R.id.scrollview);
-        EditText textView = activity.findViewById(R.id.scrollview);
-        Layout layout = textView.getLayout();
-        sv.smoothScrollTo(0, layout.getLineTop(layout.getLineForOffset(position)));
-    }
-
-    static private boolean textCurrentlyVisible(int position)
-    {
-        return true;
-    }
-
-    static private boolean moveToTopPossible(int position)
-    {
-        return true;
-    }
-
-    static private void moveLineToTop(int position)
-    {
-
-    }
-
-    static private void moveToTextBodyEnd()
-    {
-
-    }
-
 }

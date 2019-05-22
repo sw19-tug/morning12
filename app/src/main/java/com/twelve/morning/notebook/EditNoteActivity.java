@@ -43,7 +43,6 @@ public class EditNoteActivity extends AppCompatActivity {
 
     public boolean onOptionsItemSelected(MenuItem item) {
 
-
         Intent intent = getIntent();
         Note note = (Note)intent.getSerializableExtra("note");
 
@@ -105,7 +104,6 @@ public class EditNoteActivity extends AppCompatActivity {
                     for (String tag1 : tags) {
                         Tag tag = new Tag(tag1);
                         Tags.add(tag);
-                        //note.setTags(Tags);
                     }
 
                     note.save();

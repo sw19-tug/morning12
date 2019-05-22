@@ -69,14 +69,6 @@ public class EditNoteTest {
         onView(withId(R.id.bt_create)).check(matches(isDisplayed()));
     }
 
-//    @Test
-//    public void returnToMainActivityBySave(){
-//        onView(withText(title_input)).perform(click());
-//        onView(withId(R.id.rl_edit_note)).check(matches(isDisplayed()));
-//        onView(withId(R.id.bt_edit_note_create_save)).perform(click());
-//        onView(withId(R.id.bt_create)).check(matches(isDisplayed()));
-//    }
-
     @Test
     public void listItemTextIsPassedToEditNote(){
         onView(withText(title_input)).perform(click());
