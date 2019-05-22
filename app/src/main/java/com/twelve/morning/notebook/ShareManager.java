@@ -29,7 +29,6 @@ public class ShareManager {
             byte data[] = new byte[BUFFER];
 
             for (int i = 0; i < _notes.length; i++) {
-                //FileInputStream fi = new FileInputStream(_files[i]);
                 InputStream inputStream = new ByteArrayInputStream(_notes[i].getBody().getBytes(StandardCharsets.UTF_8));
                 noteBuffered = new BufferedInputStream(inputStream, BUFFER);
 

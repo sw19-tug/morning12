@@ -24,7 +24,6 @@ import static org.junit.Assert.*;
 
 @RunWith(AndroidJUnit4.class)
 public class DbTest {
-    //private NoteRepository testdb;
     private NoteDatabase testdb;
     private DaoAccess myDao;
     private Context context;
@@ -32,14 +31,12 @@ public class DbTest {
     @Before
     public void setup() {
         context = InstrumentationRegistry.getContext();
-        //testdb = new NoteRepository(context);
         testdb = Room.inMemoryDatabaseBuilder(context, NoteDatabase.class).build();
         myDao = testdb.daoAccess();
     }
 
     @After
     public void closeDB() throws IOException {
-        //testdb.CloseDb();
         testdb.close();
     }
 

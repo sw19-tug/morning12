@@ -6,19 +6,14 @@ import android.app.Instrumentation;
 import android.content.Intent;
 import android.support.test.espresso.Espresso;
 import android.support.test.espresso.intent.Intents;
-import android.support.test.espresso.intent.matcher.IntentMatchers;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
-import android.widget.EditText;
 
 import org.hamcrest.Matcher;
-import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import java.util.concurrent.TimeUnit;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.clearText;
@@ -37,8 +32,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static junit.framework.TestCase.assertNotNull;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
+
 
 @RunWith(AndroidJUnit4.class)
 public class EditNoteTest {
@@ -128,12 +122,10 @@ public class EditNoteTest {
         Instrumentation.ActivityResult result =
                 new Instrumentation.ActivityResult(Activity.RESULT_OK, new Intent());
         DatabaseWrapper.getInstance().reset();
-        // create note
         onView(withId(R.id.bt_create)).perform(click());
         onView(withId(R.id.et_note_title)).perform(typeText("XXXX"), closeSoftKeyboard());
         onView(withId(R.id.bt_note_create_save)).perform(click());
 
-        // open created note
         onView(withText("XXXX")).perform(click());
         Espresso.openContextualActionModeOverflowMenu();
         Intents.init();
@@ -145,7 +137,6 @@ public class EditNoteTest {
                 hasExtra(Intent.EXTRA_TEXT, "Sharing exported notes")
         )));
         Intents.release();
-        //onView(withText("share " + "XXXX.zip")).perform(click());
     }
 
 

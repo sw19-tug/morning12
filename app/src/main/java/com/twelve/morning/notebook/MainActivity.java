@@ -1,42 +1,28 @@
 package com.twelve.morning.notebook;
 
-import android.Manifest;
-import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.content.res.Configuration;
-import android.os.Build;
-import android.os.Environment;
-import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatDelegate;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
-import android.net.Uri;
 import android.widget.Toast;
 
 import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.ByteArrayInputStream;
-import java.io.File;
+
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
+
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.charset.StandardCharsets;
+
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
-import java.util.zip.ZipOutputStream;
+
 
 
 public class MainActivity extends AppCompatActivity {
@@ -182,7 +168,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
         Button sort_date_button = findViewById(R.id.bt_sort_by_creation);
-
         sort_date_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -192,11 +177,19 @@ public class MainActivity extends AppCompatActivity {
         });
 
         Button sort_title_button = findViewById(R.id.bt_sort_by_title);
-
         sort_title_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 sorting = Sorting.TITLE;
+                reloadNotes(sorting);
+            }
+        });
+
+        Button sort_size_button = findViewById(R.id.bt_sort_by_size);
+        sort_size_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                sorting = Sorting.SIZE;
                 reloadNotes(sorting);
             }
         });

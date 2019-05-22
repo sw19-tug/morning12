@@ -2,6 +2,7 @@
     <string name="app_name">Notebook</string>
     <string name="sort_title">Title</string>
     <string name="sort_creationdate">Creation</string>
+    <string name="sort_size">Size</string>
 
     <string name="pin_note">Pin</string>
     <string name="delete_note">Delete</string>
