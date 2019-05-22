@@ -19,8 +19,7 @@ public class DatabaseWrapper {
     {
     }
 
-    private Arraysystem.out
-    List<Note> notes = new ArrayList<>();
+    private ArrayList<Note> notes = new ArrayList<>();
 
     public static DatabaseWrapper getInstance() {
         return singleton;
