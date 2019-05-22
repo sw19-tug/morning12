@@ -22,9 +22,9 @@ public class LandscapeTest {
 
 
     @Test
-    public void MainActivityViewChangesToLandscape{
+    public void MainActivityViewChangesToLandscape(){
         activityMainTestRule.getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-        onView(withId(R.id.rl_create_note)).check(matches(isDisplayed()));
+        onView(withId(R.id.bt_create)).check(matches(isDisplayed()));
         activityMainTestRule.getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
     }
 
