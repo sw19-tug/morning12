@@ -32,6 +32,13 @@
                 android:layout_height="wrap_content"
                 android:text="@string/sort_creationdate"
                 android:layout_weight="1"/>
+
+            <Button
+                android:id="@+id/bt_sort_by_size"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/sort_size"
+                android:layout_weight="1"/>
         </LinearLayout>
 
 
