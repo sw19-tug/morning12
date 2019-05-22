@@ -24,6 +24,7 @@ public class NoteSortingTest {
     public void testSortingButtonsAreDisplayed() {
         onView(withId(R.id.bt_sort_by_title)).check(matches(isDisplayed()));
         onView(withId(R.id.bt_sort_by_creation)).check(matches(isDisplayed()));
+        onView(withId(R.id.bt_sort_by_size)).check(matches(isDisplayed()));
     }
 
     @Test
@@ -31,10 +32,12 @@ public class NoteSortingTest {
 
         onView(withId(R.id.bt_create)).perform(click());
         onView(withId(R.id.et_note_title)).perform(typeText("A"), closeSoftKeyboard());
+        onView(withId(R.id.et_edit_note_body)).perform(typeText("ABC"), closeSoftKeyboard());
         onView(withId(R.id.bt_note_create_save)).perform(click());
 
         onView(withId(R.id.bt_create)).perform(click());
         onView(withId(R.id.et_note_title)).perform(typeText("B"), closeSoftKeyboard());
+        onView(withId(R.id.et_edit_note_body)).perform(typeText("ABCDEF"), closeSoftKeyboard());
         onView(withId(R.id.bt_note_create_save)).perform(click());
 
         Note[] notes = activityTestRule.getActivity().adapter.getNotes();
@@ -47,6 +50,11 @@ public class NoteSortingTest {
         Assert.assertTrue(notes[1].getTitle().equals("B"));
 
         onView(withId(R.id.bt_sort_by_creation)).perform(click());
+        notes = activityTestRule.getActivity().adapter.getNotes();
+        Assert.assertTrue(notes[0].getTitle().equals("B"));
+        Assert.assertTrue(notes[1].getTitle().equals("A"));
+
+        onView(withId(R.id.bt_sort_by_size)).perform(click());
         notes = activityTestRule.getActivity().adapter.getNotes();
         Assert.assertTrue(notes[0].getTitle().equals("B"));
         Assert.assertTrue(notes[1].getTitle().equals("A"));
