@@ -85,6 +85,19 @@ public class DatabaseWrapper {
                 }
             });
         }
+
+        if (sorting == Sorting.SIZE) {
+            Arrays.sort(tmp, new Comparator<Note>() {
+                @Override
+                public int compare(Note o1, Note o2) {
+                    if(o1.getBody().length() > o2.getBody().length()) {
+                        return 1;
+                    }
+                    return -1;
+                }
+            });
+        }
+
         return tmp;
     }
 
@@ -122,5 +135,6 @@ public class DatabaseWrapper {
 
 enum Sorting {
     CREATION,
-    TITLE
+    TITLE,
+    SIZE
 }
