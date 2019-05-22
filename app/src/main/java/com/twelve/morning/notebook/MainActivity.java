@@ -168,7 +168,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
         Button sort_date_button = findViewById(R.id.bt_sort_by_creation);
-
         sort_date_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -178,11 +177,19 @@ public class MainActivity extends AppCompatActivity {
         });
 
         Button sort_title_button = findViewById(R.id.bt_sort_by_title);
-
         sort_title_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 sorting = Sorting.TITLE;
+                reloadNotes(sorting);
+            }
+        });
+
+        Button sort_size_button = findViewById(R.id.bt_sort_by_size);
+        sort_size_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                sorting = Sorting.SIZE;
                 reloadNotes(sorting);
             }
         });

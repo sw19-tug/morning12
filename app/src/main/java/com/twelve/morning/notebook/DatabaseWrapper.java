@@ -64,7 +64,7 @@ public class DatabaseWrapper {
             });
         }
 
-        if (sorting == Sorting.TITLE) {
+        else if (sorting == Sorting.TITLE) {
             Arrays.sort(tmp, new Comparator<Note>() {
                 @Override
                 public int compare(Note o1, Note o2) {
@@ -74,10 +74,26 @@ public class DatabaseWrapper {
                     if (!o1.getPinned() && o2.getPinned()){
                         return 1;
                     }
-                    return o1.getTitle().compareTo(o2.getTitle());
+                    return o1.getTitle().toUpperCase().compareTo(o2.getTitle().toUpperCase());
                 }
             });
         }
+
+        else if (sorting == Sorting.SIZE) {
+            Arrays.sort(tmp, new Comparator<Note>() {
+                @Override
+                public int compare(Note o1, Note o2) {
+                    if (o1.getPinned() && !o2.getPinned()){
+                        return -1;
+                    }
+                    if (!o1.getPinned() && o2.getPinned()){
+                        return 1;
+                    }
+                    return o2.getBody().trim().length() - o1.getBody().trim().length();
+                }
+            });
+        }
+
         return tmp;
     }
 
@@ -114,5 +130,6 @@ public class DatabaseWrapper {
 
 enum Sorting {
     CREATION,
-    TITLE
+    TITLE,
+    SIZE
 }
