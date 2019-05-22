@@ -38,6 +38,7 @@ public class CreateNoteActivityTest {
         onView(withId(R.id.et_note_body)).check(matches(isDisplayed()));
         onView(withId(R.id.bt_note_create_save)).check(matches(isDisplayed()));
         onView(withId(R.id.bt_note_create_cancel)).check(matches(isDisplayed()));
+        onView(withId(R.id.bt_note_create_cancel)).perform(click());
     }
 
     @Test
