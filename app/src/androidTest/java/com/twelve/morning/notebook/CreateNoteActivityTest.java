@@ -60,12 +60,7 @@ public class CreateNoteActivityTest {
         onView(withId(R.id.bt_create)).check(matches(isDisplayed()));
     }
 
-//    @Test
-//    public void returnToMainActivityBySave(){
-//        onView(withId(R.id.rl_create_note)).check(matches(isDisplayed()));
-//        onView(withId(R.id.bt_note_create_save)).perform(click());
-//        onView(withId(R.id.bt_create)).check(matches(isDisplayed()));
-//    }
+
 
     @Test
     public void testCorrectNoteCreation(){
@@ -84,19 +79,7 @@ public class CreateNoteActivityTest {
 
     }
 
-//    @Test
-//    public void testIncorrectNoteCreation(){
-//        String title_input = "";
-//        String body_input = "";
-//        onView(withId(R.id.rl_create_note)).check(matches(isDisplayed()));
-//        onView(withId(R.id.et_note_title)).perform(clearText(), typeText(title_input));
-//        onView(withId(R.id.et_note_body)).perform(clearText(), typeText(body_input))
-//                .perform(closeSoftKeyboard());
-//        onView(withId(R.id.bt_note_create_save)).check(matches(isDisplayed()));
-//        onView(withId(R.id.bt_note_create_save)).perform(click());
-//        Note note = activityCreateNoteTestRule.getActivity().getLastSavedNote();
-//        assertNull(note);
-//    }
+
 
     @Test
     public void testAbortedNoteCreation(){

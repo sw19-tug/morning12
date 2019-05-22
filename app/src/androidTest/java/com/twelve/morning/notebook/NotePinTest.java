@@ -1,17 +1,10 @@
 package com.twelve.morning.notebook;
 
-import android.app.LauncherActivity;
-import android.support.test.annotation.UiThreadTest;
-import android.support.test.espresso.ViewInteraction;
+
 import android.support.test.rule.ActivityTestRule;
-import android.view.View;
-import android.widget.CheckBox;
-import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.RelativeLayout;
 
 import org.junit.Assert;
-import org.junit.Before;
+
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -26,7 +19,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.isNotChecked;
 import static android.support.test.espresso.matcher.ViewMatchers.isChecked;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
-import static android.support.test.espresso.matcher.ViewMatchers.withParent;
+
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.anything;
 
@@ -65,7 +58,6 @@ public class NotePinTest {
         onView(withId(R.id.bt_note_create_save)).perform(click());
         onView(withId(R.id.bt_create)).check(matches(isDisplayed()));
 
-        // -----------------------actual pin test --------------------------------
 
         onView(withId(R.id.cb_pinned)).check(matches(isDisplayed()));
         onView(withId(R.id.cb_pinned)).check(matches(isNotChecked()));
@@ -79,7 +71,6 @@ public class NotePinTest {
         onView(withId(R.id.et_note_title)).perform(typeText("A"), closeSoftKeyboard());
         onView(withId(R.id.bt_note_create_save)).perform(click());
 
-        // -----------------------actual pin test --------------------------------
 
         Note[] notes = activityTestRule.getActivity().adapter.getNotes();
         Assert.assertFalse(notes[0].getPinned());

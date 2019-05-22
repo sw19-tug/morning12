@@ -9,7 +9,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -99,7 +98,6 @@ public class EditNoteActivity extends AppCompatActivity {
                     for (String tag1 : tags) {
                         Tag tag = new Tag(tag1);
                         Tags.add(tag);
-                        //note.setTags(Tags);
                     }
 
                     note.save();
