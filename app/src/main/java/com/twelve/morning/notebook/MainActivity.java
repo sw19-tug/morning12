@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import java.io.BufferedInputStream;
@@ -38,7 +39,28 @@ public class MainActivity extends AppCompatActivity {
         DatabaseWrapper.getInstance().createDatabase(getApplicationContext());
         setContentView(R.layout.activity_main);
         setupButtons();
+        setupSearch();
         reloadNotes(sorting);
+    }
+
+    public void setupSearch() {
+        SearchView sv = findViewById(R.id.search_view_find_text);
+        sv.setSubmitButtonEnabled(true);
+        sv.setIconifiedByDefault(false);
+        //sv.setQueryHint("");
+        sv.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                reloadNotesByTitle(query);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                reloadNotesByTitle(newText);
+                return true;
+            }
+        });
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -152,6 +174,12 @@ public class MainActivity extends AppCompatActivity {
             this.sorting = sorting;
         }
         this.adapter = new NotesListAdapter(DatabaseWrapper.getInstance().getNotes(this.sorting), this);
+        list_view = findViewById(R.id.list_notes);
+        list_view.setAdapter(this.adapter);
+    }
+
+    public void reloadNotesByTitle(String query) {
+        this.adapter = new NotesListAdapter(DatabaseWrapper.getInstance().getNotesByTitle(query), this);
         list_view = findViewById(R.id.list_notes);
         list_view.setAdapter(this.adapter);
     }

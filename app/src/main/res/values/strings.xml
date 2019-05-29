@@ -22,5 +22,6 @@
     <string name="day_mode">Day Mode</string>
     <string name="import_string">Import notes</string>
     <string name="export_string">Export notes</string>
+    <string name="search_here">Search here</string>
     <string name="sort_size">Size</string>
 </resources>
