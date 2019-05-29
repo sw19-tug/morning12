@@ -5,14 +5,11 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ListAdapter;
 import android.widget.TextView;
 
-import java.util.ArrayList;
 
 public class NotesListAdapter extends BaseAdapter implements ListAdapter {
 
@@ -55,10 +52,11 @@ public class NotesListAdapter extends BaseAdapter implements ListAdapter {
 
         TextView content = (TextView)convertView.findViewById(R.id.note_content);
         String body = ((Note)notes[position]).getBody();
-        content.setText(body.substring(0, Math.min(body.length(), 25)));
+        content.setText(body);
 
         CheckBox pinned_box = (CheckBox)convertView.findViewById(R.id.cb_pinned);
         pinned_box.setChecked(((Note)notes[position]).getPinned());
+
 
         pinned_box.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -69,27 +67,6 @@ public class NotesListAdapter extends BaseAdapter implements ListAdapter {
                 ((MainActivity)context).reloadNotes(null);
             }
         });
-
-        /*
-        Button deleteBtn = (Button)view.findViewById(R.id.delete_btn);
-        Button addBtn = (Button)view.findViewById(R.id.add_btn);
-
-        deleteBtn.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                //do something
-                list.remove(position); //or some other task
-                notifyDataSetChanged();
-            }
-        });
-        addBtn.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                //do something
-                notifyDataSetChanged();
-            }
-        });
-        */
 
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override

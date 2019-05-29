@@ -3,9 +3,14 @@ package com.twelve.morning.notebook;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.Spannable;
+import android.text.TextWatcher;
+import android.text.util.Linkify;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +26,25 @@ public class CreateNoteActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_note);
+        TextView textView = (TextView) findViewById(R.id.et_note_body);
+        textView.addTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                Linkify.addLinks((Spannable) s, Linkify.WEB_URLS);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                Linkify.addLinks(s, Linkify.WEB_URLS);
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                // Nothing to do
+            }
+
+        });
 
         finishCreateNoteActivity((Button)findViewById(R.id.bt_note_create_cancel));
         finishCreateNoteActivity((Button)findViewById(R.id.bt_note_create_save));
@@ -41,8 +65,6 @@ public class CreateNoteActivity extends AppCompatActivity {
             Tag tag = new Tag(tag1);
             Tags.add(tag);
         }
-        //last_saved_note.setTags(Tags);
-        System.out.println(Tags);
 
         DatabaseWrapper.getInstance().addNote(new Note(title_text, body_text));
     }

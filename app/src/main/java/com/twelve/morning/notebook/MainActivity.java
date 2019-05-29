@@ -11,34 +11,31 @@ import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Environment;
 import android.support.annotation.RequiresApi;
+import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v7.app.AppCompatDelegate;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
-import android.net.Uri;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.ByteArrayInputStream;
-import java.io.File;
+
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.Locale;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
-import java.util.zip.ZipOutputStream;
+
 
 
 public class MainActivity extends AppCompatActivity {
@@ -46,8 +43,6 @@ public class MainActivity extends AppCompatActivity {
     private ListView list_view;
     public NotesListAdapter adapter = null;
     private Sorting sorting = Sorting.CREATION;
-
-    static private boolean firstLaunch = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,21 +63,44 @@ public class MainActivity extends AppCompatActivity {
         }
         setContentView(R.layout.activity_main);
         setupButtons();
+        setupSearch();
         reloadNotes(sorting);
 
+    }
+
+    public void setupSearch() {
+        SearchView sv = findViewById(R.id.search_view_find_text);
+        sv.setSubmitButtonEnabled(true);
+        sv.setIconifiedByDefault(false);
+        //sv.setQueryHint("");
+        sv.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                reloadNotesByText(query);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                reloadNotesByText(newText);
+                return true;
+            }
+        });
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.main_menu, menu);
+        if(AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES){
+            menu.findItem(R.id.bt_darkmode).setTitle(R.string.day_mode);
+        } else {
+            menu.findItem(R.id.bt_darkmode).setTitle(R.string.night_mode);
+        }
         return true;
     }
+  
     public boolean onOptionsItemSelected(MenuItem item) {
-
-
         Intent intent = getIntent();
-        //Note note = (Note)intent.getSerializableExtra("note");
-
         switch (item.getItemId()){
             case R.id.bt_import:
                 showFileChooser();
@@ -115,6 +133,15 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
                 builder.show();
+            case R.id.bt_darkmode:
+                if (AppCompatDelegate.getDefaultNightMode() != AppCompatDelegate.MODE_NIGHT_YES) {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                    recreate();
+                } else {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                    recreate();
+                }
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -197,6 +224,12 @@ public class MainActivity extends AppCompatActivity {
         list_view.setAdapter(this.adapter);
     }
 
+    public void reloadNotesByText(String query) {
+        this.adapter = new NotesListAdapter(DatabaseWrapper.getInstance().getNotesByText(query), this);
+        list_view = findViewById(R.id.list_notes);
+        list_view.setAdapter(this.adapter);
+    }
+
     private void setupButtons(){
         FloatingActionButton create_note_btn = findViewById(R.id.bt_create);
         create_note_btn.setOnClickListener(new View.OnClickListener() {
@@ -209,7 +242,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
         Button sort_date_button = findViewById(R.id.bt_sort_by_creation);
-
         sort_date_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -219,7 +251,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
         Button sort_title_button = findViewById(R.id.bt_sort_by_title);
-
         sort_title_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -227,7 +258,15 @@ public class MainActivity extends AppCompatActivity {
                 reloadNotes(sorting);
             }
         });
-    }
 
+        Button sort_size_button = findViewById(R.id.bt_sort_by_size);
+        sort_size_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                sorting = Sorting.SIZE;
+                reloadNotes(sorting);
+            }
+        });
+    }
 }
 

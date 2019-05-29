@@ -24,7 +24,6 @@ import static org.junit.Assert.*;
 
 @RunWith(AndroidJUnit4.class)
 public class DbTest {
-    //private NoteRepository testdb;
     private NoteDatabase testdb;
     private DaoAccess myDao;
     private Context context;
@@ -32,14 +31,12 @@ public class DbTest {
     @Before
     public void setup() {
         context = InstrumentationRegistry.getContext();
-        //testdb = new NoteRepository(context);
         testdb = Room.inMemoryDatabaseBuilder(context, NoteDatabase.class).build();
         myDao = testdb.daoAccess();
     }
 
     @After
     public void closeDB() throws IOException {
-        //testdb.CloseDb();
         testdb.close();
     }
 
@@ -55,7 +52,7 @@ public class DbTest {
         List<Note> noteList = myDao.loadAllNotes();
         int id = noteList.get(noteList.size() - 1).getId();
         test_note.setId(id);
-        Note newNote = myDao.getNoteByTitle((title)).get(0);
+        Note newNote = myDao.getNotesByTitle((title)).get(0);
         assertEquals(test_note.getBody(), newNote.getBody());
         myDao.deleteNote(test_note);
         noteList = myDao.loadAllNotes();

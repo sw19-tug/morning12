@@ -7,7 +7,6 @@ import android.arch.persistence.room.PrimaryKey;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 @Entity(tableName = "noteTable")
 public class Note implements Serializable {
@@ -26,6 +25,7 @@ public class Note implements Serializable {
 
     @ColumnInfo(name = "Pinned")
     private Boolean pinned = false;
+
 
     Note()
     {

@@ -17,8 +17,6 @@ public class DatabaseWrapper {
 
     private DatabaseWrapper()
     {
-        //context = context.getApplicationContext();
-        //noteDatabase = Room.databaseBuilder(context, NoteDatabase.class, DB_NAME).allowMainThreadQueries().build();
     }
 
     private ArrayList<Note> notes = new ArrayList<>();
@@ -39,19 +37,14 @@ public class DatabaseWrapper {
         noteDatabase.close();
     }
 
-    // add new note
     public int addNote(Note new_note) {
-        //notes.add(new_note);
         noteDatabase.daoAccess().InsertNote(new_note);
         List<Note> notes = noteDatabase.daoAccess().loadAllNotes();
 
         return notes.get(notes.size()-1).getId();
     }
 
-    // get all notes
     public Note[] getNotes(Sorting sorting) {
-        //Note[] tmp = new Note[notes.size()];
-        //notes.toArray(tmp);
         List<Note> notes = noteDatabase.daoAccess().loadAllNotes();
         Note[] tmp = new Note[notes.size()];
         notes.toArray(tmp);
@@ -71,7 +64,7 @@ public class DatabaseWrapper {
             });
         }
 
-        if (sorting == Sorting.TITLE) {
+        else if (sorting == Sorting.TITLE) {
             Arrays.sort(tmp, new Comparator<Note>() {
                 @Override
                 public int compare(Note o1, Note o2) {
@@ -81,46 +74,81 @@ public class DatabaseWrapper {
                     if (!o1.getPinned() && o2.getPinned()){
                         return 1;
                     }
-                    return o1.getTitle().compareTo(o2.getTitle());
+                    return o1.getTitle().toUpperCase().compareTo(o2.getTitle().toUpperCase());
                 }
             });
         }
+
+        else if (sorting == Sorting.SIZE) {
+            Arrays.sort(tmp, new Comparator<Note>() {
+                @Override
+                public int compare(Note o1, Note o2) {
+                    if (o1.getPinned() && !o2.getPinned()){
+                        return -1;
+                    }
+                    if (!o1.getPinned() && o2.getPinned()){
+                        return 1;
+                    }
+                    return o2.getBody().trim().length() - o1.getBody().trim().length();
+                }
+            });
+        }
+
+        return tmp;
+    }
+
+    public Note[] getNotesByText(String text) {
+        text = '%' + text + '%';
+        List<Note> notes;
+        if(text.contains("#")) {
+            notes = noteDatabase.daoAccess().getNotesByTag(text);
+        }else {
+            notes = noteDatabase.daoAccess().getNotesByTitle(text);
+        }
+        Note[] tmp = new Note[notes.size()];
+        notes.toArray(tmp);
+
+        Arrays.sort(tmp, new Comparator<Note>() {
+            @Override
+            public int compare(Note o1, Note o2) {
+                if (o1.getPinned() && !o2.getPinned()){
+                    return -1;
+                }
+                if (!o1.getPinned() && o2.getPinned()){
+                    return 1;
+                }
+                return o1.getTitle().toUpperCase().compareTo(o2.getTitle().toUpperCase());
+            }
+        });
+
+        return tmp;
+    }
+
+    public Note[] getNotesByTag(String tag) {
+        tag = '#' + tag;
+        List<Note> notes = noteDatabase.daoAccess().getNotesByTag(tag);
+        Note[] tmp = new Note[notes.size()];
+        notes.toArray(tmp);
+
         return tmp;
     }
 
     public void saveNote(Note note) {
-        /*for (Note n :
-                notes) {
-            if (note.id == n.id){
-                n.setTitle(note.getTitle());
-                n.setPinned(note.getPinned());
-                n.setBody(note.getBody());
-            }
-        }*/
         noteDatabase.daoAccess().updateNote(note);
     }
   
     public void reset(){
-        //this.notes.clear();
         noteDatabase.daoAccess().deleteTable();
     }
   
     public void deleteNote(Note note) {
-        /*int index = 0;
-        for(int i = 0; i < notes.size(); i++)
-        {
-            if(notes.get(i).id == note.id)
-            {
-                index = i;
-                break;
-            }
-        }
-        notes.remove(index);*/
         noteDatabase.daoAccess().deleteNote(note);
     }
 }
 
 enum Sorting {
     CREATION,
-    TITLE
+    TITLE,
+    SIZE,
+    MATCHINGTITLE
 }

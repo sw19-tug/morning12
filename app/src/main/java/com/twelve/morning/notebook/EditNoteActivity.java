@@ -1,15 +1,26 @@
 package com.twelve.morning.notebook;
 
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.Html;
+import android.text.Spannable;
+import android.text.TextWatcher;
+import android.text.method.LinkMovementMethod;
+import android.text.util.Linkify;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.SearchView;
 import android.widget.TextView;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +40,7 @@ public class EditNoteActivity extends AppCompatActivity {
         fillTitleBody();
         finishEditNoteActivity((Button)findViewById(R.id.bt_edit_note_create_cancel));
         finishEditNoteActivity((Button)findViewById(R.id.bt_edit_note_create_save));
+        finishEditNoteActivity((SearchView)findViewById(R.id.search_view_find_text));
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -38,8 +50,6 @@ public class EditNoteActivity extends AppCompatActivity {
     }
 
     public boolean onOptionsItemSelected(MenuItem item) {
-
-
         Intent intent = getIntent();
         Note note = (Note)intent.getSerializableExtra("note");
 
@@ -63,11 +73,32 @@ public class EditNoteActivity extends AppCompatActivity {
         }
     }
 
+
+
     private void fillTitleBody()
     {
         Intent intent = getIntent();
         Note note = (Note)intent.getSerializableExtra("note");
         EditText edit_text_title = this.findViewById(R.id.et_edit_note_title);
+        TextView textView = (TextView) findViewById(R.id.et_edit_note_body);
+        textView.addTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                Linkify.addLinks((Spannable) s, Linkify.WEB_URLS);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                Linkify.addLinks(s, Linkify.WEB_URLS);
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                // Nothing to do
+            }
+
+        });
         EditText edit_text_body = this.findViewById(R.id.et_edit_note_body);
         edit_text_title.setText(note.getTitle());
         edit_text_body.setText(note.getBody());
@@ -101,7 +132,6 @@ public class EditNoteActivity extends AppCompatActivity {
                     for (String tag1 : tags) {
                         Tag tag = new Tag(tag1);
                         Tags.add(tag);
-                        //note.setTags(Tags);
                     }
 
                     note.save();
@@ -112,5 +142,46 @@ public class EditNoteActivity extends AppCompatActivity {
                 }
             });
         }
+    }
+
+    private void finishEditNoteActivity(final SearchView searchView){
+        Intent intent = getIntent();
+        final Note note = (Note)intent.getSerializableExtra("note");
+        final Activity self = this;
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                System.out.println("onQueryTextSubmit "+query);
+                int position = TextSearcher.GetInstance().SearchNextInstance(note, query);
+                if(position == -1){
+                    showAlert("Warning", "'"+query+"' not found", "Ok");
+                    return false;
+                }
+                else{
+                    TextSearcher.GetInstance().highlightText(self, note, position, query.length());
+                }
+
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return true;
+            }
+        });
+    }
+
+    private void showAlert(String title, String message, String positive_message) {
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+        alert.setPositiveButton(positive_message, new DialogInterface.OnClickListener(){
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+        alert.setTitle(title);
+        alert.setMessage(message);
+
+        alert.create().show();
     }
 }

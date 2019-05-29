@@ -13,14 +13,15 @@ public interface DaoAccess {
 
     @Insert
     void InsertNote(Note note);
-    //boolean InsertNote(Note note);
 
-    @Query("SELECT * FROM noteTable WHERE title = :noteTitle")
-    List<Note> getNoteByTitle(String noteTitle);
+    @Query("SELECT * FROM noteTable WHERE title LIKE :noteTitle")
+    List<Note> getNotesByTitle(String noteTitle);
+
+    @Query("SELECT * FROM noteTable WHERE Body LIKE :tag")
+    List<Note> getNotesByTag(String tag);
 
     @Query("SELECT * FROM noteTable")
     List<Note> loadAllNotes();
-    //Note[] loadAllNotes();
 
     @Update
     void updateNote(Note note);

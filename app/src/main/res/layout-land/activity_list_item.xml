@@ -48,8 +48,7 @@
         <CheckBox
             android:id="@+id/cb_pinned"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:button="@layout/checkbox_pin" />
+            android:layout_height="wrap_content" />
 
     </LinearLayout>
 
