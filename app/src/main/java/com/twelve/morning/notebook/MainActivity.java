@@ -51,13 +51,13 @@ public class MainActivity extends AppCompatActivity {
         sv.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                reloadNotesa(query);
+                reloadNotesByTitle(query);
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                reloadNotesa(newText);
+                reloadNotesByTitle(newText);
                 return true;
             }
         });
@@ -178,7 +178,7 @@ public class MainActivity extends AppCompatActivity {
         list_view.setAdapter(this.adapter);
     }
 
-    public void reloadNotesa(String query) {
+    public void reloadNotesByTitle(String query) {
         this.adapter = new NotesListAdapter(DatabaseWrapper.getInstance().getNotesByTitle(query), this);
         list_view = findViewById(R.id.list_notes);
         list_view.setAdapter(this.adapter);
