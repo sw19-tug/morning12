@@ -51,13 +51,13 @@ public class MainActivity extends AppCompatActivity {
         sv.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-
+                reloadNotes(query);
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                return false;
+                return true;
             }
         });
     }
@@ -173,6 +173,12 @@ public class MainActivity extends AppCompatActivity {
             this.sorting = sorting;
         }
         this.adapter = new NotesListAdapter(DatabaseWrapper.getInstance().getNotes(this.sorting), this);
+        list_view = findViewById(R.id.list_notes);
+        list_view.setAdapter(this.adapter);
+    }
+
+    public void reloadNotes(String query) {
+        this.adapter = new NotesListAdapter(DatabaseWrapper.getInstance().getNotesByTitle(query), this);
         list_view = findViewById(R.id.list_notes);
         list_view.setAdapter(this.adapter);
     }
