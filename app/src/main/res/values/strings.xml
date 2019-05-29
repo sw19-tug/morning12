@@ -23,4 +23,5 @@
     <string name="tag_information"><![CDATA[To tag a note write \"#<tag> \" into the text body for every tag you want to add, where <tag> is replaced by the wanted tag]]></string>
     <string name="import_string">Import notes</string>
     <string name="export_string">Export notes</string>
+    <string name="search_here">Search here</string>
 </resources>

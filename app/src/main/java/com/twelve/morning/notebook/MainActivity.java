@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import java.io.BufferedInputStream;
@@ -38,7 +39,26 @@ public class MainActivity extends AppCompatActivity {
         DatabaseWrapper.getInstance().createDatabase(getApplicationContext());
         setContentView(R.layout.activity_main);
         setupButtons();
+        setupSearch();
         reloadNotes(sorting);
+    }
+
+    public void setupSearch() {
+        SearchView sv = findViewById(R.id.search_view_find_text);
+        sv.setSubmitButtonEnabled(true);
+        sv.setIconifiedByDefault(false);
+        //sv.setQueryHint("");
+        sv.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
