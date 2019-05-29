@@ -25,11 +25,6 @@ public class SearchTest {
     public ActivityTestRule<MainActivity> activityTestRule = new ActivityTestRule<>(MainActivity.class);
 
     @Test
-    public void searchBarExistance() {
-        onView(withId(R.id.bt_note_create_save)).check(matches(isDisplayed()));
-    }
-
-    @Test
     public void searchBarTest() {
         String title_input = "dummyTitle";
         String body_input = "dummyBodydummyBodydummyBodydummyBodydummyBodydummyBody";

@@ -22,16 +22,8 @@ public class MainActivitySearchTest {
     public ActivityTestRule<MainActivity> activityTestRule = new ActivityTestRule<>(MainActivity.class);
 
     @Test
-    public void searchBarTest() {/*
-        String title_input = "dummyTitle";
-        String body_input = "dummyBodydummyBodydummyBodydummyBodydummyBodydummyBody";
-        onView(withId(R.id.bt_create)).perform(click());
-        onView(withId(R.id.et_note_title)).perform(clearText(), typeText(title_input));
-        onView(withId(R.id.et_note_body)).perform(clearText(), typeText(body_input))
-                .perform(closeSoftKeyboard());
-        onView(withId(R.id.bt_note_create_save)).perform(click());*/
-
-        onView(withId(R.id.main_activity_search_view_find_text)).check(matches(isDisplayed()));
+    public void searchBarTest() {
+        onView(withId(R.id.bt_note_create_save)).check(matches(isDisplayed()));
     }
 
 }
