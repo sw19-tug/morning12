@@ -26,4 +26,23 @@ public class MainActivitySearchTest {
         onView(withId(R.id.bt_note_create_save)).check(matches(isDisplayed()));
     }
 
+    @Test
+    public void searchTagTest() {
+        String title_input = "a title";
+        String body_input = "#tag1 #tag2 #anothertag";
+
+        onView(withId(R.id.bt_create)).perform(click());
+        onView(withId(R.id.et_note_title)).perform(clearText(), typeText(title_input))
+                .perform(closeSoftKeyboard());
+        onView(withId(R.id.et_note_body)).perform(clearText(), typeText(body_input))
+                .perform(closeSoftKeyboard());
+        onView(withId(R.id.bt_note_create_save)).perform(click());
+
+        onView(withId(R.id.search_view_find_text)).perform(click());
+        onView(withId(R.id.search_view_find_text)).perform(typeText("#anothertag"))
+                .perform(closeSoftKeyboard());
+
+        onView(withText(title_input)).check(matches(isDisplayed()));
+    }
+
 }
