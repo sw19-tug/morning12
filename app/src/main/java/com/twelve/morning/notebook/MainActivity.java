@@ -1,5 +1,16 @@
 package com.twelve.morning.notebook;
 
+import android.Manifest;
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.res.Configuration;
+import android.os.Build;
+import android.os.Environment;
+import android.support.annotation.RequiresApi;
 import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -20,7 +31,8 @@ import java.io.FileInputStream;
 
 import java.io.IOException;
 import java.io.InputStream;
-
+import java.nio.charset.StandardCharsets;
+import java.util.Locale;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
@@ -32,15 +44,30 @@ public class MainActivity extends AppCompatActivity {
     public NotesListAdapter adapter = null;
     private Sorting sorting = Sorting.CREATION;
 
-    
+    boolean firstLaunch = true;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         DatabaseWrapper.getInstance().createDatabase(getApplicationContext());
+
+
+        if(firstLaunch){
+            firstLaunch = false;
+            Locale locale = new Locale("de");
+            Locale.setDefault(locale);
+            Configuration config = new Configuration();
+            config.locale = locale;
+            getResources().updateConfiguration(
+                    config,
+                    getResources().getDisplayMetrics()
+            );
+        }
         setContentView(R.layout.activity_main);
         setupButtons();
         setupSearch();
         reloadNotes(sorting);
+
     }
 
     public void setupSearch() {
@@ -83,9 +110,31 @@ public class MainActivity extends AppCompatActivity {
             case R.id.bt_export:
                 ShareManager.getStoragePermission(this);
                 String zipFileName = "exported_notes.zip";
-                Note[] notesToEport = DatabaseWrapper.getInstance().getNotes(Sorting.TITLE);
-                ShareManager.zip(notesToEport, zipFileName);
+                Note[] notesToExport = DatabaseWrapper.getInstance().getNotes(Sorting.TITLE);
+                ShareManager.zip(notesToExport, zipFileName);
                 startActivity(ShareManager.shareZipFile(zipFileName));
+                return true;
+            case R.id.bt_local:
+                String[] languages = {"English", "Deutsch", "Hrvatski", "Italiano", "Español", "Deitsch"};
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setTitle("Select Language");
+                builder.setItems(languages, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        String language = "en";
+                        switch (which){
+                            case 0: language = "en"; break;
+                            case 1: language = "de"; break;
+                            case 2: language = "hr"; break;
+                            case 3: language = "it"; break;
+                            case 4: language = "es"; break;
+                            case 5: language = "st"; break;
+                        }
+                        LocaleHelper.setLocale(MainActivity.this, language);
+                        recreate();
+                    }
+                });
+                builder.show();
                 return true;
             case R.id.bt_darkmode:
                 if (AppCompatDelegate.getDefaultNightMode() != AppCompatDelegate.MODE_NIGHT_YES) {

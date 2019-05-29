@@ -5,7 +5,9 @@ import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity(tableName = "noteTable")
 public class Note implements Serializable {
@@ -100,4 +102,6 @@ public class Note implements Serializable {
     public Boolean getPinned() { return pinned; }
 
     public void setPinned(Boolean pinned) { this.pinned = pinned; }
+
+    public List<Tag> getTags() { return new ArrayList<>(); }
 }
