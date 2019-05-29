@@ -97,6 +97,28 @@ public class DatabaseWrapper {
         return tmp;
     }
 
+    public Note[] getNotesByTitle(String title) {
+        title = '%' + title + '%';
+        List<Note> notes = noteDatabase.daoAccess().getNoteByTitle(title);
+        Note[] tmp = new Note[notes.size()];
+        notes.toArray(tmp);
+
+        Arrays.sort(tmp, new Comparator<Note>() {
+            @Override
+            public int compare(Note o1, Note o2) {
+                if (o1.getPinned() && !o2.getPinned()){
+                    return -1;
+                }
+                if (!o1.getPinned() && o2.getPinned()){
+                    return 1;
+                }
+                return o1.getTitle().toUpperCase().compareTo(o2.getTitle().toUpperCase());
+            }
+        });
+
+        return tmp;
+    }
+
     public void saveNote(Note note) {
         /*for (Note n :
                 notes) {
@@ -131,5 +153,6 @@ public class DatabaseWrapper {
 enum Sorting {
     CREATION,
     TITLE,
-    SIZE
+    SIZE,
+    MATCHINGTITLE
 }
