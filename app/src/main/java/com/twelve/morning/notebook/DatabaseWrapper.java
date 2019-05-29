@@ -97,9 +97,14 @@ public class DatabaseWrapper {
         return tmp;
     }
 
-    public Note[] getNotesByTitle(String title) {
-        title = '%' + title + '%';
-        List<Note> notes = noteDatabase.daoAccess().getNoteByTitle(title);
+    public Note[] getNotesByText(String text) {
+        text = '%' + text + '%';
+        List<Note> notes;
+        if(text.contains("#")) {
+            notes = noteDatabase.daoAccess().getNotesByTag(text);
+        }else {
+            notes = noteDatabase.daoAccess().getNotesByTitle(text);
+        }
         Note[] tmp = new Note[notes.size()];
         notes.toArray(tmp);
 
@@ -115,6 +120,15 @@ public class DatabaseWrapper {
                 return o1.getTitle().toUpperCase().compareTo(o2.getTitle().toUpperCase());
             }
         });
+
+        return tmp;
+    }
+
+    public Note[] getNotesByTag(String tag) {
+        tag = '#' + tag;
+        List<Note> notes = noteDatabase.daoAccess().getNotesByTag(tag);
+        Note[] tmp = new Note[notes.size()];
+        notes.toArray(tmp);
 
         return tmp;
     }
