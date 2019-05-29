@@ -39,7 +39,7 @@ public class MainActivitySearchTest {
         onView(withId(R.id.search_view_find_text)).perform(click());
         onView(withId(R.id.search_view_find_text)).perform(clearText(), typeText("#anothertag"))
                 .perform(closeSoftKeyboard());
-        
+
         onView(withText(title_input)).check(matches(isDisplayed()));
     }
 
