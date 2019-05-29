@@ -14,7 +14,7 @@ public interface DaoAccess {
     @Insert
     void InsertNote(Note note);
 
-    @Query("SELECT * FROM noteTable WHERE title = :noteTitle")
+    @Query("SELECT * FROM noteTable WHERE title LIKE :noteTitle")
     List<Note> getNoteByTitle(String noteTitle);
 
     @Query("SELECT * FROM noteTable")
