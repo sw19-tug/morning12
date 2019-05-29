@@ -52,10 +52,11 @@ public class NotesListAdapter extends BaseAdapter implements ListAdapter {
 
         TextView content = (TextView)convertView.findViewById(R.id.note_content);
         String body = ((Note)notes[position]).getBody();
-        content.setText(body.substring(0, Math.min(body.length(), 25)));
+        content.setText(body);
 
         CheckBox pinned_box = (CheckBox)convertView.findViewById(R.id.cb_pinned);
         pinned_box.setChecked(((Note)notes[position]).getPinned());
+
 
         pinned_box.setOnClickListener(new View.OnClickListener(){
             @Override
