@@ -16,10 +16,15 @@
     <string name="Abort_bt">Cancella</string>
     <string name="Title">Titolo:</string>
     <string name="Body_hint">Inseriere testo qui:</string>
-    <string name="export_bt">Notiz exportieren</string>
+    <string name="export_bt">Esportare notizia</string>
     <string name="tag_information"><![CDATA[Per aggiungere un tag a una notizia, inserisci \"#<tag> \" per ognuno tag dentro il Textfeld della notizia. Inoltre devi sostituiere <tag> con il nome del tag.]]></string>
 
     <string name="import_string">Importarte notizia</string>
     <string name="export_string">Esportarte notizia</string>
     <string name="local_string">Cambia lingua</string>
+    <string name="sort_size">Lunghezza</string>
+    <string name="darkmode_bt">Darkmode</string>
+    <string name="night_mode">Night Mode</string>
+    <string name="day_mode">Day Mode</string>
+    <string name="search_here">Cerca qui</string>
 </resources>

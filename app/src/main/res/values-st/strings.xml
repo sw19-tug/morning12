@@ -22,4 +22,9 @@
     <string name="import_string">Notizn importiern</string>
     <string name="export_string">Notizn exportiern</string>
     <string name="local_string">Sproche ändorn</string>
+    <string name="sort_size">Länge</string>
+    <string name="darkmode_bt">Dunklor Modus</string>
+    <string name="night_mode">Nocht Modus</string>
+    <string name="day_mode">Tog Mode</string>
+    <string name="search_here">Suach do</string>
 </resources>

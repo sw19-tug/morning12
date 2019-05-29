@@ -21,5 +21,10 @@
 
     <string name="import_string">Notiz importieren</string>
     <string name="export_string">Notiz exportieren</string>
+    <string name="darkmode_bt">Dunkler Modus</string>
+    <string name="night_mode">Nacht Modus</string>
+    <string name="day_mode">Day Mode</string>
     <string name="local_string">Sprache verändern</string>
+    <string name="sort_size">Länge</string>
+    <string name="search_here">Suche hier</string>
 </resources>

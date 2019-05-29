@@ -44,6 +44,8 @@ public class MainActivity extends AppCompatActivity {
     public NotesListAdapter adapter = null;
     private Sorting sorting = Sorting.CREATION;
 
+    boolean firstLaunch = true;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -133,6 +135,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
                 builder.show();
+                return true;
             case R.id.bt_darkmode:
                 if (AppCompatDelegate.getDefaultNightMode() != AppCompatDelegate.MODE_NIGHT_YES) {
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
