@@ -52,7 +52,7 @@ public class DbTest {
         List<Note> noteList = myDao.loadAllNotes();
         int id = noteList.get(noteList.size() - 1).getId();
         test_note.setId(id);
-        Note newNote = myDao.getNoteByTitle((title)).get(0);
+        Note newNote = myDao.getNotesByTitle((title)).get(0);
         assertEquals(test_note.getBody(), newNote.getBody());
         myDao.deleteNote(test_note);
         noteList = myDao.loadAllNotes();
