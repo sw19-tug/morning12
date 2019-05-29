@@ -45,7 +45,9 @@ public class LocationTaggingTest {
 
     @Test
     public void checkVisibleTextView(){
+        onView(withText("z")).perform(click());
         onView(withId(R.id.tv_note_location)).check(matches(isDisplayed()));
-        onView(withId(R.id.tv_note_location)).check(matches(withText("")));
+        onView(withId(R.id.tv_note_location)).check(matches(withText(R.string.created_at_location)));
+        onView(withId(R.id.bt_edit_note_create_cancel)).perform(click());
     }
 }
