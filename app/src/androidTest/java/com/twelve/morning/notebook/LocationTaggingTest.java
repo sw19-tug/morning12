@@ -35,19 +35,22 @@ import static org.hamcrest.Matchers.is;
 @RunWith(AndroidJUnit4.class)
 public class LocationTaggingTest {
 
-    public static Matcher<Intent> chooser(Matcher<Intent> matcher) {
-        return allOf(hasAction(Intent.ACTION_CHOOSER), hasExtra(is(Intent.EXTRA_INTENT), matcher));
-    }
-
     @Rule
-    public ActivityTestRule<MainActivity> activityMainTestRule =
-            new ActivityTestRule<>(MainActivity.class);
+    public ActivityTestRule<MainActivity> activityMainTestRule = new ActivityTestRule<>(MainActivity.class);
 
     @Test
     public void checkVisibleTextView(){
-        onView(withText("z")).perform(click());
+        String title = "I'm a dope motherfucker";
+        onView(withId(R.id.bt_create)).perform(click());
+        onView(withId(R.id.et_note_title)).perform(typeText(title), closeSoftKeyboard());
+        onView(withId(R.id.et_note_body)).perform(typeText("Krocha Hymne"), closeSoftKeyboard());
+        onView(withId(R.id.bt_note_create_save)).perform(click());
+        onView(withText(title)).perform(click());
+
         onView(withId(R.id.tv_note_location)).check(matches(isDisplayed()));
         onView(withId(R.id.tv_note_location)).check(matches(withText(R.string.created_at_location)));
-        onView(withId(R.id.bt_edit_note_create_cancel)).perform(click());
+
+        Espresso.openContextualActionModeOverflowMenu();
+        onView(withText(R.string.delete_note)).perform(click());
     }
 }
