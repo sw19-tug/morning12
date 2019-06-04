@@ -82,6 +82,9 @@ public class EditNoteActivity extends AppCompatActivity {
         Note note = (Note)intent.getSerializableExtra("note");
         TextView location_text_view = this.findViewById(R.id.tv_note_location);
         String address = note.getAddress();
+        if(address == null) {
+            address = " a wonderful location";
+        }
         location_text_view.setText(getString(R.string.created_at_location, address));
     }
 
@@ -161,7 +164,6 @@ public class EditNoteActivity extends AppCompatActivity {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                System.out.println("onQueryTextSubmit "+query);
                 int position = TextSearcher.GetInstance().SearchNextInstance(note, query);
                 if(position == -1){
                     showAlert("Warning", "'"+query+"' not found", "Ok");
