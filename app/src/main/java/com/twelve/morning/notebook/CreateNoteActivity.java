@@ -1,6 +1,14 @@
 package com.twelve.morning.notebook;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
+import android.location.LocationManager;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
@@ -12,15 +20,26 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class CreateNoteActivity extends AppCompatActivity {
 
     private Note last_saved_note = null;
-    public Note getLastSavedNote(){
+
+    public Note getLastSavedNote() {
         return this.last_saved_note;
     }
+
+    private FusedLocationProviderClient fusedLocationClient;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,15 +65,16 @@ public class CreateNoteActivity extends AppCompatActivity {
 
         });
 
-        finishCreateNoteActivity((Button)findViewById(R.id.bt_note_create_cancel));
-        finishCreateNoteActivity((Button)findViewById(R.id.bt_note_create_save));
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+        finishCreateNoteActivity((Button) findViewById(R.id.bt_note_create_cancel));
+        finishCreateNoteActivity((Button) findViewById(R.id.bt_note_create_save));
     }
 
     private void storeNote() {
         EditText title = CreateNoteActivity.this.findViewById(R.id.et_note_title);
         EditText body = CreateNoteActivity.this.findViewById(R.id.et_note_body);
-        String title_text = title.getText().toString();
-        String body_text = body.getText().toString();
+        final String title_text = title.getText().toString();
+        final String body_text = body.getText().toString();
         if (!(title_text.isEmpty() && body_text.isEmpty())) {
             last_saved_note = new Note(title_text, body_text);
         }
@@ -66,7 +86,58 @@ public class CreateNoteActivity extends AppCompatActivity {
             Tags.add(tag);
         }
 
-        DatabaseWrapper.getInstance().addNote(new Note(title_text, body_text));
+
+        final Note note_to_store = new Note(title_text, body_text);
+        DatabaseWrapper.getInstance().addNote(note_to_store);
+        final Integer target_id = DatabaseWrapper.getInstance().lastAddedNoteKey();
+
+        if (ActivityCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
+                ActivityCompat.checkSelfPermission(this,
+                        Manifest.permission.ACCESS_COARSE_LOCATION) !=
+                        PackageManager.PERMISSION_GRANTED) {
+        } else {
+            fusedLocationClient.getLastLocation().addOnSuccessListener(this,
+                    new OnSuccessListener<Location>() {
+                        @Override
+                        public void onSuccess(Location location) {
+                            // Got last known location. In some rare situations this can be null.
+                            if(location != null) {
+                                Note note_to_update = DatabaseWrapper.getInstance()
+                                        .getNoteById(target_id);
+                                if (note_to_update != null
+                                        && note_to_update.getId() == target_id){
+
+                                    try {
+                                        List<Address> addresses;
+                                        Geocoder geocoder = new Geocoder(getApplicationContext(),
+                                                Locale.getDefault());
+                                        addresses = geocoder.getFromLocation(location.getLatitude(),
+                                                location.getLongitude(), 1);
+                                        note_to_update.setAddress(addresses.get(0).
+                                                getAddressLine(0));
+                                        System.out.println(location.toString());
+                                        for (Address a: addresses){
+                                            System.out.println(a.toString());
+                                        }
+                                        note_to_update.setLocation(location);
+                                        DatabaseWrapper.getInstance().saveNote(note_to_update);
+                                    } catch(IOException ioe) {
+                                        note_to_update.setLocation(location);
+                                        DatabaseWrapper.getInstance().saveNote(note_to_update);
+                                    }
+
+
+
+                                }
+
+                            }
+                        }
+
+                    });
+        }
+
+
     }
 
 

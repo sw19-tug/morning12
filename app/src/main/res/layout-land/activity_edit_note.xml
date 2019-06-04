@@ -5,7 +5,7 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:contentDescription="@string/Edit"
-    android:orientation="vertical"
+    android:orientation="horizontal"
     android:padding="20dip">
 
     <LinearLayout
@@ -17,7 +17,6 @@
             android:id="@+id/TextView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
             android:textSize="25sp"
             android:textStyle="bold"
             android:text="@string/Edit"
@@ -28,6 +27,8 @@
             android:layout_height="wrap_content"
             android:textSize="15sp"
             android:text="@string/created_at_location"
+            android:layout_gravity="center_vertical"
+            android:lines="2"
             android:layout_marginLeft="10dp"
             android:layout_marginBottom="5dp"
             />

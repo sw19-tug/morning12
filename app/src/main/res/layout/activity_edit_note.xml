@@ -17,7 +17,6 @@
             android:id="@+id/TextView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
             android:textSize="25sp"
             android:textStyle="bold"
             android:text="@string/Edit"
@@ -28,7 +27,9 @@
             android:layout_height="wrap_content"
             android:textSize="15sp"
             android:text="@string/created_at_location"
+            android:lines="2"
             android:layout_marginLeft="10dp"
+            android:layout_gravity="center_vertical"
             android:layout_marginBottom="5dp"
             />
 

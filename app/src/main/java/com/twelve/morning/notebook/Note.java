@@ -3,6 +3,9 @@ package com.twelve.morning.notebook;
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
+import android.location.Location;
+
+import com.google.android.gms.maps.model.LatLng;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -25,6 +28,14 @@ public class Note implements Serializable {
     @ColumnInfo(name = "Pinned")
     private Boolean pinned = false;
 
+    @ColumnInfo(name = "Latitude")
+    private Double latitude;
+
+    @ColumnInfo(name = "Longitude")
+    private Double longitude;
+
+    @ColumnInfo(name = "address")
+    private String address;
 
     Note()
     {
@@ -51,7 +62,48 @@ public class Note implements Serializable {
         body = inNote.body;
         id = inNote.id;
         creationDate = inNote.creationDate;
+        longitude = inNote.longitude;
+        latitude = inNote.latitude;
     }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public Double getLatitude() {
+        return latitude;
+    }
+
+    public Double getLongitude() {
+        return longitude;
+    }
+
+    public void setLatitude(Double latitude) {
+        this.latitude = latitude;
+    }
+
+    public void setLongitude(Double longitude) {
+        this.longitude = longitude;
+    }
+
+    public void setLocation(Location location) {
+        this.latitude = location.getLatitude();
+        this.longitude = location.getLongitude();
+    }
+
+    public LatLng getLocation(){
+        if(this.latitude != null && this.longitude != null){
+            return new LatLng(this.latitude, this.longitude);
+        }
+        else {
+            return new LatLng(0.0, 0.0);
+        }
+    }
+
 
     public void save(){
         DatabaseWrapper.getInstance().saveNote(this);

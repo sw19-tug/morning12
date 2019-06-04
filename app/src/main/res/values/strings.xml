@@ -23,6 +23,6 @@
     <string name="import_string">Import notes</string>
     <string name="export_string">Export notes</string>
     <string name="sort_size">Size</string>
-    <string name="created_at_location">created at: </string>
+    <string name="created_at_location">created at: \n%1$s</string>
 
 </resources>

@@ -1,5 +1,6 @@
 package com.twelve.morning.notebook;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -22,6 +23,8 @@ import android.widget.SearchView;
 import android.widget.TextView;
 
 
+import com.google.android.gms.maps.model.LatLng;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,6 +40,7 @@ public class EditNoteActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_note);
 
+        fillLocation();
         fillTitleBody();
         finishEditNoteActivity((Button)findViewById(R.id.bt_edit_note_create_cancel));
         finishEditNoteActivity((Button)findViewById(R.id.bt_edit_note_create_save));
@@ -73,7 +77,13 @@ public class EditNoteActivity extends AppCompatActivity {
         }
     }
 
-
+    private void fillLocation(){
+        Intent intent = getIntent();
+        Note note = (Note)intent.getSerializableExtra("note");
+        TextView location_text_view = this.findViewById(R.id.tv_note_location);
+        String address = note.getAddress();
+        location_text_view.setText(getString(R.string.created_at_location, address));
+    }
 
     private void fillTitleBody()
     {

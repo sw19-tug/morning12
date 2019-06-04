@@ -29,6 +29,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.allOf;
+import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.is;
 
 
@@ -45,9 +46,9 @@ public class LocationTaggingTest {
 
     @Test
     public void checkVisibleTextView(){
-        onView(withText("z")).perform(click());
+        onView(withText("testView123")).perform(click());
         onView(withId(R.id.tv_note_location)).check(matches(isDisplayed()));
-        onView(withId(R.id.tv_note_location)).check(matches(withText(R.string.created_at_location)));
+        onView(withId(R.id.tv_note_location)).check(matches(withText(containsString("created at:"))));
         onView(withId(R.id.bt_edit_note_create_cancel)).perform(click());
     }
 }
