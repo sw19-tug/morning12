@@ -4,21 +4,44 @@
     android:id="@+id/rl_edit_note"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="@color/lightBackgroundGrey"
     android:contentDescription="@string/Edit"
-    android:orientation="vertical"
+    android:orientation="horizontal"
     android:padding="20dip">
 
-
-    <TextView
-        android:id="@+id/TextView2"
+    <LinearLayout
+        android:id="@+id/edit_note_header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:textSize="25sp"
-        android:textStyle="bold"
-        android:text="@string/Edit"
-        android:textColor="@color/colorPrimaryDark"/>
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/TextView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            android:text="@string/Edit"
+            android:textColor="@color/colorPrimaryDark"/>
+        <TextView
+            android:id="@+id/tv_note_location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:text="@string/created_at_location"
+            android:lines="2"
+            android:layout_marginLeft="10dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginBottom="5dp"
+            />
+
+    </LinearLayout>
+
+    <SearchView
+        android:id="@+id/search_view_find_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:queryHint="Search for Text"
+        android:layout_below="@+id/edit_note_header"
+        android:layout_marginTop="32dp" />
 
 
     <EditText
@@ -37,9 +60,9 @@
     <ScrollView
         android:id="@+id/scrollview"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/bt_edit_note_create_save"
+        android:layout_height="match_parent"
         android:layout_below="@+id/et_edit_note_title"
+        android:layout_above="@id/bt_edit_note_create_cancel"
         android:layout_marginTop="15dp"
         android:maxLength="2000"
         android:ems="10"
@@ -61,13 +84,6 @@
 
     </ScrollView>
 
-    <SearchView
-        android:id="@+id/search_view_find_text"
-        android:layout_width="372dp"
-        android:layout_height="27dp"
-        android:queryHint="Search for Text"
-        android:layout_below="@+id/TextView2"
-        android:layout_marginTop="32dp" />
 
     <Button
         android:id="@+id/bt_edit_note_create_save"
