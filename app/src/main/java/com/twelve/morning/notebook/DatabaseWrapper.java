@@ -144,6 +144,11 @@ public class DatabaseWrapper {
     public void deleteNote(Note note) {
         noteDatabase.daoAccess().deleteNote(note);
     }
+
+    public void deleteNotes(List<Note> notes){
+        for(Note note : notes)
+            deleteNote(note);
+    }
 }
 
 enum Sorting {
