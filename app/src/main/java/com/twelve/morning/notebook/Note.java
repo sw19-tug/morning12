@@ -27,6 +27,9 @@ public class Note implements Serializable {
     @ColumnInfo(name = "Pinned")
     private Boolean pinned = false;
 
+    @ColumnInfo(name = "Selected")
+    private Boolean selected = false;
+
 
     Note()
     {
@@ -102,6 +105,10 @@ public class Note implements Serializable {
     public Boolean getPinned() { return pinned; }
 
     public void setPinned(Boolean pinned) { this.pinned = pinned; }
+
+    public Boolean getSelected() { return selected; }
+
+    public void setSelected(Boolean selected) { this.selected = selected; }
 
     public List<Tag> getTags() { return new ArrayList<>(); }
 }

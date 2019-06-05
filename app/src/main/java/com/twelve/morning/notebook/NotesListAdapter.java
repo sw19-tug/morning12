@@ -57,12 +57,24 @@ public class NotesListAdapter extends BaseAdapter implements ListAdapter {
         CheckBox pinned_box = (CheckBox)convertView.findViewById(R.id.cb_pinned);
         pinned_box.setChecked(((Note)notes[position]).getPinned());
 
+        CheckBox selectBox = (CheckBox)convertView.findViewById(R.id.cb_selected);
+        selectBox.setChecked(((Note)notes[position]).getSelected());
 
         pinned_box.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
                 Note note = notes[position];
                 note.setPinned(!note.getPinned());
+                note.save();
+                ((MainActivity)context).reloadNotes(null);
+            }
+        });
+
+        selectBox.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Note note = notes[position];
+                note.setSelected(!note.getSelected());
                 note.save();
                 ((MainActivity)context).reloadNotes(null);
             }
