@@ -32,6 +32,8 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Locale;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
@@ -267,6 +269,16 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 sorting = Sorting.SIZE;
+                reloadNotes(sorting);
+            }
+        });
+
+        Button delete_notes_button = findViewById(R.id.bt_delete_notes);
+        sort_size_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ArrayList<Note> notes = new ArrayList<Note>(Arrays.asList(adapter.getNotes()));
+                DatabaseWrapper.getInstance().deleteNotes(notes);
                 reloadNotes(sorting);
             }
         });

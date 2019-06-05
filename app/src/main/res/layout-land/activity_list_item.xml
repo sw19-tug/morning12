@@ -51,6 +51,11 @@
             android:layout_height="wrap_content"
             android:button="@layout/checkbox_pin" />
 
+        <CheckBox
+            android:id="@+id/cb_selected"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
     </LinearLayout>
 
 </RelativeLayout>
