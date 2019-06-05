@@ -35,7 +35,7 @@ public class TextToSpeechTest {
         onView(withText("1 2 3 4 5 6 7 meine Frau kocht rote Rüben")).perform(click());
         Espresso.openContextualActionModeOverflowMenu();
 
-        onView(withText(R.string.textToSpeech)).check(matches(isDisplayed()));
-        onView(withText(R.string.textToSpeech)).perform(click());
+        onView(withText(R.string.text_to_speech)).check(matches(isDisplayed()));
+        onView(withText(R.string.text_to_speech)).perform(click());
     }
 }
