@@ -21,6 +21,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.Toast;
@@ -274,11 +275,18 @@ public class MainActivity extends AppCompatActivity {
         });
 
         Button delete_notes_button = findViewById(R.id.bt_delete_notes);
-        sort_size_button.setOnClickListener(new View.OnClickListener() {
+        delete_notes_button.setVisibility(View.INVISIBLE);
+        delete_notes_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 ArrayList<Note> notes = new ArrayList<Note>(Arrays.asList(adapter.getNotes()));
                 DatabaseWrapper.getInstance().deleteNotes(notes);
+
+                findViewById(R.id.bt_delete_notes).setVisibility(View.INVISIBLE);
+
+                //CheckBox cb_selected = findViewById(R.id.cb_selected);
+                findViewById(R.id.cb_selected).setVisibility(View.INVISIBLE);
+
                 reloadNotes(sorting);
             }
         });
