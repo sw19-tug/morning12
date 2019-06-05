@@ -3,12 +3,15 @@ package com.twelve.morning.notebook;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.ListAdapter;
 import android.widget.TextView;
+
+import java.util.logging.Handler;
 
 
 public class NotesListAdapter extends BaseAdapter implements ListAdapter {
@@ -80,6 +83,19 @@ public class NotesListAdapter extends BaseAdapter implements ListAdapter {
             }
         });
 
+//        //define showSelectBox
+//
+//        //define onTouchEvents
+//        pressedView.setOnTouchListener(new View.OnTouchListener(){
+//            @Override
+//            public void onTouch(View v){
+//                Note note = notes[position];
+//
+//            }
+//        });
+//
+//        convertView.setOnTouchListener(new);
+
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -98,3 +114,18 @@ public class NotesListAdapter extends BaseAdapter implements ListAdapter {
         return notes;
     }
 }
+
+//public class TouchListener implements View.OnTouchListener{
+//    private Handler handler = new Handler();
+//    private int initialInterval;
+//    private View touchedView;
+//
+//    public boolean onTouch(View view, MotionEvent motionEvent){
+//        switch (motionEvent.getAction()){
+//            case MotionEvent.ACTION_DOWN:
+//                return true;
+//            case
+//        }
+//    }
+//
+//}
