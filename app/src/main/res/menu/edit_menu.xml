@@ -7,5 +7,5 @@
     <item android:id="@+id/option_delete"
         android:title="@string/delete_note"/>
     <item android:id="@+id/text_to_speech"
-        android:title="@string/text_to_speech"/>
+        android:title="Read note"/>
 </menu>
