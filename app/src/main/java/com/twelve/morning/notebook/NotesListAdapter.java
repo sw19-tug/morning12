@@ -19,6 +19,7 @@ public class NotesListAdapter extends BaseAdapter implements ListAdapter {
 
     private Note[] notes = null;
     private Context context;
+    private CheckBox cbSelected = null;
 
 
     public NotesListAdapter(Note[] notes, Context ctx) {
@@ -62,6 +63,8 @@ public class NotesListAdapter extends BaseAdapter implements ListAdapter {
 
         CheckBox selectBox = (CheckBox)convertView.findViewById(R.id.cb_selected);
         selectBox.setChecked(((Note)notes[position]).getSelected());
+        selectBox.setVisibility(View.GONE);
+        cbSelected = selectBox;
 
         pinned_box.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -112,6 +115,10 @@ public class NotesListAdapter extends BaseAdapter implements ListAdapter {
 
     public Note[] getNotes() {
         return notes;
+    }
+
+    public void setCbSelectedVisibility(int visibility){
+        cbSelected.setVisibility(visibility);
     }
 }
 

@@ -282,10 +282,9 @@ public class MainActivity extends AppCompatActivity {
                 ArrayList<Note> notes = new ArrayList<Note>(Arrays.asList(adapter.getNotes()));
                 DatabaseWrapper.getInstance().deleteNotes(notes);
 
-                findViewById(R.id.bt_delete_notes).setVisibility(View.INVISIBLE);
-
                 //CheckBox cb_selected = findViewById(R.id.cb_selected);
-                findViewById(R.id.cb_selected).setVisibility(View.INVISIBLE);
+                //findViewById(R.id.cb_selected).setVisibility(View.INVISIBLE);
+                adapter.setCbSelectedVisibility(View.GONE);
 
                 reloadNotes(sorting);
             }
