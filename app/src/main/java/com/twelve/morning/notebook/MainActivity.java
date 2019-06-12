@@ -145,6 +145,10 @@ public class MainActivity extends AppCompatActivity {
                     recreate();
                 }
                 return true;
+            case R.id.bt_about:
+                Intent switch_to_about_activity = new Intent(MainActivity.this,
+                        AboutActivity.class);
+                startActivity(switch_to_about_activity);
             default:
                 return super.onOptionsItemSelected(item);
         }

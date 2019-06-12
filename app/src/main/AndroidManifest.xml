@@ -15,6 +15,7 @@
         <activity android:name=".EditNoteActivity"
             android:windowSoftInputMode="adjustPan"/>
         <activity android:name=".CreateNoteActivity" />
+        <activity android:name=".AboutActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

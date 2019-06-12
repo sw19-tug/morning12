@@ -25,5 +25,8 @@
     <string name="search_here">Search here</string>
     <string name="sort_size">Size</string>
     <string name="created_at_location">created at: \n%1$s</string>
+    <string name="about">About</string>
+    <string name="about_made">Made with 🥵 by</string>
+    <string name="about_names">Philipp\nBernhard\nJuri\nMichael\nMarko\nAndreas\nPaul\nAhmed</string>
 
 </resources>
