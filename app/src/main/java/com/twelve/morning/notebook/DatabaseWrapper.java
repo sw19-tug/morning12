@@ -145,6 +145,11 @@ public class DatabaseWrapper {
         noteDatabase.daoAccess().deleteNote(note);
     }
 
+    public void deleteNotes(List<Note> notes){
+        for(Note note : notes)
+            deleteNote(note);
+    }
+  
     public Integer lastAddedNoteKey(){
         return noteDatabase.daoAccess().getMaxKey();
     }

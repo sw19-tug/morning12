@@ -3,12 +3,18 @@ package com.twelve.morning.notebook;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.ListAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.logging.Handler;
 
 
 public class NotesListAdapter extends BaseAdapter implements ListAdapter {
@@ -16,11 +22,35 @@ public class NotesListAdapter extends BaseAdapter implements ListAdapter {
 
     private Note[] notes = null;
     private Context context;
+    public static CheckBox cbSelected = null;
+    public static boolean visible = false;
 
 
     public NotesListAdapter(Note[] notes, Context ctx) {
         this.notes = notes;
         this.context = ctx;
+    }
+
+    public void removeChecks() {
+        ArrayList<Note> notesList = new ArrayList<Note>(Arrays.asList(notes));
+        for(Note note : notesList){
+            note.setSelected(false);
+            note.save();
+        }
+        cbSelected.setChecked(false);
+    }
+
+    public ArrayList<Note> getCheckedNotes(){
+        ArrayList<Note> notesList = new ArrayList<Note>(Arrays.asList(notes));
+        ArrayList<Note> returnList = new ArrayList<Note>(Arrays.asList(notes));
+
+        for(Note note : notesList){
+            if(!note.getSelected()){
+                returnList.remove(note);
+            }
+        }
+
+        return returnList;
     }
 
 
@@ -57,6 +87,22 @@ public class NotesListAdapter extends BaseAdapter implements ListAdapter {
         CheckBox pinned_box = (CheckBox)convertView.findViewById(R.id.cb_pinned);
         pinned_box.setChecked(((Note)notes[position]).getPinned());
 
+        final CheckBox selectBox = (CheckBox)convertView.findViewById(R.id.cb_selected);
+        selectBox.setChecked(((Note)notes[position]).getSelected());
+        if(!visible)
+            selectBox.setVisibility(View.GONE);
+        cbSelected = selectBox;
+
+        /*ListView list = (ListView)convertView.findViewById(R.id.list_notes);
+        list.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                removeChecks();
+                cbSelected.setVisibility(View.VISIBLE);
+                MainActivity.delBtn.setVisibility(View.VISIBLE);
+                return false;
+            }
+        });*/
 
         pinned_box.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -68,9 +114,34 @@ public class NotesListAdapter extends BaseAdapter implements ListAdapter {
             }
         });
 
+        selectBox.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Note note = notes[position];
+                note.setSelected(!note.getSelected());
+                note.save();
+                ((MainActivity)context).reloadNotes(null);
+                selectBox.setVisibility(View.VISIBLE);
+            }
+        });
+
+//        //define showSelectBox
+//
+//        //define onTouchEvents
+//        pressedView.setOnTouchListener(new View.OnTouchListener(){
+//            @Override
+//            public void onTouch(View v){
+//                Note note = notes[position];
+//
+//            }
+//        });
+//
+//        convertView.setOnTouchListener(new);
+
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                MainActivity.visible = false;
                 Intent intent = new Intent(context, EditNoteActivity.class);
                 Note note = notes[position];
                 intent.putExtra("note", note);
@@ -79,10 +150,27 @@ public class NotesListAdapter extends BaseAdapter implements ListAdapter {
 
         });
 
+        convertView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                removeChecks();
+                visible = true;
+                MainActivity.visible = true;
+                cbSelected.setVisibility(View.VISIBLE);
+                MainActivity.delBtn.setVisibility(View.VISIBLE);
+                ((MainActivity)context).reloadNotes(null);
+                return true;
+            }
+        });
+
         return convertView;
     }
 
     public Note[] getNotes() {
         return notes;
+    }
+
+    public void setCbSelectedVisibility(int visibility){
+        cbSelected.setVisibility(visibility);
     }
 }

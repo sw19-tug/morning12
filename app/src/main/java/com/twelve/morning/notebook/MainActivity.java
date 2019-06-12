@@ -21,6 +21,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.Toast;
@@ -32,16 +33,19 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Locale;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
-
 
 
 public class MainActivity extends AppCompatActivity {
 
     private ListView list_view;
     public NotesListAdapter adapter = null;
+    public static Button delBtn;
+    public static boolean visible = false;
     private Sorting sorting = Sorting.CREATION;
 
     boolean firstLaunch = true;
@@ -53,17 +57,6 @@ public class MainActivity extends AppCompatActivity {
         DatabaseWrapper.getInstance().createDatabase(getApplicationContext());
 
 
-        /*if(firstLaunch){
-            firstLaunch = false;
-            Locale locale = new Locale("de");
-            Locale.setDefault(locale);
-            Configuration config = new Configuration();
-            config.locale = locale;
-            getResources().updateConfiguration(
-                    config,
-                    getResources().getDisplayMetrics()
-            );
-        }*/
         setContentView(R.layout.activity_main);
         setupButtons();
         setupSearch();
@@ -103,6 +96,7 @@ public class MainActivity extends AppCompatActivity {
     }
   
     public boolean onOptionsItemSelected(MenuItem item) {
+        visible = false;
         Intent intent = getIntent();
         switch (item.getItemId()){
             case R.id.bt_import:
@@ -233,12 +227,14 @@ public class MainActivity extends AppCompatActivity {
         this.adapter = new NotesListAdapter(DatabaseWrapper.getInstance().getNotes(this.sorting), this);
         list_view = findViewById(R.id.list_notes);
         list_view.setAdapter(this.adapter);
+        NotesListAdapter.visible = visible;
     }
 
     public void reloadNotesByText(String query) {
         this.adapter = new NotesListAdapter(DatabaseWrapper.getInstance().getNotesByText(query), this);
         list_view = findViewById(R.id.list_notes);
         list_view.setAdapter(this.adapter);
+        NotesListAdapter.visible = visible;
     }
 
     private void setupButtons(){
@@ -246,6 +242,7 @@ public class MainActivity extends AppCompatActivity {
         create_note_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                visible = false;
                 Intent switch_to_create_note = new Intent(MainActivity.this,
                         CreateNoteActivity.class);
                 startActivity(switch_to_create_note);
@@ -275,6 +272,28 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 sorting = Sorting.SIZE;
+                reloadNotes(sorting);
+            }
+        });
+
+        Button delete_notes_button = findViewById(R.id.bt_delete_notes);
+        delete_notes_button.setVisibility(View.GONE);
+        delBtn = delete_notes_button;
+        delete_notes_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ArrayList<Note> notes = adapter.getCheckedNotes();
+                if(!notes.isEmpty())
+                    DatabaseWrapper.getInstance().deleteNotes(notes);
+
+                NotesListAdapter.cbSelected.setVisibility(View.GONE);
+                delBtn.setVisibility(View.GONE);
+
+                NotesListAdapter.visible = false;
+                visible = false;
+                //findViewById(R.id.cb_selected).setVisibility(View.INVISIBLE);
+                //adapter.setCbSelectedVisibility(View.GONE);
+
                 reloadNotes(sorting);
             }
         });
