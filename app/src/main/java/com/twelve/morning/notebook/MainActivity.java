@@ -275,12 +275,12 @@ public class MainActivity extends AppCompatActivity {
         });
 
         Button delete_notes_button = findViewById(R.id.bt_delete_notes);
-        delete_notes_button.setVisibility(View.INVISIBLE);
+        delete_notes_button.setVisibility(View.GONE);
         delBtn = delete_notes_button;
         delete_notes_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ArrayList<Note> notes = new ArrayList<Note>(Arrays.asList(adapter.getNotes()));
+                ArrayList<Note> notes = adapter.getCheckedNotes();
                 DatabaseWrapper.getInstance().deleteNotes(notes);
 
                 NotesListAdapter.cbSelected.setVisibility(View.GONE);

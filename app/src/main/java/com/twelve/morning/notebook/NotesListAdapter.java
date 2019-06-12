@@ -12,6 +12,8 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.logging.Handler;
 
 
@@ -26,6 +28,25 @@ public class NotesListAdapter extends BaseAdapter implements ListAdapter {
     public NotesListAdapter(Note[] notes, Context ctx) {
         this.notes = notes;
         this.context = ctx;
+    }
+
+    void removeChecks() {
+        ArrayList<Note> notesList = new ArrayList<Note>(Arrays.asList(notes));
+        for(Note note : notesList){
+            note.setSelected(false);
+        }
+        cbSelected.setChecked(false);
+    }
+
+    ArrayList<Note> getCheckedNotes(){
+        ArrayList<Note> notesList = new ArrayList<Note>(Arrays.asList(notes));
+        for(Note note : notesList){
+            if(!note.getSelected()){
+                notesList.remove(note);
+            }
+        }
+
+        return notesList;
     }
 
 
@@ -71,7 +92,7 @@ public class NotesListAdapter extends BaseAdapter implements ListAdapter {
         list.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                //TODO
+                removeChecks();
                 cbSelected.setVisibility(View.VISIBLE);
                 MainActivity.delBtn.setVisibility(View.VISIBLE);
                 return false;
