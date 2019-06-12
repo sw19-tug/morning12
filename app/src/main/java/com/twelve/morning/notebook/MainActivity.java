@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
         DatabaseWrapper.getInstance().createDatabase(getApplicationContext());
 
 
-        if(firstLaunch){
+        /*if(firstLaunch){
             firstLaunch = false;
             Locale locale = new Locale("de");
             Locale.setDefault(locale);
@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
                     config,
                     getResources().getDisplayMetrics()
             );
-        }
+        }*/
         setContentView(R.layout.activity_main);
         setupButtons();
         setupSearch();
@@ -132,7 +132,10 @@ public class MainActivity extends AppCompatActivity {
                             case 5: language = "st"; break;
                         }
                         LocaleHelper.setLocale(MainActivity.this, language);
-                        self.recreate();
+                        //self.recreate();
+                        Intent intent = self.getIntent();
+                        self.finish();
+                        startActivity(intent);
                     }
                 });
                 builder.show();
