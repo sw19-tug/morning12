@@ -31,4 +31,10 @@ public interface DaoAccess {
 
     @Query("DELETE FROM noteTable")
     void deleteTable();
+
+    @Query("SELECT max(id) FROM noteTable")
+    Integer getMaxKey();
+
+    @Query("SELECT * FROM noteTable WHERE id = :id")
+    Note getNoteById(Integer id);
 }

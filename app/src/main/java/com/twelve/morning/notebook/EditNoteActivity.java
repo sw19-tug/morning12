@@ -1,9 +1,11 @@
 package com.twelve.morning.notebook;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.speech.tts.TextToSpeech;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
@@ -22,12 +24,16 @@ import android.widget.SearchView;
 import android.widget.TextView;
 
 
+import com.google.android.gms.maps.model.LatLng;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class EditNoteActivity extends AppCompatActivity {
 
     private Note last_edited_note = null;
+    TextToSpeech textToSpeechObject = null;
     public Note getLastEditedNote(){
         return this.last_edited_note;
     }
@@ -37,12 +43,20 @@ public class EditNoteActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_note);
 
+        fillLocation();
         fillTitleBody();
         finishEditNoteActivity((Button)findViewById(R.id.bt_edit_note_create_cancel));
         finishEditNoteActivity((Button)findViewById(R.id.bt_edit_note_create_save));
         finishEditNoteActivity((SearchView)findViewById(R.id.search_view_find_text));
+        textToSpeechObject = new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
+            @Override
+            public void onInit(int status) {
+                if(status != TextToSpeech.ERROR) {
+                    textToSpeechObject.setLanguage(Locale.UK);
+                }
+            }
+        });
     }
-
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.edit_menu, menu);
@@ -68,12 +82,30 @@ public class EditNoteActivity extends AppCompatActivity {
                 ShareManager.zip(noteToEport, zipFileName);
                 startActivity(ShareManager.shareZipFile(zipFileName));
                 return true;
+            case R.id.text_to_speech:
+                textToSpeech(note.getBody());
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
 
+    private void textToSpeech(String text) {
+        textToSpeechObject.speak(text, TextToSpeech.QUEUE_FLUSH, null, null);
+    }
 
+    private void fillLocation(){
+        Intent intent = getIntent();
+        Note note = (Note)intent.getSerializableExtra("note");
+        TextView location_text_view = this.findViewById(R.id.tv_note_location);
+        String address = note.getAddress();
+        if(address == null) {
+            address = "";
+        }
+        else {
+            address = "@ " + address;
+        }
+        location_text_view.setText(getString(R.string.created_at_location, address));
+    }
 
     private void fillTitleBody()
     {
@@ -151,7 +183,6 @@ public class EditNoteActivity extends AppCompatActivity {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                System.out.println("onQueryTextSubmit "+query);
                 int position = TextSearcher.GetInstance().SearchNextInstance(note, query);
                 if(position == -1){
                     showAlert("Warning", "'"+query+"' not found", "Ok");

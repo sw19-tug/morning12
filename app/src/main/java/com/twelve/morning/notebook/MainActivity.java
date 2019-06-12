@@ -49,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
     private Sorting sorting = Sorting.CREATION;
 
     boolean firstLaunch = true;
+    final MainActivity self = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,33 +57,11 @@ public class MainActivity extends AppCompatActivity {
         DatabaseWrapper.getInstance().createDatabase(getApplicationContext());
 
 
-        if(firstLaunch){
-            firstLaunch = false;
-            Locale locale = new Locale("de");
-            Locale.setDefault(locale);
-            Configuration config = new Configuration();
-            config.locale = locale;
-            getResources().updateConfiguration(
-                    config,
-                    getResources().getDisplayMetrics()
-            );
-        }
-
-
         setContentView(R.layout.activity_main);
         setupButtons();
         setupSearch();
         reloadNotes(sorting);
 
-//        list_view.setOnLongClickListener(new View.OnLongClickListener() {
-//            @Override
-//            public boolean onLongClick(View v) {
-//                adapter.removeChecks();
-//                adapter.cbSelected.setVisibility(View.VISIBLE);
-//                delBtn.setVisibility(View.VISIBLE);
-//                return false;
-//            }
-//        });
     }
 
     public void setupSearch() {
@@ -147,7 +126,10 @@ public class MainActivity extends AppCompatActivity {
                             case 5: language = "st"; break;
                         }
                         LocaleHelper.setLocale(MainActivity.this, language);
-                        recreate();
+                        //self.recreate();
+                        Intent intent = self.getIntent();
+                        self.finish();
+                        startActivity(intent);
                     }
                 });
                 builder.show();
@@ -161,6 +143,10 @@ public class MainActivity extends AppCompatActivity {
                     recreate();
                 }
                 return true;
+            case R.id.bt_about:
+                Intent switch_to_about_activity = new Intent(MainActivity.this,
+                        AboutActivity.class);
+                startActivity(switch_to_about_activity);
             default:
                 return super.onOptionsItemSelected(item);
         }

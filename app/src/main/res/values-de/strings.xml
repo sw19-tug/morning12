@@ -27,4 +27,10 @@
     <string name="local_string">Sprache verändern</string>
     <string name="sort_size">Länge</string>
     <string name="search_here">Suche hier</string>
+    <string name="created_at_location">%1$s</string>
+    <string name="about">About</string>
+    <string name="text_to_speech">Notiz vorlesen</string>
+    <string name="about_made">Handgefertigt mit 🍺, 🇦🇹 und 🏔 by</string>
+    <string name="about_names">Philipp\nBernhard\nJuri\nMichael\nMarko\nAndreas\nPaul\nAhmed</string>
+
 </resources>
