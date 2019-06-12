@@ -30,7 +30,7 @@ public class NotesListAdapter extends BaseAdapter implements ListAdapter {
         this.context = ctx;
     }
 
-    void removeChecks() {
+    public void removeChecks() {
         ArrayList<Note> notesList = new ArrayList<Note>(Arrays.asList(notes));
         for(Note note : notesList){
             note.setSelected(false);
@@ -38,7 +38,7 @@ public class NotesListAdapter extends BaseAdapter implements ListAdapter {
         cbSelected.setChecked(false);
     }
 
-    ArrayList<Note> getCheckedNotes(){
+    public ArrayList<Note> getCheckedNotes(){
         ArrayList<Note> notesList = new ArrayList<Note>(Arrays.asList(notes));
         for(Note note : notesList){
             if(!note.getSelected()){
@@ -88,7 +88,7 @@ public class NotesListAdapter extends BaseAdapter implements ListAdapter {
         selectBox.setVisibility(View.GONE);
         cbSelected = selectBox;
 
-        ListView list = (ListView)convertView.findViewById(R.id.list_notes);
+        /*ListView list = (ListView)convertView.findViewById(R.id.list_notes);
         list.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
@@ -97,7 +97,7 @@ public class NotesListAdapter extends BaseAdapter implements ListAdapter {
                 MainActivity.delBtn.setVisibility(View.VISIBLE);
                 return false;
             }
-        });
+        });*/
 
         pinned_box.setOnClickListener(new View.OnClickListener(){
             @Override

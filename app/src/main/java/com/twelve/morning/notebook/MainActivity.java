@@ -66,11 +66,22 @@ public class MainActivity extends AppCompatActivity {
                     getResources().getDisplayMetrics()
             );
         }
+
+
         setContentView(R.layout.activity_main);
         setupButtons();
         setupSearch();
         reloadNotes(sorting);
 
+        list_view.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                adapter.removeChecks();
+                adapter.cbSelected.setVisibility(View.VISIBLE);
+                delBtn.setVisibility(View.VISIBLE);
+                return false;
+            }
+        });
     }
 
     public void setupSearch() {
