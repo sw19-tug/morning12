@@ -17,15 +17,18 @@
     <string name="Body_hint">Enter Text here:</string>
     <string name="tag_information"><![CDATA[\n\nTo tag a note write \"#<tag> \" into the text body for every tag you want to add, where <tag> is replaced by the wanted tag]]></string>
     <string name="export_bt">Export notes</string>
-    <string name="darkmode_bt">Darkmode</string>
-    <string name="night_mode">Night Mode</string>
+    <string name="darkmode_bt">Darkmode 🧛</string>
+    <string name="night_mode">Night Mode 🧛</string>
     <string name="day_mode">Day Mode</string>
     <string name="import_string">Import notes</string>
     <string name="export_string">Export notes</string>
     <string name="local_string">Change Language</string>
     <string name="search_here">Search here</string>
     <string name="sort_size">Size</string>
-    <string name="created_at_location">%1$s</string>
     <string name="text_to_speech">Read note</string>
+    <string name="created_at_location">%1$s</string>
+    <string name="about">About</string>
+    <string name="about_made">Made with 🥵🔥 by</string>
+    <string name="about_names">Philipp\nBernhard\nJuri\nMichael\nMarko\nAndreas\nPaul\nAhmed</string>
 
 </resources>
