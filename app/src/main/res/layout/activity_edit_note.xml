@@ -40,7 +40,7 @@
         android:layout_height="wrap_content"
         android:queryHint="Search for Text"
         android:layout_below="@+id/edit_note_header"
-        android:layout_marginTop="32dp" />
+        android:layout_marginTop="0px" />
 
 
     <EditText
@@ -48,7 +48,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/search_view_find_text"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="0px"
         android:ems="10"
         android:focusableInTouchMode="true"
         android:hint="Title:"
