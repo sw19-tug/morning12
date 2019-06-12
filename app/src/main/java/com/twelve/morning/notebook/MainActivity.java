@@ -117,6 +117,7 @@ public class MainActivity extends AppCompatActivity {
     }
   
     public boolean onOptionsItemSelected(MenuItem item) {
+        visible = false;
         Intent intent = getIntent();
         switch (item.getItemId()){
             case R.id.bt_import:
@@ -240,14 +241,14 @@ public class MainActivity extends AppCompatActivity {
         this.adapter = new NotesListAdapter(DatabaseWrapper.getInstance().getNotes(this.sorting), this);
         list_view = findViewById(R.id.list_notes);
         list_view.setAdapter(this.adapter);
-        NotesListAdapter.visible = true;
+        NotesListAdapter.visible = visible;
     }
 
     public void reloadNotesByText(String query) {
         this.adapter = new NotesListAdapter(DatabaseWrapper.getInstance().getNotesByText(query), this);
         list_view = findViewById(R.id.list_notes);
         list_view.setAdapter(this.adapter);
-        NotesListAdapter.visible = true;
+        NotesListAdapter.visible = visible;
     }
 
     private void setupButtons(){
@@ -255,6 +256,7 @@ public class MainActivity extends AppCompatActivity {
         create_note_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                visible = false;
                 Intent switch_to_create_note = new Intent(MainActivity.this,
                         CreateNoteActivity.class);
                 startActivity(switch_to_create_note);
@@ -295,7 +297,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 ArrayList<Note> notes = adapter.getCheckedNotes();
-                Toast.makeText(getApplicationContext(), "DeleteOnClickListener", Toast.LENGTH_LONG).show();
                 if(!notes.isEmpty())
                     DatabaseWrapper.getInstance().deleteNotes(notes);
 

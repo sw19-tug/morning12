@@ -147,8 +147,7 @@ public class DatabaseWrapper {
 
     public void deleteNotes(List<Note> notes){
         for(Note note : notes)
-            if(note.getPinned())
-                deleteNote(note);
+            deleteNote(note);
     }
 }
 

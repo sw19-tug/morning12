@@ -11,7 +11,6 @@ import android.widget.CheckBox;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -36,6 +35,7 @@ public class NotesListAdapter extends BaseAdapter implements ListAdapter {
         ArrayList<Note> notesList = new ArrayList<Note>(Arrays.asList(notes));
         for(Note note : notesList){
             note.setSelected(false);
+            note.save();
         }
         cbSelected.setChecked(false);
     }
@@ -88,7 +88,7 @@ public class NotesListAdapter extends BaseAdapter implements ListAdapter {
         pinned_box.setChecked(((Note)notes[position]).getPinned());
 
         final CheckBox selectBox = (CheckBox)convertView.findViewById(R.id.cb_selected);
-        selectBox.setChecked(false);
+        selectBox.setChecked(((Note)notes[position]).getSelected());
         if(!visible)
             selectBox.setVisibility(View.GONE);
         cbSelected = selectBox;
@@ -118,7 +118,6 @@ public class NotesListAdapter extends BaseAdapter implements ListAdapter {
             @Override
             public void onClick(View v) {
                 Note note = notes[position];
-                Toast.makeText(context, "SelectBoxOnClickListener", Toast.LENGTH_LONG).show();
                 note.setSelected(!note.getSelected());
                 note.save();
                 ((MainActivity)context).reloadNotes(null);
@@ -142,9 +141,9 @@ public class NotesListAdapter extends BaseAdapter implements ListAdapter {
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                MainActivity.visible = false;
                 Intent intent = new Intent(context, EditNoteActivity.class);
                 Note note = notes[position];
-                Toast.makeText(context, "OnClickListener", Toast.LENGTH_LONG).show();
                 intent.putExtra("note", note);
                 context.startActivity(intent);
         }
@@ -159,8 +158,8 @@ public class NotesListAdapter extends BaseAdapter implements ListAdapter {
                 MainActivity.visible = true;
                 cbSelected.setVisibility(View.VISIBLE);
                 MainActivity.delBtn.setVisibility(View.VISIBLE);
-                Toast.makeText(context, "OnLongClickListener", Toast.LENGTH_LONG).show();
-                return false;
+                ((MainActivity)context).reloadNotes(null);
+                return true;
             }
         });
 
