@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Bilješke</string>
     <string name="sort_title">Naslov</string>
@@ -26,7 +27,7 @@
     <string name="night_mode">Night Mode</string>
     <string name="day_mode">Day Mode</string>
     <string name="search_here">Traži ovdje</string>
-    <string name="created_at_location">created at: \\n%1$s</string>
+    <string name="created_at_location">%1$s</string>
     <string name="about">About</string>
     <string name="about_made">Made with 🥵 by</string>
     <string name="about_names">Philipp\nBernhard\nJuri\nMichael\nMarko\nAndreas\nPaul\nAhmed</string>

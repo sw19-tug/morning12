@@ -12,7 +12,7 @@
         android:id="@+id/edit_note_header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="vertical">
         <TextView
             android:id="@+id/TextView2"
             android:layout_width="wrap_content"
@@ -28,9 +28,8 @@
             android:textSize="15sp"
             android:text="@string/created_at_location"
             android:lines="2"
-            android:layout_marginLeft="10dp"
-            android:layout_gravity="center_vertical"
-            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="5sp"
+            android:layout_marginBottom="5sp"
             />
 
     </LinearLayout>

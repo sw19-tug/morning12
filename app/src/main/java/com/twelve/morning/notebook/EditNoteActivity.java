@@ -99,7 +99,10 @@ public class EditNoteActivity extends AppCompatActivity {
         TextView location_text_view = this.findViewById(R.id.tv_note_location);
         String address = note.getAddress();
         if(address == null) {
-            address = " a wonderful location";
+            address = "";
+        }
+        else {
+            address = "@ " + address;
         }
         location_text_view.setText(getString(R.string.created_at_location, address));
     }
