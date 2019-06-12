@@ -144,6 +144,14 @@ public class DatabaseWrapper {
     public void deleteNote(Note note) {
         noteDatabase.daoAccess().deleteNote(note);
     }
+
+    public Integer lastAddedNoteKey(){
+        return noteDatabase.daoAccess().getMaxKey();
+    }
+
+    public Note getNoteById(Integer id){
+        return noteDatabase.daoAccess().getNoteById(id);
+    }
 }
 
 enum Sorting {

@@ -38,10 +38,10 @@ public class NoteURLTest {
         onView(withId(R.id.et_note_title)).perform(typeText("Note " + rand), closeSoftKeyboard());
         onView(withId(R.id.et_note_body)).perform(typeText("Body https://gitignore.io lelelelele hiho"), closeSoftKeyboard());
         onView(withId(R.id.bt_note_create_save)).perform(click());
-
         onView(withText("Note " + rand)).perform(click());
 
         onView(withText("Body https://gitignore.io lelelelele hiho")).check(matches(isDisplayed()));
+
         Espresso.openContextualActionModeOverflowMenu();
         onView(withText(R.string.delete_note)).perform(click());
     }

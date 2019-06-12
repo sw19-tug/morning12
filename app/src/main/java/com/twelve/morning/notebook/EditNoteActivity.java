@@ -1,5 +1,6 @@
 package com.twelve.morning.notebook;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -23,6 +24,8 @@ import android.widget.SearchView;
 import android.widget.TextView;
 
 
+import com.google.android.gms.maps.model.LatLng;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -40,6 +43,7 @@ public class EditNoteActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_note);
 
+        fillLocation();
         fillTitleBody();
         finishEditNoteActivity((Button)findViewById(R.id.bt_edit_note_create_cancel));
         finishEditNoteActivity((Button)findViewById(R.id.bt_edit_note_create_save));
@@ -89,6 +93,16 @@ public class EditNoteActivity extends AppCompatActivity {
         textToSpeechObject.speak(text, TextToSpeech.QUEUE_FLUSH, null, null);
     }
 
+    private void fillLocation(){
+        Intent intent = getIntent();
+        Note note = (Note)intent.getSerializableExtra("note");
+        TextView location_text_view = this.findViewById(R.id.tv_note_location);
+        String address = note.getAddress();
+        if(address == null) {
+            address = " a wonderful location";
+        }
+        location_text_view.setText(getString(R.string.created_at_location, address));
+    }
 
     private void fillTitleBody()
     {
@@ -166,7 +180,6 @@ public class EditNoteActivity extends AppCompatActivity {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                System.out.println("onQueryTextSubmit "+query);
                 int position = TextSearcher.GetInstance().SearchNextInstance(note, query);
                 if(position == -1){
                     showAlert("Warning", "'"+query+"' not found", "Ok");
