@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.speech.tts.TextToSpeech;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
@@ -27,10 +28,12 @@ import com.google.android.gms.maps.model.LatLng;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class EditNoteActivity extends AppCompatActivity {
 
     private Note last_edited_note = null;
+    TextToSpeech textToSpeechObject = null;
     public Note getLastEditedNote(){
         return this.last_edited_note;
     }
@@ -45,8 +48,15 @@ public class EditNoteActivity extends AppCompatActivity {
         finishEditNoteActivity((Button)findViewById(R.id.bt_edit_note_create_cancel));
         finishEditNoteActivity((Button)findViewById(R.id.bt_edit_note_create_save));
         finishEditNoteActivity((SearchView)findViewById(R.id.search_view_find_text));
+        textToSpeechObject = new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
+            @Override
+            public void onInit(int status) {
+                if(status != TextToSpeech.ERROR) {
+                    textToSpeechObject.setLanguage(Locale.UK);
+                }
+            }
+        });
     }
-
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.edit_menu, menu);
@@ -72,9 +82,15 @@ public class EditNoteActivity extends AppCompatActivity {
                 ShareManager.zip(noteToEport, zipFileName);
                 startActivity(ShareManager.shareZipFile(zipFileName));
                 return true;
+            case R.id.text_to_speech:
+                textToSpeech(note.getBody());
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    private void textToSpeech(String text) {
+        textToSpeechObject.speak(text, TextToSpeech.QUEUE_FLUSH, null, null);
     }
 
     private void fillLocation(){
