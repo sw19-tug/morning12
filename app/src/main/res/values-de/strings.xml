@@ -27,4 +27,6 @@
     <string name="local_string">Sprache verändern</string>
     <string name="sort_size">Länge</string>
     <string name="search_here">Suche hier</string>
+    <string name="created_at_location">%1$s</string>
+
 </resources>

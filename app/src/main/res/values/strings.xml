@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Notebook</string>
     <string name="sort_title">Title</string>
@@ -24,6 +25,6 @@
     <string name="local_string">Change Language</string>
     <string name="search_here">Search here</string>
     <string name="sort_size">Size</string>
-    <string name="created_at_location">created at: \n%1$s</string>
+    <string name="created_at_location">%1$s</string>
 
 </resources>
