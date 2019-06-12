@@ -48,12 +48,11 @@ public class EditNoteActivity extends AppCompatActivity {
             @Override
             public void onInit(int status) {
                 if(status != TextToSpeech.ERROR) {
-                    textToSpeechObject.setLanguage(Locale.US);
+                    textToSpeechObject.setLanguage(Locale.UK);
                 }
             }
         });
     }
-
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.edit_menu, menu);
