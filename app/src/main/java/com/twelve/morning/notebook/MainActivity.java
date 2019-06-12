@@ -45,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
     private ListView list_view;
     public NotesListAdapter adapter = null;
     public static Button delBtn;
+    public static boolean visible = false;
     private Sorting sorting = Sorting.CREATION;
 
     boolean firstLaunch = true;
@@ -73,15 +74,15 @@ public class MainActivity extends AppCompatActivity {
         setupSearch();
         reloadNotes(sorting);
 
-        list_view.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                adapter.removeChecks();
-                adapter.cbSelected.setVisibility(View.VISIBLE);
-                delBtn.setVisibility(View.VISIBLE);
-                return false;
-            }
-        });
+//        list_view.setOnLongClickListener(new View.OnLongClickListener() {
+//            @Override
+//            public boolean onLongClick(View v) {
+//                adapter.removeChecks();
+//                adapter.cbSelected.setVisibility(View.VISIBLE);
+//                delBtn.setVisibility(View.VISIBLE);
+//                return false;
+//            }
+//        });
     }
 
     public void setupSearch() {
@@ -239,12 +240,14 @@ public class MainActivity extends AppCompatActivity {
         this.adapter = new NotesListAdapter(DatabaseWrapper.getInstance().getNotes(this.sorting), this);
         list_view = findViewById(R.id.list_notes);
         list_view.setAdapter(this.adapter);
+        NotesListAdapter.visible = true;
     }
 
     public void reloadNotesByText(String query) {
         this.adapter = new NotesListAdapter(DatabaseWrapper.getInstance().getNotesByText(query), this);
         list_view = findViewById(R.id.list_notes);
         list_view.setAdapter(this.adapter);
+        NotesListAdapter.visible = true;
     }
 
     private void setupButtons(){
@@ -292,10 +295,15 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 ArrayList<Note> notes = adapter.getCheckedNotes();
-                DatabaseWrapper.getInstance().deleteNotes(notes);
+                Toast.makeText(getApplicationContext(), "DeleteOnClickListener", Toast.LENGTH_LONG).show();
+                if(!notes.isEmpty())
+                    DatabaseWrapper.getInstance().deleteNotes(notes);
 
                 NotesListAdapter.cbSelected.setVisibility(View.GONE);
                 delBtn.setVisibility(View.GONE);
+
+                NotesListAdapter.visible = false;
+                visible = false;
                 //findViewById(R.id.cb_selected).setVisibility(View.INVISIBLE);
                 //adapter.setCbSelectedVisibility(View.GONE);
 
