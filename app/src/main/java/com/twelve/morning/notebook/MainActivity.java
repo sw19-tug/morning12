@@ -45,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
     private Sorting sorting = Sorting.CREATION;
 
     boolean firstLaunch = true;
+    final MainActivity self = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -131,7 +132,7 @@ public class MainActivity extends AppCompatActivity {
                             case 5: language = "st"; break;
                         }
                         LocaleHelper.setLocale(MainActivity.this, language);
-                        recreate();
+                        self.recreate();
                     }
                 });
                 builder.show();
