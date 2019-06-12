@@ -27,4 +27,6 @@
     <string name="night_mode">Nocht Modus</string>
     <string name="day_mode">Tog Mode</string>
     <string name="search_here">Suach do</string>
+    <string name="created_at_location">%1$s</string>
+
 </resources>
