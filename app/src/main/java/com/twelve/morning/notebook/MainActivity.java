@@ -40,11 +40,11 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
 
-
 public class MainActivity extends AppCompatActivity {
 
     private ListView list_view;
     public NotesListAdapter adapter = null;
+    public static Button delBtn;
     private Sorting sorting = Sorting.CREATION;
 
     boolean firstLaunch = true;
@@ -276,15 +276,17 @@ public class MainActivity extends AppCompatActivity {
 
         Button delete_notes_button = findViewById(R.id.bt_delete_notes);
         delete_notes_button.setVisibility(View.INVISIBLE);
+        delBtn = delete_notes_button;
         delete_notes_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 ArrayList<Note> notes = new ArrayList<Note>(Arrays.asList(adapter.getNotes()));
                 DatabaseWrapper.getInstance().deleteNotes(notes);
 
-                //CheckBox cb_selected = findViewById(R.id.cb_selected);
+                NotesListAdapter.cbSelected.setVisibility(View.GONE);
+                delBtn.setVisibility(View.GONE);
                 //findViewById(R.id.cb_selected).setVisibility(View.INVISIBLE);
-                adapter.setCbSelectedVisibility(View.GONE);
+                //adapter.setCbSelectedVisibility(View.GONE);
 
                 reloadNotes(sorting);
             }

@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.ListAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.logging.Handler;
@@ -19,7 +20,7 @@ public class NotesListAdapter extends BaseAdapter implements ListAdapter {
 
     private Note[] notes = null;
     private Context context;
-    private CheckBox cbSelected = null;
+    public static CheckBox cbSelected = null;
 
 
     public NotesListAdapter(Note[] notes, Context ctx) {
@@ -62,9 +63,20 @@ public class NotesListAdapter extends BaseAdapter implements ListAdapter {
         pinned_box.setChecked(((Note)notes[position]).getPinned());
 
         CheckBox selectBox = (CheckBox)convertView.findViewById(R.id.cb_selected);
-        selectBox.setChecked(((Note)notes[position]).getSelected());
+        selectBox.setChecked(false);
         selectBox.setVisibility(View.GONE);
         cbSelected = selectBox;
+
+        ListView list = (ListView)convertView.findViewById(R.id.list_notes);
+        list.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                //TODO
+                cbSelected.setVisibility(View.VISIBLE);
+                MainActivity.delBtn.setVisibility(View.VISIBLE);
+                return false;
+            }
+        });
 
         pinned_box.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -121,18 +133,3 @@ public class NotesListAdapter extends BaseAdapter implements ListAdapter {
         cbSelected.setVisibility(visibility);
     }
 }
-
-//public class TouchListener implements View.OnTouchListener{
-//    private Handler handler = new Handler();
-//    private int initialInterval;
-//    private View touchedView;
-//
-//    public boolean onTouch(View view, MotionEvent motionEvent){
-//        switch (motionEvent.getAction()){
-//            case MotionEvent.ACTION_DOWN:
-//                return true;
-//            case
-//        }
-//    }
-//
-//}
