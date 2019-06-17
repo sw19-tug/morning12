@@ -1,10 +1,13 @@
 package com.twelve.morning.notebook;
 
 
+import android.Manifest;
 import android.support.test.rule.ActivityTestRule;
+import android.support.test.rule.GrantPermissionRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.widget.EditText;
 
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -30,6 +33,17 @@ public class CreateNoteActivityTest {
     public ActivityTestRule<CreateNoteActivity> activityCreateNoteTestRule =
             new ActivityTestRule<>(CreateNoteActivity.class);
 
+    @Rule
+    public GrantPermissionRule grantPermissionRule = GrantPermissionRule.grant(
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            Manifest.permission.ACCESS_COARSE_LOCATION,
+            Manifest.permission.ACCESS_FINE_LOCATION);
+
+    @Before
+    public void resetDatabase(){
+        DatabaseWrapper.getInstance().reset();
+    }
 
     @Test
     public void popUpContainsFieldsAndButtons(){
@@ -47,8 +61,8 @@ public class CreateNoteActivityTest {
         String body_input = "testBody";
         EditText note_title = activityCreateNoteTestRule.getActivity().findViewById(R.id.et_note_title);
         assertNotNull(note_title);
-        onView(withId(R.id.et_note_title)).perform(clearText(), typeText(title_input));
-        onView(withId(R.id.et_note_body)).perform(clearText(), typeText(body_input));
+        onView(withId(R.id.et_note_title)).perform(clearText(), typeText(title_input), closeSoftKeyboard());
+        onView(withId(R.id.et_note_body)).perform(clearText(), typeText(body_input), closeSoftKeyboard());
         onView(withId(R.id.et_note_title)).check(matches(withText(title_input)));
         onView(withId(R.id.et_note_body)).check(matches(withText(body_input)));
     }
@@ -67,9 +81,8 @@ public class CreateNoteActivityTest {
         String title_input = "dummyTitle";
         String body_input = "dummyBodydummyBodydummyBodydummyBodydummyBodydummyBody";
         onView(withId(R.id.rl_create_note)).check(matches(isDisplayed()));
-        onView(withId(R.id.et_note_title)).perform(clearText(), typeText(title_input));
-        onView(withId(R.id.et_note_body)).perform(clearText(), typeText(body_input))
-                .perform(closeSoftKeyboard());
+        onView(withId(R.id.et_note_title)).perform(clearText(), typeText(title_input), closeSoftKeyboard());
+        onView(withId(R.id.et_note_body)).perform(clearText(), typeText(body_input), closeSoftKeyboard());
         onView(withId(R.id.bt_note_create_save)).check(matches(isDisplayed()));
         onView(withId(R.id.bt_note_create_save)).perform(click());
         Note note = activityCreateNoteTestRule.getActivity().getLastSavedNote();
@@ -86,7 +99,7 @@ public class CreateNoteActivityTest {
         String title_input = "dummyTitle";
         String body_input = "dummyBody";
         onView(withId(R.id.rl_create_note)).check(matches(isDisplayed()));
-        onView(withId(R.id.et_note_title)).perform(clearText(), typeText(title_input));
+        onView(withId(R.id.et_note_title)).perform(clearText(), typeText(title_input), closeSoftKeyboard());
         onView(withId(R.id.et_note_body)).perform(clearText(), typeText(body_input))
                 .perform(closeSoftKeyboard());
         onView(withId(R.id.bt_note_create_cancel)).check(matches(isDisplayed()));

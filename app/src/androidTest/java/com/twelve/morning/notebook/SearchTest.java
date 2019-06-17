@@ -1,8 +1,11 @@
 package com.twelve.morning.notebook;
 
+import android.Manifest;
 import android.support.test.rule.ActivityTestRule;
+import android.support.test.rule.GrantPermissionRule;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -24,13 +27,25 @@ public class SearchTest {
     @Rule
     public ActivityTestRule<MainActivity> activityTestRule = new ActivityTestRule<>(MainActivity.class);
 
+    @Rule
+    public GrantPermissionRule grantPermissionRule = GrantPermissionRule.grant(
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            Manifest.permission.ACCESS_COARSE_LOCATION,
+            Manifest.permission.ACCESS_FINE_LOCATION);
+
+    @Before
+    public void resetDatabase(){
+        DatabaseWrapper.getInstance().reset();
+    }
+
     @Test
     public void searchBarTest() {
         String title_input = "dummyTitle";
         String body_input = "dummyBodydummyBodydummyBodydummyBodydummyBodydummyBody";
         onView(withId(R.id.bt_create)).perform(click());
-        onView(withId(R.id.et_note_title)).perform(clearText(), typeText(title_input));
-        onView(withId(R.id.et_note_body)).perform(clearText(), typeText(body_input))
+        onView(withId(R.id.et_note_title)).perform(clearText(), typeText(title_input), closeSoftKeyboard());
+        onView(withId(R.id.et_note_body)).perform(clearText(), typeText(body_input), closeSoftKeyboard())
                 .perform(closeSoftKeyboard());
         onView(withId(R.id.bt_note_create_save)).perform(click());
 

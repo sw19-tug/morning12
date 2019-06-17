@@ -169,9 +169,14 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == 0){
-            String path = data.getData().getPath();
-            path = path.substring(path.indexOf(':') + 1);
-            unpackZip(path);
+            try {
+                String path = data.getData().getPath();
+                path = path.substring(path.indexOf(':') + 1);
+                unpackZip(path);
+            } catch (NullPointerException e) {
+                System.err.print("data or path not available");
+            }
+
         }
     }
 

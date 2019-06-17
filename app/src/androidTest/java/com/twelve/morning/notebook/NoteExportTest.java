@@ -1,8 +1,10 @@
 package com.twelve.morning.notebook;
 
+import android.support.test.espresso.Espresso;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
+import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
@@ -20,8 +22,15 @@ public class NoteExportTest {
     @Rule
     public ActivityTestRule<MainActivity> activityTestRule = new ActivityTestRule<>(MainActivity.class);
 
+
+    @Before
+    public void resetDatabase(){
+        DatabaseWrapper.getInstance().reset();
+    }
+
     @Test
     public void checkVisibleButton () {
+        Espresso.openContextualActionModeOverflowMenu();
         onView(withId(R.id.bt_export)).check(matches(isDisplayed()));
     }
 
@@ -32,6 +41,7 @@ public class NoteExportTest {
 
     @Test
     public void checkCompress() {
+        Espresso.openContextualActionModeOverflowMenu();
         onView(withId(R.id.bt_export)).check(matches(isDisplayed()));
     }
 }

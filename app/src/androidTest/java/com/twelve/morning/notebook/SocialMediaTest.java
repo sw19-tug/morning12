@@ -1,7 +1,9 @@
 package com.twelve.morning.notebook;
 
 
+import android.Manifest;
 import android.support.test.rule.ActivityTestRule;
+import android.support.test.rule.GrantPermissionRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.widget.EditText;
 
@@ -30,6 +32,13 @@ public class SocialMediaTest {
     @Rule
     public ActivityTestRule<MainActivity> activityMainTestRule =
             new ActivityTestRule<>(MainActivity.class);
+
+    @Rule
+    public GrantPermissionRule grantPermissionRule = GrantPermissionRule.grant(
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            Manifest.permission.ACCESS_COARSE_LOCATION,
+            Manifest.permission.ACCESS_FINE_LOCATION);
     
     @Test
     public void checkSocialButton() {
@@ -41,6 +50,5 @@ public class SocialMediaTest {
         Espresso.openContextualActionModeOverflowMenu();
 
         onView(withText(R.string.share_note)).check(matches(isDisplayed()));
-        onView(withText(R.string.share_note)).perform(click());
     }
 }
