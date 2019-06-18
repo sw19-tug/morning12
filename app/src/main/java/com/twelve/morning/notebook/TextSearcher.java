@@ -34,7 +34,6 @@ public class TextSearcher {
     int SearchNextInstance(Note note, String text)
     {
         currentPos = note.getBody().indexOf(text, lastPos);
-        System.out.println("SearchNextInstance "+currentPos+" last: "+lastPos);
         if(currentPos == -1)
         {
             if(lastPos == 0)
