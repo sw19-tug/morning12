@@ -8,6 +8,7 @@ import android.support.test.espresso.intent.Intents;
 import android.support.test.espresso.intent.matcher.IntentMatchers;
 import android.support.test.espresso.intent.rule.IntentsTestRule;
 
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -23,6 +24,12 @@ public class NoteSharingTest {
     @Rule
     public IntentsTestRule<MainActivity> intentsTestRule = new IntentsTestRule<>(MainActivity.class);
 
+    @Before
+    public void resetDatabase(){
+        DatabaseWrapper.getInstance().reset();
+
+    }
+
     @Test
     public void menuButtonOverviewTest() {
         Intent resultData = new Intent();
@@ -35,8 +42,6 @@ public class NoteSharingTest {
         Espresso.openContextualActionModeOverflowMenu();
         onView(withText(R.string.import_string)).check(matches(isDisplayed()));
         onView(withText(R.string.import_string)).perform(click());
-
-
         onView(withText(R.string.import_string)).check(doesNotExist());
     }
 }

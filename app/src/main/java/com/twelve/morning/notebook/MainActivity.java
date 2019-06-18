@@ -48,7 +48,6 @@ public class MainActivity extends AppCompatActivity {
     public static boolean visible = false;
     private Sorting sorting = Sorting.CREATION;
 
-    boolean firstLaunch = true;
     final MainActivity self = this;
 
     @Override
@@ -68,7 +67,6 @@ public class MainActivity extends AppCompatActivity {
         SearchView sv = findViewById(R.id.search_view_find_text);
         sv.setSubmitButtonEnabled(true);
         sv.setIconifiedByDefault(false);
-        //sv.setQueryHint("");
         sv.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -126,7 +124,6 @@ public class MainActivity extends AppCompatActivity {
                             case 5: language = "st"; break;
                         }
                         LocaleHelper.setLocale(MainActivity.this, language);
-                        //self.recreate();
                         Intent intent = self.getIntent();
                         self.finish();
                         startActivity(intent);
@@ -169,9 +166,13 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == 0){
-            String path = data.getData().getPath();
-            path = path.substring(path.indexOf(':') + 1);
-            unpackZip(path);
+            try {
+                String path = data.getData().getPath();
+                path = path.substring(path.indexOf(':') + 1);
+                unpackZip(path);
+            } catch (NullPointerException e) {
+            }
+
         }
     }
 
@@ -291,8 +292,6 @@ public class MainActivity extends AppCompatActivity {
 
                 NotesListAdapter.visible = false;
                 visible = false;
-                //findViewById(R.id.cb_selected).setVisibility(View.INVISIBLE);
-                //adapter.setCbSelectedVisibility(View.GONE);
 
                 reloadNotes(sorting);
             }

@@ -93,17 +93,6 @@ public class NotesListAdapter extends BaseAdapter implements ListAdapter {
             selectBox.setVisibility(View.GONE);
         cbSelected = selectBox;
 
-        /*ListView list = (ListView)convertView.findViewById(R.id.list_notes);
-        list.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                removeChecks();
-                cbSelected.setVisibility(View.VISIBLE);
-                MainActivity.delBtn.setVisibility(View.VISIBLE);
-                return false;
-            }
-        });*/
-
         pinned_box.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
@@ -124,19 +113,6 @@ public class NotesListAdapter extends BaseAdapter implements ListAdapter {
                 selectBox.setVisibility(View.VISIBLE);
             }
         });
-
-//        //define showSelectBox
-//
-//        //define onTouchEvents
-//        pressedView.setOnTouchListener(new View.OnTouchListener(){
-//            @Override
-//            public void onTouch(View v){
-//                Note note = notes[position];
-//
-//            }
-//        });
-//
-//        convertView.setOnTouchListener(new);
 
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override

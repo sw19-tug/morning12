@@ -1,7 +1,10 @@
 package com.twelve.morning.notebook;
 
+import android.Manifest;
 import android.support.test.rule.ActivityTestRule;
+import android.support.test.rule.GrantPermissionRule;
 
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -21,9 +24,22 @@ public class MainActivitySearchTest {
     @Rule
     public ActivityTestRule<MainActivity> activityTestRule = new ActivityTestRule<>(MainActivity.class);
 
+
+    @Rule
+    public GrantPermissionRule grantPermissionRule = GrantPermissionRule.grant(
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            Manifest.permission.ACCESS_COARSE_LOCATION,
+            Manifest.permission.ACCESS_FINE_LOCATION);
+
+    @Before
+    public void resetDatabase(){
+        DatabaseWrapper.getInstance().reset();
+    }
+
     @Test
     public void searchBarTest() {
-        onView(withId(R.id.bt_note_create_save)).check(matches(isDisplayed()));
+        onView(withId(R.id.search_view_find_text)).check(matches(isDisplayed()));
     }
 
     @Test

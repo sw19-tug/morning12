@@ -1,6 +1,8 @@
 package com.twelve.morning.notebook;
 
+import android.Manifest;
 import android.support.test.rule.ActivityTestRule;
+import android.support.test.rule.GrantPermissionRule;
 
 import org.junit.Assert;
 import org.junit.Rule;
@@ -19,6 +21,13 @@ public class NoteSortingTest {
     @Rule
     public ActivityTestRule<MainActivity> activityTestRule = new ActivityTestRule<>(MainActivity.class);
 
+    @Rule
+    public GrantPermissionRule grantPermissionRule = GrantPermissionRule.grant(
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            Manifest.permission.ACCESS_COARSE_LOCATION,
+            Manifest.permission.ACCESS_FINE_LOCATION);
+
     @Test
     public void testSortingButtonsAreDisplayed() {
         onView(withId(R.id.bt_sort_by_title)).check(matches(isDisplayed()));
@@ -31,12 +40,12 @@ public class NoteSortingTest {
 
         onView(withId(R.id.bt_create)).perform(click());
         onView(withId(R.id.et_note_title)).perform(typeText("A"), closeSoftKeyboard());
-        onView(withId(R.id.et_edit_note_body)).perform(typeText("ABC"), closeSoftKeyboard());
+        onView(withId(R.id.et_note_body)).perform(typeText("ABC"), closeSoftKeyboard());
         onView(withId(R.id.bt_note_create_save)).perform(click());
 
         onView(withId(R.id.bt_create)).perform(click());
         onView(withId(R.id.et_note_title)).perform(typeText("B"), closeSoftKeyboard());
-        onView(withId(R.id.et_edit_note_body)).perform(typeText("ABCDEF"), closeSoftKeyboard());
+        onView(withId(R.id.et_note_body)).perform(typeText("ABCDEF"), closeSoftKeyboard());
         onView(withId(R.id.bt_note_create_save)).perform(click());
 
         Note[] notes = activityTestRule.getActivity().adapter.getNotes();

@@ -54,16 +54,6 @@ public class LocaleHelper {
     @SuppressWarnings("deprecation")
     private static Context updateResources(Context context, String language) {
         return updateResourcesLegacy(context, language);
-        /*Locale locale = new Locale(language);
-        Locale.setDefault(locale);
-
-        Configuration configuration = new Configuration();
-        configuration.setLocale(locale);
-
-        //Resources resources = context.getResources();
-        //resources.updateConfiguration(configuration, resources.getDisplayMetrics());
-        return context.createConfigurationContext(configuration);
-        return context;*/
     }
 
     @SuppressWarnings("deprecation")

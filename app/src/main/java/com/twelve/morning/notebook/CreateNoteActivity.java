@@ -140,10 +140,6 @@ public class CreateNoteActivity extends AppCompatActivity {
                                             location.getLongitude(), 1);
                                     note_to_update.setAddress(addresses.get(0).
                                             getAddressLine(0));
-                                    System.out.println(location.toString());
-                                    for (Address a: addresses){
-                                        System.out.println(a.toString());
-                                    }
                                     note_to_update.setLocation(location);
                                     DatabaseWrapper.getInstance().saveNote(note_to_update);
                                 } catch(IOException ioe) {
