@@ -1,20 +1,39 @@
 package com.twelve.morning.notebook;
 
+import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.speech.tts.TextToSpeech;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.Html;
+import android.text.Spannable;
+import android.text.TextWatcher;
+import android.text.method.LinkMovementMethod;
+import android.text.util.Linkify;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.SearchView;
+import android.widget.TextView;
+
+
+import com.google.android.gms.maps.model.LatLng;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class EditNoteActivity extends AppCompatActivity {
 
     private Note last_edited_note = null;
+    TextToSpeech textToSpeechObject = null;
     public Note getLastEditedNote(){
         return this.last_edited_note;
     }
@@ -24,11 +43,20 @@ public class EditNoteActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_note);
 
+        fillLocation();
         fillTitleBody();
         finishEditNoteActivity((Button)findViewById(R.id.bt_edit_note_create_cancel));
         finishEditNoteActivity((Button)findViewById(R.id.bt_edit_note_create_save));
+        finishEditNoteActivity((SearchView)findViewById(R.id.search_view_find_text));
+        textToSpeechObject = new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
+            @Override
+            public void onInit(int status) {
+                if(status != TextToSpeech.ERROR) {
+                    textToSpeechObject.setLanguage(Locale.UK);
+                }
+            }
+        });
     }
-
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.edit_menu, menu);
@@ -36,20 +64,47 @@ public class EditNoteActivity extends AppCompatActivity {
     }
 
     public boolean onOptionsItemSelected(MenuItem item) {
+        Intent intent = getIntent();
+        Note note = (Note)intent.getSerializableExtra("note");
 
         switch (item.getItemId()){
             case R.id.option_delete:
-
-                Intent intent = getIntent();
-                Note note = (Note)intent.getSerializableExtra("note");
                 note.delete();
                 Intent switch_back_to_main = new Intent(EditNoteActivity.this,
                         MainActivity.class);
                 startActivity(switch_back_to_main);
                 return true;
+            case R.id.option_share:
+                ShareManager.getStoragePermission(this);
+                Note[] noteToEport = new Note[1];
+                noteToEport[0] = note;
+                String zipFileName = note.getTitle()+".zip";
+                ShareManager.zip(noteToEport, zipFileName);
+                startActivity(ShareManager.shareZipFile(zipFileName));
+                return true;
+            case R.id.text_to_speech:
+                textToSpeech(note.getBody());
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    private void textToSpeech(String text) {
+        textToSpeechObject.speak(text, TextToSpeech.QUEUE_FLUSH, null, null);
+    }
+
+    private void fillLocation(){
+        Intent intent = getIntent();
+        Note note = (Note)intent.getSerializableExtra("note");
+        TextView location_text_view = this.findViewById(R.id.tv_note_location);
+        String address = note.getAddress();
+        if(address == null) {
+            address = "";
+        }
+        else {
+            address = "@ " + address;
+        }
+        location_text_view.setText(getString(R.string.created_at_location, address));
     }
 
     private void fillTitleBody()
@@ -57,6 +112,25 @@ public class EditNoteActivity extends AppCompatActivity {
         Intent intent = getIntent();
         Note note = (Note)intent.getSerializableExtra("note");
         EditText edit_text_title = this.findViewById(R.id.et_edit_note_title);
+        TextView textView = (TextView) findViewById(R.id.et_edit_note_body);
+        textView.addTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                Linkify.addLinks((Spannable) s, Linkify.WEB_URLS);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                Linkify.addLinks(s, Linkify.WEB_URLS);
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                // Nothing to do
+            }
+
+        });
         EditText edit_text_body = this.findViewById(R.id.et_edit_note_body);
         edit_text_title.setText(note.getTitle());
         edit_text_body.setText(note.getBody());
@@ -90,7 +164,6 @@ public class EditNoteActivity extends AppCompatActivity {
                     for (String tag1 : tags) {
                         Tag tag = new Tag(tag1);
                         Tags.add(tag);
-                        note.setTags(Tags);
                     }
 
                     note.save();
@@ -101,5 +174,45 @@ public class EditNoteActivity extends AppCompatActivity {
                 }
             });
         }
+    }
+
+    private void finishEditNoteActivity(final SearchView searchView){
+        Intent intent = getIntent();
+        final Note note = (Note)intent.getSerializableExtra("note");
+        final Activity self = this;
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                int position = TextSearcher.GetInstance().SearchNextInstance(note, query);
+                if(position == -1){
+                    showAlert("Warning", "'"+query+"' not found", "Ok");
+                    return false;
+                }
+                else{
+                    TextSearcher.GetInstance().highlightText(self, note, position, query.length());
+                }
+
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return true;
+            }
+        });
+    }
+
+    private void showAlert(String title, String message, String positive_message) {
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+        alert.setPositiveButton(positive_message, new DialogInterface.OnClickListener(){
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+        alert.setTitle(title);
+        alert.setMessage(message);
+
+        alert.create().show();
     }
 }

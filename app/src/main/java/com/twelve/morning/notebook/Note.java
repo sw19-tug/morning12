@@ -1,78 +1,114 @@
 package com.twelve.morning.notebook;
 
+import android.arch.persistence.room.ColumnInfo;
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.PrimaryKey;
+import android.location.Location;
+
+import com.google.android.gms.maps.model.LatLng;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Random;
-import java.util.Set;
 
+@Entity(tableName = "noteTable")
 public class Note implements Serializable {
-  
-    private static Random rand = new Random();
 
+    @PrimaryKey(autoGenerate = true)
+    public int id;
+
+    @ColumnInfo(name = "Title")
     private String title;
+
+    @ColumnInfo(name = "Body")
     private String body;
-    private Date creation_date;
+
+    @ColumnInfo(name = "Date")
+    private Date creationDate;
+
+    @ColumnInfo(name = "Pinned")
     private Boolean pinned = false;
-    public int id = rand.nextInt();
-    private List<Tag> tags;
 
-    public Note(String title){
-        this.title = title;
-        this.body = "";
-        this.creation_date = new Date();
-        this.tags = new ArrayList<>();
-        //this.tags.add("#testTag");
+    @ColumnInfo(name = "Selected")
+    private Boolean selected = false;
+  
+    @ColumnInfo(name = "Latitude")
+    private Double latitude;
+
+    @ColumnInfo(name = "Longitude")
+    private Double longitude;
+
+    @ColumnInfo(name = "address")
+    private String address;
+
+    Note()
+    {
+        creationDate = new Date();
+        pinned = false;
     }
 
-    public Note(String title, String body){
-        this.title = title;
-        this.body = body;
-        this.creation_date = new Date();
-        this.tags = new ArrayList<>();
-        //this.tags.add("#testTag");
+    Note(String inTitle)
+    {
+        title = inTitle;
+        creationDate = new Date();
     }
 
-    public void setBody(String body) {
-        this.body = body;
+    Note(String inTitle, String inText)
+    {
+        title = inTitle;
+        body = inText;
+        creationDate = new Date();
     }
 
-
-    public String getBody(){
-        return body;
+    Note(Note inNote)
+    {
+        title = inNote.title;
+        body = inNote.body;
+        id = inNote.id;
+        creationDate = inNote.creationDate;
+        longitude = inNote.longitude;
+        latitude = inNote.latitude;
     }
 
-
-    public Boolean getPinned() {
-        return pinned;
+    public String getAddress() {
+        return address;
     }
 
-
-    public void setPinned(Boolean pinned) {
-        this.pinned = pinned;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
-
-    public String getTitle() {
-        return title;
+    public Double getLatitude() {
+        return latitude;
     }
 
-
-    public void setTitle(String title) {
-        this.title = title;
+    public Double getLongitude() {
+        return longitude;
     }
 
-
-    public Date getCreationDate() {
-        return creation_date;
+    public void setLatitude(Double latitude) {
+        this.latitude = latitude;
     }
 
-
-    public void setCreationDate(Date creation_date) {
-        this.creation_date = creation_date;
+    public void setLongitude(Double longitude) {
+        this.longitude = longitude;
     }
+
+    public void setLocation(Location location) {
+        this.latitude = location.getLatitude();
+        this.longitude = location.getLongitude();
+    }
+
+    public LatLng getLocation(){
+        if(this.latitude != null && this.longitude != null){
+            return new LatLng(this.latitude, this.longitude);
+        }
+        else {
+            return new LatLng(0.0, 0.0);
+        }
+    }
+
 
     public void save(){
         DatabaseWrapper.getInstance().saveNote(this);
@@ -82,12 +118,49 @@ public class Note implements Serializable {
         DatabaseWrapper.getInstance().deleteNote(this);
     }
 
-    public List<Tag> getTags() {
-        return tags;
+    public int getId() {
+        return id;
     }
 
-    public void setTags(List<Tag> tags) {
-        this.tags = tags;
+    public void setId(int id) {
+        this.id = id;
     }
 
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getBody() {
+        return body;
+    }
+
+    public void setBody(String body) {
+        this.body = body;
+    }
+
+    public void setTextBody(String textBody) {
+        this.body = textBody;
+    }
+
+    public Date getCreationDate() {
+        return creationDate;
+    }
+
+    public void setCreationDate(Date creation_date) {
+        this.creationDate = creation_date;
+    }
+
+    public Boolean getPinned() { return pinned; }
+
+    public void setPinned(Boolean pinned) { this.pinned = pinned; }
+
+    public Boolean getSelected() { return selected; }
+
+    public void setSelected(Boolean selected) { this.selected = selected; }
+
+    public List<Tag> getTags() { return new ArrayList<>(); }
 }

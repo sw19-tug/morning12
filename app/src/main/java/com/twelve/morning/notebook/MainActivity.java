@@ -1,59 +1,221 @@
 package com.twelve.morning.notebook;
 
 import android.Manifest;
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Environment;
 import android.support.annotation.RequiresApi;
+import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v7.app.AppCompatDelegate;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ListView;
-import android.net.Uri;
+import android.widget.SearchView;
+import android.widget.Toast;
 
 import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.FileOutputStream;
+
+import java.io.FileInputStream;
+
+import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Locale;
 import java.util.zip.ZipEntry;
-import java.util.zip.ZipOutputStream;
+import java.util.zip.ZipInputStream;
 
 
 public class MainActivity extends AppCompatActivity {
 
     private ListView list_view;
-    final private int REQUEST_CODE_ASK_PERMISSIONS = 123;
     public NotesListAdapter adapter = null;
+    public static Button delBtn;
+    public static boolean visible = false;
     private Sorting sorting = Sorting.CREATION;
+
+    final MainActivity self = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        DatabaseWrapper.getInstance().createDatabase(getApplicationContext());
+
+
         setContentView(R.layout.activity_main);
         setupButtons();
+        setupSearch();
         reloadNotes(sorting);
-        exportNotes();      
 
-//        list_view.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-//                Intent intent = new Intent(MainActivity.this, EditNoteActivity.class);
-//                Note note = (Note)adapterView.getItemAtPosition(i);
-//                intent.putExtra("note", note);
-//                startActivity(intent);
-//            }
-//        });
+    }
+
+    public void setupSearch() {
+        SearchView sv = findViewById(R.id.search_view_find_text);
+        sv.setSubmitButtonEnabled(true);
+        sv.setIconifiedByDefault(false);
+        sv.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                reloadNotesByText(query);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                reloadNotesByText(newText);
+                return true;
+            }
+        });
+    }
+
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_menu, menu);
+        if(AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES){
+            menu.findItem(R.id.bt_darkmode).setTitle(R.string.day_mode);
+        } else {
+            menu.findItem(R.id.bt_darkmode).setTitle(R.string.night_mode);
+        }
+        return true;
     }
   
+    public boolean onOptionsItemSelected(MenuItem item) {
+        visible = false;
+        Intent intent = getIntent();
+        switch (item.getItemId()){
+            case R.id.bt_import:
+                showFileChooser();
+                return true;
+            case R.id.bt_export:
+                ShareManager.getStoragePermission(this);
+                String zipFileName = "exported_notes.zip";
+                Note[] notesToExport = DatabaseWrapper.getInstance().getNotes(Sorting.TITLE);
+                ShareManager.zip(notesToExport, zipFileName);
+                startActivity(ShareManager.shareZipFile(zipFileName));
+                return true;
+            case R.id.bt_local:
+                String[] languages = {"English", "Deutsch", "Hrvatski", "Italiano", "Español", "Deitsch"};
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setTitle("Select Language");
+                builder.setItems(languages, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        String language = "en";
+                        switch (which){
+                            case 0: language = "en"; break;
+                            case 1: language = "de"; break;
+                            case 2: language = "hr"; break;
+                            case 3: language = "it"; break;
+                            case 4: language = "es"; break;
+                            case 5: language = "st"; break;
+                        }
+                        LocaleHelper.setLocale(MainActivity.this, language);
+                        Intent intent = self.getIntent();
+                        self.finish();
+                        startActivity(intent);
+                    }
+                });
+                builder.show();
+                return true;
+            case R.id.bt_darkmode:
+                if (AppCompatDelegate.getDefaultNightMode() != AppCompatDelegate.MODE_NIGHT_YES) {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                    recreate();
+                } else {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                    recreate();
+                }
+                return true;
+            case R.id.bt_about:
+                Intent switch_to_about_activity = new Intent(MainActivity.this,
+                        AboutActivity.class);
+                startActivity(switch_to_about_activity);
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+    private void showFileChooser() {
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.setType("application/zip");
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+
+        try {
+            startActivityForResult(
+                    Intent.createChooser(intent, "Select a File"),0);
+        } catch (android.content.ActivityNotFoundException ex) {
+            // Potentially direct the user to the Market with a Dialog
+            Toast.makeText(this, "Please install a File Manager.",
+                    Toast.LENGTH_SHORT).show();
+        }
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == 0){
+            try {
+                String path = data.getData().getPath();
+                path = path.substring(path.indexOf(':') + 1);
+                unpackZip(path);
+            } catch (NullPointerException e) {
+            }
+
+        }
+    }
+
+    private boolean unpackZip(String path)
+    {
+        InputStream is;
+        ZipInputStream zis;
+        try
+        {
+            String filename;
+            is = new FileInputStream(path);
+            zis = new ZipInputStream(new BufferedInputStream(is));
+            ZipEntry ze;
+
+            while ((ze = zis.getNextEntry()) != null)
+            {
+                filename = ze.getName();
+
+                byte[] buffer = new byte[1024];
+                int read = 0;
+                String content = "";
+                while ((read = zis.read(buffer)) != -1) {
+                    content += new String(buffer);
+                }
+
+                Note note = new Note();
+                note.setTitle(filename.replace(".txt", ""));
+                note.setBody(content);
+                DatabaseWrapper.getInstance().addNote(note);
+                zis.closeEntry();
+            }
+
+            zis.close();
+        }
+        catch(IOException e)
+        {
+            e.printStackTrace();
+            return false;
+        }
+
+        return true;
+    }
+
     protected void onResume() {
         super.onResume();
         reloadNotes(sorting);
@@ -66,6 +228,14 @@ public class MainActivity extends AppCompatActivity {
         this.adapter = new NotesListAdapter(DatabaseWrapper.getInstance().getNotes(this.sorting), this);
         list_view = findViewById(R.id.list_notes);
         list_view.setAdapter(this.adapter);
+        NotesListAdapter.visible = visible;
+    }
+
+    public void reloadNotesByText(String query) {
+        this.adapter = new NotesListAdapter(DatabaseWrapper.getInstance().getNotesByText(query), this);
+        list_view = findViewById(R.id.list_notes);
+        list_view.setAdapter(this.adapter);
+        NotesListAdapter.visible = visible;
     }
 
     private void setupButtons(){
@@ -73,6 +243,7 @@ public class MainActivity extends AppCompatActivity {
         create_note_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                visible = false;
                 Intent switch_to_create_note = new Intent(MainActivity.this,
                         CreateNoteActivity.class);
                 startActivity(switch_to_create_note);
@@ -80,7 +251,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
         Button sort_date_button = findViewById(R.id.bt_sort_by_creation);
-
         sort_date_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -90,7 +260,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
         Button sort_title_button = findViewById(R.id.bt_sort_by_title);
-
         sort_title_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -98,68 +267,35 @@ public class MainActivity extends AppCompatActivity {
                 reloadNotes(sorting);
             }
         });
-    }
 
-    private void exportNotes(){
-        FloatingActionButton export_note_btn = findViewById(R.id.bt_export);
-        export_note_btn.setOnClickListener(new View.OnClickListener() {
+        Button sort_size_button = findViewById(R.id.bt_sort_by_size);
+        sort_size_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String zipFileName = "exported_notes.zip";
-                //zip(notes, zipFileName);
-                shareZipFile(zipFileName);
+                sorting = Sorting.SIZE;
+                reloadNotes(sorting);
             }
         });
-    }
 
-    private void zip(String[] _notes, String zipFileName) {
-        int BUFFER = 1000;
-        try {
-            getStoragePermission();
-            BufferedInputStream noteBuffered = null;
-            FileOutputStream dest = new FileOutputStream(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) + "/" + zipFileName);
-            ZipOutputStream out = new ZipOutputStream(new BufferedOutputStream(dest));
-            byte data[] = new byte[BUFFER];
+        Button delete_notes_button = findViewById(R.id.bt_delete_notes);
+        delete_notes_button.setVisibility(View.GONE);
+        delBtn = delete_notes_button;
+        delete_notes_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ArrayList<Note> notes = adapter.getCheckedNotes();
+                if(!notes.isEmpty())
+                    DatabaseWrapper.getInstance().deleteNotes(notes);
 
-            for (int i = 0; i < _notes.length; i++) {
-                //FileInputStream fi = new FileInputStream(_files[i]);
-                InputStream inputStream = new ByteArrayInputStream(_notes[i].getBytes(StandardCharsets.UTF_8));
-                noteBuffered = new BufferedInputStream(inputStream, BUFFER);
+                NotesListAdapter.cbSelected.setVisibility(View.GONE);
+                delBtn.setVisibility(View.GONE);
 
-                ZipEntry entry = new ZipEntry(_notes[i]);
-                out.putNextEntry(entry);
-                int count;
+                NotesListAdapter.visible = false;
+                visible = false;
 
-                while ((count = noteBuffered.read(data, 0, BUFFER)) != -1) {
-                    out.write(data, 0, count);
-                }
-                noteBuffered.close();
+                reloadNotes(sorting);
             }
-
-            out.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void getStoragePermission() {
-        int hasStoragePermission = checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE);
-        if (hasStoragePermission != PackageManager.PERMISSION_GRANTED) {
-            requestPermissions(new String[] {Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                    REQUEST_CODE_ASK_PERMISSIONS);
-            return;
-        }
-    }
-
-    private void shareZipFile(String zipFileName) {
-        File exportedNotesFile = new File("file://"+ Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) + "/" + zipFileName);
-        Intent sendIntent = new Intent();
-        sendIntent.setAction(Intent.ACTION_SEND);
-        sendIntent.putExtra(Intent.EXTRA_FROM_STORAGE, exportedNotesFile);
-        sendIntent.putExtra(Intent.EXTRA_TEXT, "Sharing exported notes");
-        sendIntent.setType("application/zip");
-        startActivity(Intent.createChooser(sendIntent, "share " + zipFileName));
-        return;
+        });
     }
 }
 

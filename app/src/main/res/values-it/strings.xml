@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Libretto</string>
+    <string name="sort_title">Titolo</string>
+    <string name="sort_creationdate">Data di creazione</string>
+
+    <string name="pin_note">Pinnen</string>
+    <string name="delete_note">Cancellare</string>
+    <string name="share_note">Share</string>
+
+    <string name="dummy_text">Dummy Text</string>
+    <string name="create_note_description">Creare una notizia per mofificazione</string>
+    <string name="Create">Creare una nuova notizia</string>
+    <string name="Edit">Modificare</string>
+    <string name="Confirm_bt">Confirma</string>
+    <string name="Abort_bt">Cancella</string>
+    <string name="Title">Titolo:</string>
+    <string name="Body_hint">Inseriere testo qui:</string>
+    <string name="export_bt">Esportare notizia</string>
+    <string name="tag_information"><![CDATA[Per aggiungere un tag a una notizia, inserisci \"#<tag> \" per ognuno tag dentro il Textfeld della notizia. Inoltre devi sostituiere <tag> con il nome del tag.]]></string>
+
+    <string name="import_string">Importarte notizia</string>
+    <string name="export_string">Esportarte notizia</string>
+    <string name="local_string">Cambia lingua</string>
+    <string name="sort_size">Lunghezza</string>
+    <string name="darkmode_bt">Darkmode</string>
+    <string name="night_mode">Night Mode</string>
+    <string name="day_mode">Day Mode</string>
+    <string name="search_here">Cerca qui</string>
+    <string name="about">About</string>
+    <string name="created_at_location">%1$s</string>
+    <string name="text_to_speech">Leggi la nota</string>
+    <string name="about_made">Fatto con una 🍕 e con tanto 🍷 by</string>
+    <string name="about_names">Philipp\nBernhard\nJuri\nMichael\nMarko\nAndreas\nPaul\nAhmed</string>
+
+</resources>

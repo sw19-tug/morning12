@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Notizbuch</string>
+    <string name="sort_title">Titel</string>
+    <string name="sort_creationdate">Erstellungsdatum</string>
+
+    <string name="pin_note">Pinnen</string>
+    <string name="delete_note">Löschen</string>
+    <string name="share_note">Teilen</string>
+
+    <string name="dummy_text">Dummy Text</string>
+    <string name="create_note_description">Notiz erstellen und bearbeiten</string>
+    <string name="Create">Neue Notiz erstellen</string>
+    <string name="Edit">Notiz bearbeiten</string>
+    <string name="Confirm_bt">Bestätigen</string>
+    <string name="Abort_bt">Abbrechen</string>
+    <string name="Title">Titel:</string>
+    <string name="Body_hint">Text hier eingeben:</string>
+    <string name="export_bt">Notiz exportieren</string>
+    <string name="tag_information"><![CDATA[Um eine Notiz zu taggen schreibe \"#<tag> \" für jeden tag in das Textfeld der Notiz, wobei <tag> jeweils mit dem tag ersetzt wird]]></string>
+
+    <string name="import_string">Notiz importieren</string>
+    <string name="export_string">Notiz exportieren</string>
+    <string name="darkmode_bt">Dunkler Modus</string>
+    <string name="night_mode">Nacht Modus</string>
+    <string name="day_mode">Day Mode</string>
+    <string name="local_string">Sprache verändern</string>
+    <string name="sort_size">Länge</string>
+    <string name="search_here">Suche hier</string>
+    <string name="created_at_location">%1$s</string>
+    <string name="about">About</string>
+    <string name="text_to_speech">Notiz vorlesen</string>
+    <string name="about_made">Handgefertigt mit 🍺, 🇦🇹 und 🏔 by</string>
+    <string name="about_names">Philipp\nBernhard\nJuri\nMichael\nMarko\nAndreas\nPaul\nAhmed</string>
+
+</resources>

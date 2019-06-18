@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Bilješke</string>
+    <string name="sort_title">Naslov</string>
+    <string name="sort_creationdate">Datum stvaranja</string>
+
+    <string name="pin_note">Označi</string>
+    <string name="delete_note">Izbriši</string>
+    <string name="share_note">Podijeli</string>
+
+    <string name="dummy_text">Nevažan tekst</string>
+    <string name="create_note_description">Stvori i uredi bilješku</string>
+    <string name="Create">Stvori novu bilješku</string>
+    <string name="Edit">Uredi bilješku</string>
+    <string name="Confirm_bt">Potvrdi</string>
+    <string name="Abort_bt">Prekid</string>
+    <string name="Title">Naslov:</string>
+    <string name="Body_hint">Unesi tekst ovdje:</string>
+    <string name="export_bt">Pošalji bilješke</string>
+    <string name="tag_information"><![CDATA[Za označiti bilješku napišite \"#<oznaka>\" unutar teksta za svaku oznaku koju želite dodati, gdje je <oznaka> zamijenjena sa željenom oznakom]]></string>
+
+    <string name="import_string">Unesi bilješke</string>
+    <string name="export_string">Unesi bilješke</string>
+    <string name="local_string">Promijeni jezik</string>
+    <string name="sort_size">size</string>
+    <string name="darkmode_bt">Darkmode</string>
+    <string name="night_mode">Night Mode</string>
+    <string name="day_mode">Day Mode</string>
+    <string name="search_here">Traži ovdje</string>
+    <string name="created_at_location">%1$s</string>
+    <string name="about">About</string>
+    <string name="text_to_speech">Pročitajte bilješku</string>
+    <string name="about_made">Made with 🥵 by</string>
+    <string name="about_names">Philipp\nBernhard\nJuri\nMichael\nMarko\nAndreas\nPaul\nAhmed</string>
+
+</resources>

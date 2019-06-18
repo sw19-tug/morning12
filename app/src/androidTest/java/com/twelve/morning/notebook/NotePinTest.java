@@ -1,16 +1,12 @@
 package com.twelve.morning.notebook;
 
-import android.app.LauncherActivity;
-import android.support.test.annotation.UiThreadTest;
-import android.support.test.espresso.ViewInteraction;
+
+import android.Manifest;
 import android.support.test.rule.ActivityTestRule;
-import android.view.View;
-import android.widget.CheckBox;
-import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.RelativeLayout;
+import android.support.test.rule.GrantPermissionRule;
 
 import org.junit.Assert;
+
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -26,7 +22,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.isNotChecked;
 import static android.support.test.espresso.matcher.ViewMatchers.isChecked;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
-import static android.support.test.espresso.matcher.ViewMatchers.withParent;
+
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.anything;
 
@@ -34,6 +30,18 @@ public class NotePinTest {
 
     @Rule
     public ActivityTestRule<MainActivity> activityTestRule = new ActivityTestRule<>(MainActivity.class);
+
+    @Before
+    public void resetDatabase(){
+        DatabaseWrapper.getInstance().reset();
+    }
+
+    @Rule
+    public GrantPermissionRule grantPermissionRule = GrantPermissionRule.grant(
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            Manifest.permission.ACCESS_COARSE_LOCATION,
+            Manifest.permission.ACCESS_FINE_LOCATION);
 
     @Test
     public void testPinning() {
@@ -58,14 +66,13 @@ public class NotePinTest {
         String body_input = "dummyBody";
         onView(withId(R.id.bt_create)).perform(click());
         onView(withId(R.id.rl_create_note)).check(matches(isDisplayed()));
-        onView(withId(R.id.et_note_title)).perform(clearText(), typeText(title_input));
-        onView(withId(R.id.et_note_body)).perform(clearText(), typeText(body_input)).perform(closeSoftKeyboard());
+        onView(withId(R.id.et_note_title)).perform(clearText(), typeText(title_input), closeSoftKeyboard());
+        onView(withId(R.id.et_note_body)).perform(clearText(), typeText(body_input), closeSoftKeyboard());
         onView(withId(R.id.et_note_title)).check(matches(withText(title_input)));
         onView(withId(R.id.et_note_body)).check(matches(withText(body_input)));
         onView(withId(R.id.bt_note_create_save)).perform(click());
         onView(withId(R.id.bt_create)).check(matches(isDisplayed()));
 
-        // -----------------------actual pin test --------------------------------
 
         onView(withId(R.id.cb_pinned)).check(matches(isDisplayed()));
         onView(withId(R.id.cb_pinned)).check(matches(isNotChecked()));
@@ -79,7 +86,6 @@ public class NotePinTest {
         onView(withId(R.id.et_note_title)).perform(typeText("A"), closeSoftKeyboard());
         onView(withId(R.id.bt_note_create_save)).perform(click());
 
-        // -----------------------actual pin test --------------------------------
 
         Note[] notes = activityTestRule.getActivity().adapter.getNotes();
         Assert.assertFalse(notes[0].getPinned());
